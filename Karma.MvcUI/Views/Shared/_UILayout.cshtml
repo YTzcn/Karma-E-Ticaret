@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+@await Html.PartialAsync("/Views/PartialViews/_HeaderPartialView.cshtml")
+<body>
+    @await Html.PartialAsync("/Views/PartialViews/_NavbarPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/_BannerAreaPartialView.cshtml")
+    <br>
+    @RenderBody()
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_RelatedProductsPartialView.cshtml")
+    <br />
+    @await Html.PartialAsync("/Views/PartialViews/_FooterPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/_ScriptsPartialView.cshtml")
+</body>
+</html>

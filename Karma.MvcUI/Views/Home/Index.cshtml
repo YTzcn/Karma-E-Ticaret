@@ -1,0 +1,21 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+@await Html.PartialAsync("/Views/PartialViews/_HeaderPartialView.cshtml")
+<body>
+    @await Html.PartialAsync("/Views/PartialViews/_NavbarPartialView.cshtml", Model)
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_BannerPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_FeaturesPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_CategoryAreaPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_ProductAreaPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_ExclusiveDealPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_BrandAreaPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_RelatedProductsPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/_FooterPartialView.cshtml")
+    @await Html.PartialAsync("/Views/PartialViews/_ScriptsPartialView.cshtml")
+</body>
+</html>

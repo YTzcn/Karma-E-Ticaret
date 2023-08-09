@@ -1,0 +1,26 @@
+﻿@model Karma.MvcUI.Models.ProductListViewModel
+@{
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+<section class="category-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            @foreach (var item in Model.Categories)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <a href="~/Kategori/@item.CategoryId">
+                        <div class="single-deal" href="##">
+                            <div class="overlay"></div>
+                            <img class="img-fluid w-100" src="@item.ImagePath" alt="">
+                            <div class="deal-details">
+                                <h6 class="deal-title">@item.CategoryName</h6>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
