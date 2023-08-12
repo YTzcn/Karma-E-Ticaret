@@ -20,9 +20,11 @@ namespace Karma.MvcUI.Controllers
             _productService = productService;
             _brandService = brandService;
         }
-        public IActionResult Index(string? categoryName, int page = 1, int pageSize = 12, string[] brands = null, string[] color = null, string upperValue = null, string lowerValue = null)
+        public IActionResult Index(string? categoryName, int page = 1, int pageSize = 12, string[] brands = null, string[] color = null, string upperValue = null, string lowerValue = null, string shorting = null)
         {
+
             ViewBag.Brands = brands;
+            ViewBag.PageSize = pageSize;
             ViewBag.Color = color;
             ViewBag.lowerValue = lowerValue;
             ViewBag.upperValue = upperValue;
@@ -48,7 +50,17 @@ namespace Karma.MvcUI.Controllers
                 {
                     products = _productService.GetByCategoryId(CurrentCategoryId);
                 }
-
+                switch (shorting)
+                {
+                    case "Fiyat":
+                        products = products.OrderBy(x => x.Price).ToList();
+                        break;
+                    case "A-Z":
+                        products = products.OrderBy(y => y.ProductName).ToList();
+                        break;
+                    default:
+                        break;
+                }
                 ProductListViewModel model = new ProductListViewModel
                 {
                     CurrentCategory = CurrentCategoryId,

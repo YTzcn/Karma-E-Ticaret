@@ -2,7 +2,6 @@
 @{
     Layout = null;
 }
-
 <div class="col-xl-3 col-lg-4 col-md-5">
     <div class="sidebar-categories">
         <div class="head">Kategoriler</div>
@@ -19,12 +18,10 @@
         </ul>
     </div>
     <div class="sidebar-filter mt-50">
-
         <div class="top-filter-head">Filtreler</div>
         <form action="~/Kategori/@ViewContext.RouteData.Values["categoryName"]" method="get">
             <div class="common-filter">
                 <div class="head">Markalar</div>
-
                 <ul>
                     @foreach (var x in Model.Brands)
                     {
@@ -36,26 +33,17 @@
             </div>
             <div class="common-filter">
                 <div class="head">Renkler</div>
-
                 <ul>
                     @foreach (var x in Model.Colors)
                     {
                         <li class="filter-list"><input class="pixel-radio" type="checkbox" id="@x" value="@x" name="color" @(((IList<string>)ViewBag.Color).Contains(x) != false ? "checked" : "")><label for="@x">@x</label></li>
                     }
-
                 </ul>
-
             </div>
-
-
-
             <div class="common-filter">
                 <div class="head">Fiyat Aralığı</div>
-
-
                 <input type="number" value="@ViewBag.lowerValue" name="lowerValue" placeholder="Min Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min Fiyat'" class="single-input">
                 <input type="number" value="@ViewBag.upperValue" name="upperValue" placeholder="Max Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max Fiyat'" class="single-input">
-
                 <br />
                 <button type="submit" class="genric-btn primary circle arrow">Uygula</button>
             </div>

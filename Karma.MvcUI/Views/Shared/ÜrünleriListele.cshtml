@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
-} 
+}
 @{
     string href(string pageSize)
     {
@@ -25,11 +25,10 @@
         <div class="col-xl-9 col-lg-8 col-md-7">
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting">
-                    <select>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
-                        <option value="1">Default sorting</option>
+                <div class="sorting" >
+                    <select onchange="window.location.href=this.value">
+                        <option value="?shorting=Fiyat"><a href="?shorting=Fiyat">Fiyata Göre Sırala</a></option>
+                        <option value="?shorting=A-Z"><a href="?shorting=AZ">A'dan Z'ye Sırala</a></option>
                     </select>
                 </div>
             </div>
@@ -39,10 +38,9 @@
             <!-- Start Filter Bar -->
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting mr-auto">
-                    <select onchange="window.location.href=this.value">
-                      
-                        <option value="?pageSize=12"><a href="@href("12")">12 Ürün</a></option>
-                        <option value="?pageSize=24"><a href="?pageSize=24">24 Ürün</a></option>
+                    <select id="pageSizeSelect" onchange="window.location.href=this.value">
+                        <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="?pageSize=12"><a href="?pageSize=24">12 Ürün</a></option>
+                        <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="?pageSize=24"><a href="?pageSize=24">24 Ürün</a></option>
                     </select>
                 </div>
                 <product-list-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage"></product-list-pager>
