@@ -10,11 +10,13 @@ namespace Karma.MvcUI.ViewComponents
     public class LeftNavbarViewComponent : ViewComponent
     {
         private readonly ICategoryService _categoryService;
+        private readonly IProductService _productService;
         private readonly IBrandService _brandService;
-        public LeftNavbarViewComponent(ICategoryService categoryService, IBrandService brandService)
+        public LeftNavbarViewComponent(ICategoryService categoryService, IBrandService brandService, IProductService productService)
         {
             _categoryService = categoryService;
             _brandService = brandService;
+            _productService = productService;
         }
         public ViewViewComponentResult Invoke(ProductListViewModel productListViewModel, string Route)
         {
@@ -32,8 +34,8 @@ namespace Karma.MvcUI.ViewComponents
             {
                 categoryList.AddRange(_categoryService.GetAll());
             }
-            var colorList = productListViewModel.Products.Select(x => x.Color).Distinct().ToList();
-            var brands = productListViewModel.Products.Select(x => x.BrandId).Distinct().ToList();
+            var colorList = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory).Select(x => x.Color).Distinct().ToList();
+            var brands = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory).Select(x => x.BrandId).Distinct().ToList();
             foreach (var brand in brands)
             {
                 brandList.Add(_brandService.Get(x => x.BrandId == brand));

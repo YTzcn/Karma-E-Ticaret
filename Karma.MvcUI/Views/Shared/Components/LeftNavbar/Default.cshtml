@@ -20,7 +20,7 @@
     </div>
     <div class="sidebar-filter mt-50">
 
-        <div class="top-filter-head">Product Filters</div>
+        <div class="top-filter-head">Filtreler</div>
         <form action="~/Kategori/@ViewContext.RouteData.Values["categoryName"]" method="get">
             <div class="common-filter">
                 <div class="head">Markalar</div>
@@ -28,7 +28,9 @@
                 <ul>
                     @foreach (var x in Model.Brands)
                     {
-                        <li class="filter-list"><input value="@x.BrandName" onclick="toggleRadio(this)" class="pixel-radio custom-radio" type="checkbox" id="@x.BrandName" name="brandName"><label for="@x.BrandName">@x.BrandName</label></li>
+                        <li class="filter-list">
+                            <input value="@x.BrandName" class="pixel-radio custom-radio" type="checkbox" id="@x.BrandName" name="brands" @(((IList<string>)ViewBag.Brands).Contains(x.BrandName) != false ? "checked" : "")><label for="@x.BrandName">@x.BrandName</label>
+                        </li>
                     }
                 </ul>
             </div>
@@ -38,7 +40,7 @@
                 <ul>
                     @foreach (var x in Model.Colors)
                     {
-                        <li class="filter-list"><input class="pixel-radio" type="checkbox" id="@x" value="@x" name="color"><label for="@x">@x</label></li>
+                        <li class="filter-list"><input class="pixel-radio" type="checkbox" id="@x" value="@x" name="color" @(((IList<string>)ViewBag.Color).Contains(x) != false ? "checked" : "")><label for="@x">@x</label></li>
                     }
 
                 </ul>
@@ -49,17 +51,11 @@
 
             <div class="common-filter">
                 <div class="head">Fiyat Aralığı</div>
-                <div class="price-range-area">
-                    <div id="price-range"></div>
-                    <div class="value-wrapper d-flex">
-                        <div class="price">Fiyat Aralığı:</div>
-                        <span>₺</span>
-                        <div name="lowerValue" id="lower-value"><input type="text" hidden="" name="lowerValue" id="lower-value" /></div>
-                        <div class="to">-</div>
-                        <span>₺</span>
-                        <div name="upperValue" id="upper-value"></div>
-                    </div>
-                </div>
+
+
+                <input type="number" value="@ViewBag.lowerValue" name="lowerValue" placeholder="Min Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min Fiyat'" class="single-input">
+                <input type="number" value="@ViewBag.upperValue" name="upperValue" placeholder="Max Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max Fiyat'" class="single-input">
+
                 <br />
                 <button type="submit" class="genric-btn primary circle arrow">Uygula</button>
             </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,9 +39,9 @@ namespace Karma.Business.Concrete
             return _productDal.Get(x => x.ProductId == ProductId);
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            return _productDal.GetAllProd();
+            return _productDal.GetAllProd(filter);
         }
 
         public void Update(Product product)
@@ -48,7 +49,7 @@ namespace Karma.Business.Concrete
             _productDal.Update(product);
         }
 
-        public List<Product> GetByFilter(int[]? brandId, string[]? color, string? lowerValue, string? upperValue)
+        public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue)
         {
             var products = _productDal.GetAllProd();
             if (brandId.Length != 0)
@@ -71,6 +72,11 @@ namespace Karma.Business.Concrete
             {
                 products = products.Where(x => Convert.ToDecimal(lowerValue) < x.Price && x.Price < Convert.ToDecimal(upperValue)).ToList();
             }
+            if (categoryId != null || categoryId != 0)
+            {
+                products = products.Where(x => x.CategoryId == categoryId).ToList();
+            }
+
             return products;
         }
     }
