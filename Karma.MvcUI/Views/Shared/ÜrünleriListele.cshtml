@@ -2,6 +2,20 @@
 
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
+} 
+@{
+    string href(string pageSize)
+    {
+        string queryString = Context.Request.RouteValues.ToString();
+        if (queryString.Contains("?pageSize"))
+        {
+            return "?pageSize=" + pageSize;
+        }
+        else
+        {
+            return queryString + "?pageSize=" + pageSize;
+        }
+    }
 }
 <div class="container">
     <div class="row">
@@ -26,20 +40,7 @@
             <div class="filter-bar d-flex flex-wrap align-items-center">
                 <div class="sorting mr-auto">
                     <select onchange="window.location.href=this.value">
-                        @{
-                            string href(string pageSize)
-                            {
-                                string queryString = Context.Request.QueryString.ToString();
-                                if (queryString.Contains("?pageSize"))
-                                {
-                                    return "?pageSize=" + pageSize;
-                                }
-                                else
-                                {
-                                    return queryString + "?pageSize=" + pageSize;
-                                }
-                            }
-                        }
+                      
                         <option value="?pageSize=12"><a href="@href("12")">12 Ürün</a></option>
                         <option value="?pageSize=24"><a href="?pageSize=24">24 Ürün</a></option>
                     </select>
