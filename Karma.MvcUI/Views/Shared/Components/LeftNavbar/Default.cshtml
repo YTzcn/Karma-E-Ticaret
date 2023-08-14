@@ -19,7 +19,7 @@
     </div>
     <div class="sidebar-filter mt-50">
         <div class="top-filter-head">Filtreler</div>
-        <form action="~/Kategori/@ViewContext.RouteData.Values["categoryName"]" method="get">
+        
             <div class="common-filter">
                 <div class="head">Markalar</div>
                 <ul>
@@ -45,8 +45,4 @@
                 <input type="number" value="@ViewBag.lowerValue" name="lowerValue" placeholder="Min Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Min Fiyat'" class="single-input">
                 <input type="number" value="@ViewBag.upperValue" name="upperValue" placeholder="Max Fiyat" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Max Fiyat'" class="single-input">
                 <br />
-                <button type="submit" class="genric-btn primary circle arrow">Uygula</button>
-            </div>
-        </form>
-    </div>
-</div>
+  

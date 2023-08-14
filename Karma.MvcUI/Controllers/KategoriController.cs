@@ -22,8 +22,8 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Index(string? categoryName, int page = 1, int pageSize = 12, string[] brands = null, string[] color = null, string upperValue = null, string lowerValue = null, string shorting = null)
         {
-
             ViewBag.Brands = brands;
+            ViewBag.Shorting = shorting == null ? null : shorting;
             ViewBag.PageSize = pageSize;
             ViewBag.Color = color;
             ViewBag.lowerValue = lowerValue;
@@ -44,21 +44,22 @@ namespace Karma.MvcUI.Controllers
                 var products = new List<Product>();
                 if (!(brands.Length == 0) || !(color.Length == 0) || upperValue != null || lowerValue != null)
                 {
-                    products = _productService.GetByFilter(CurrentCategoryId, brandId, color, lowerValue, upperValue);
+                    products = _productService.GetByFilter(CurrentCategoryId, brandId, color, lowerValue, upperValue).Distinct().ToList();
                 }
                 else
                 {
-                    products = _productService.GetByCategoryId(CurrentCategoryId);
+                    products = _productService.GetByCategoryId(CurrentCategoryId).Distinct().ToList();
                 }
                 switch (shorting)
                 {
                     case "Fiyat":
-                        products = products.OrderBy(x => x.Price).ToList();
+                        products = products.OrderBy(x => x.Price).Distinct().ToList();
                         break;
                     case "A-Z":
-                        products = products.OrderBy(y => y.ProductName).ToList();
+                        products = products.OrderBy(y => y.ProductName).Distinct().ToList();
                         break;
                     default:
+                        products = products;
                         break;
                 }
                 ProductListViewModel model = new ProductListViewModel

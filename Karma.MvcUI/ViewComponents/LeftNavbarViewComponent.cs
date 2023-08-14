@@ -18,11 +18,11 @@ namespace Karma.MvcUI.ViewComponents
             _brandService = brandService;
             _productService = productService;
         }
-        public ViewViewComponentResult Invoke(ProductListViewModel productListViewModel, string Route)
+        public ViewViewComponentResult Invoke(ProductListViewModel productListViewModel, string Controller, string queryString)
         {
             List<Category> categoryList = new List<Category>();
             List<Brand> brandList = new List<Brand>();
-            if (Route == "Ara")
+            if (Controller == "Ara")
             {
                 var categories = productListViewModel.Products.Select(x => x.CategoryId).Distinct();
                 foreach (var category in categories)
@@ -49,5 +49,6 @@ namespace Karma.MvcUI.ViewComponents
             };
             return View(model);
         }
+
     }
 }

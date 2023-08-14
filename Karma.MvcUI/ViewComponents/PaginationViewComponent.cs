@@ -11,10 +11,10 @@ namespace Karma.MvcUI.ViewComponents
         {
             ProductListViewModel model = new ProductListViewModel
             {
-                Products = productListViewModel.Products.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
-                PageCount = (int)Math.Ceiling(productListViewModel.Products.Count / (double)pageSize),
-                PageSize = pageSize,
-                CurrentPage = page
+                Products = productListViewModel.Products,
+                PageCount = productListViewModel.PageCount,
+                PageSize = productListViewModel.PageSize,
+                CurrentPage = productListViewModel.CurrentPage
             };
             return View(model);
         }

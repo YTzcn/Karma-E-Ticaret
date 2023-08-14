@@ -1,52 +1,56 @@
-﻿@model Karma.MvcUI.Models.ProductListViewModel
+﻿
+@model Karma.MvcUI.Models.ProductListViewModel
 
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
-}
-@{
-    string href(string pageSize)
-    {
-        string queryString = Context.Request.RouteValues.ToString();
-        if (queryString.Contains("?pageSize"))
-        {
-            return "?pageSize=" + pageSize;
-        }
-        else
-        {
-            return queryString + "?pageSize=" + pageSize;
-        }
-    }
-}
-<div class="container">
-    <div class="row">
-        <!--yan nav bar-->
-        @await Component.InvokeAsync("LeftNavbar", new{productListViewModel = Model , Route = ViewContext.RouteData.Values["controller"]})
 
-        <div class="col-xl-9 col-lg-8 col-md-7">
-            <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting" >
-                    <select onchange="window.location.href=this.value">
-                        <option value="?shorting=Fiyat"><a href="?shorting=Fiyat">Fiyata Göre Sırala</a></option>
-                        <option value="?shorting=A-Z"><a href="?shorting=AZ">A'dan Z'ye Sırala</a></option>
-                    </select>
-                </div>
-            </div>
-            <!-- End Filter Bar -->
-            @await Component.InvokeAsync("Pagination",new{productListViewModel = Model ,page = Model.CurrentPage,pageSize = Model.PageSize})
+}
+<form action="~/@ViewContext.RouteData.Values["controller"]/@ViewContext.RouteData.Values["categoryName"]" id="mainForm" method="get">
+    <div class="container">
+        <div class="row">
+            <!--yan nav bar-->
+            @await Component.InvokeAsync("LeftNavbar", new{productListViewModel = Model , Controller = ViewContext.RouteData.Values["controller"] ,queryString = ViewContext.HttpContext.Request.QueryString.ToString()})
+            <button type="submit" class="genric-btn primary circle arrow">Uygula</button>
 
-            <!-- Start Filter Bar -->
-            <div class="filter-bar d-flex flex-wrap align-items-center">
-                <div class="sorting mr-auto">
-                    <select id="pageSizeSelect" onchange="window.location.href=this.value">
-                        <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="?pageSize=12"><a href="?pageSize=24">12 Ürün</a></option>
-                        <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="?pageSize=24"><a href="?pageSize=24">24 Ürün</a></option>
-                    </select>
-                </div>
-                <product-list-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage"></product-list-pager>
-            </div>
-            <!-- End Filter Bar -->
         </div>
     </div>
-</div>
-<br />
+    </div>
+    <div class="col-xl-9 col-lg-8 col-md-7">
+        <!-- Start Filter Bar -->
+        <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div class="sorting">
+                <select name="shorting">
+                    <option selected="@(ViewBag.Shorting==null?"selected":null)" value=""><a>Sıralama Seçiniz</a></option>
+                    <option selected="@(ViewBag.Shorting=="Fiyat"?"selected":null)" value="Fiyat"><a>Fiyata Göre Sırala</a></option>
+                    <option selected="@(ViewBag.Shorting=="A-Z"?"selected":null)" value="A-Z"><a >A'dan Z'ye Sırala</a></option>
+                </select>
+            </div>
+        </div>
+        <!-- End Filter Bar -->
+        @await Component.InvokeAsync("Pagination",new{productListViewModel = Model ,page = Model.CurrentPage,pageSize = Model.PageSize})
+
+        <!-- Start Filter Bar a-->
+        <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div class="sorting mr-auto">
+                <select name="pageSize" id="pageSizeSelect" @* onchange="window.location.href=this.value" *@>
+                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="12"><a href="~//"> 12 Ürün</a></option>
+                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="24"><a href="~//">24 Ürün</a></option>
+                </select>
+            </div>
+            <product-list-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage"></product-list-pager>
+        </div>
+        <!-- End Filter Bar -->
+    </div>
+
+    </div>
+    </div>
+    <br />
+</form>
+
+@section submitForm{
+    <script>
+        function submitForm() {
+            document.getElementById("mainForm").submit();
+        }
+    </script>
+}

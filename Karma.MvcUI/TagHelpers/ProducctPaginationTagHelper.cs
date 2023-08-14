@@ -18,7 +18,7 @@ namespace Karma.MvcUI.TagHelpers
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i <= PageCount; i++)
             {
-                sb.AppendFormat("<a class='{0}' href='{1}'>{2}</a>", i == CurrentPage ? "active" : "", "?page=" + i, i);
+                sb.AppendFormat("<a name='page' onclick='submitForm()' name='page' data-value=\"{2}\" class='{0}' href='{1}'>{2}</a>", i == CurrentPage ? "active" : "", "?page=" + i, i);
 
             }
             output.Content.SetHtmlContent(sb.ToString());
