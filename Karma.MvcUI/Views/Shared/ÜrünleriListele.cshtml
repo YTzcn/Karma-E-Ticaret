@@ -1,10 +1,12 @@
-﻿
-@model Karma.MvcUI.Models.ProductListViewModel
+﻿@model Karma.MvcUI.Models.ProductListViewModel
 
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
 
 }
+<div class="container alert alert-secondary" role="alert">
+    <b style="color:black;">@Model.ProductsCount</b> Adet Sonuç Bulundu
+</div>
 <form action="~/@ViewContext.RouteData.Values["controller"]/@ViewContext.RouteData.Values["categoryName"]" id="mainForm" method="get">
     <div class="container">
         <div class="row">
@@ -19,10 +21,10 @@
         <!-- Start Filter Bar -->
         <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting">
-                <select name="shorting">
+                <select name="shorting" onchange="submitForm(1)">
                     <option selected="@(ViewBag.Shorting==null?"selected":null)" value=""><a>Sıralama Seçiniz</a></option>
                     <option selected="@(ViewBag.Shorting=="Fiyat"?"selected":null)" value="Fiyat"><a>Fiyata Göre Sırala</a></option>
-                    <option selected="@(ViewBag.Shorting=="A-Z"?"selected":null)" value="A-Z"><a >A'dan Z'ye Sırala</a></option>
+                    <option selected="@(ViewBag.Shorting=="A-Z"?"selected":null)" value="A-Z"><a>A'dan Z'ye Sırala</a></option>
                 </select>
             </div>
         </div>
@@ -32,12 +34,13 @@
         <!-- Start Filter Bar a-->
         <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting mr-auto">
-                <select name="pageSize" id="pageSizeSelect" @* onchange="window.location.href=this.value" *@>
-                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="12"><a href="~//"> 12 Ürün</a></option>
-                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="24"><a href="~//">24 Ürün</a></option>
+                <select name="pageSize" onchange="submitForm(1)" id="pageSizeSelect" @* onchange="window.location.href=this.value" *@>
+                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="12"><a> 12 Ürün</a></option>
+                    <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="24"><a>24 Ürün</a></option>
                 </select>
             </div>
             <product-list-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage"></product-list-pager>
+            <input hidden id="selectedPage" name='page' />
         </div>
         <!-- End Filter Bar -->
     </div>
@@ -49,7 +52,8 @@
 
 @section submitForm{
     <script>
-        function submitForm() {
+        function submitForm(page) {
+            document.getElementById("selectedPage").value = page;
             document.getElementById("mainForm").submit();
         }
     </script>

@@ -38,7 +38,7 @@ namespace Karma.MvcUI.Controllers
                 return View(model);
             }
             else
-            {
+            {//aferin aferin çalış tüm kodları bi anda silsem nabarsın 
                 var CurrentCategoryId = _categoryService.Get(x => x.CategoryName.Trim().ToLower() == categoryName.ToLower()).CategoryId;
                 var brandId = _brandService.GetAllId(x => brands.Contains(x.BrandName));
                 var products = new List<Product>();
@@ -69,7 +69,8 @@ namespace Karma.MvcUI.Controllers
                     Products = products.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                     PageCount = (int)Math.Ceiling(products.Count / (double)pageSize),
                     PageSize = pageSize,
-                    CurrentPage = page
+                    CurrentPage = page,
+                    ProductsCount = products.Count
 
                 };
                 return View("ÜrünleriListele", model);

@@ -11,5 +11,6 @@ namespace Karma.MvcUI.Models
         public int PageSize { get; set; } = 12;
         public int CurrentPage { get; set; } = 1;
         public int CurrentCategory { get; set; }
+        public int ProductsCount { get; set; }
     }
 }
