@@ -2,15 +2,24 @@
 
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
-
+    string actionString;
+   
+    if (@ViewContext.RouteData.Values["controller"].ToString() == "Ara")
+    {
+        actionString = "Ara";
+    }
+    else
+    {
+        actionString = @ViewContext.RouteData.Values["controller"] + "/" + @ViewContext.RouteData.Values["categoryName"];
+    }
 }
 <div class="container alert alert-secondary" role="alert">
     <b style="color:black;">@Model.ProductsCount</b> Adet Sonuç Bulundu
 </div>
-<form action="~/@ViewContext.RouteData.Values["controller"]/@ViewContext.RouteData.Values["categoryName"]" id="mainForm" method="get">
+<form action="/@actionString" id="mainForm" method="get">
+    <input hidden name="key" value="@ViewBag.Key" />
     <div class="container">
         <div class="row">
-            <!--yan nav bar-->
             @await Component.InvokeAsync("LeftNavbar", new{productListViewModel = Model , Controller = ViewContext.RouteData.Values["controller"] ,queryString = ViewContext.HttpContext.Request.QueryString.ToString()})
             <button type="submit" class="genric-btn primary circle arrow">Uygula</button>
 
@@ -18,7 +27,6 @@
     </div>
     </div>
     <div class="col-xl-9 col-lg-8 col-md-7">
-        <!-- Start Filter Bar -->
         <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting">
                 <select name="shorting" onchange="submitForm(1)">
@@ -28,13 +36,11 @@
                 </select>
             </div>
         </div>
-        <!-- End Filter Bar -->
         @await Component.InvokeAsync("Pagination",new{productListViewModel = Model ,page = Model.CurrentPage,pageSize = Model.PageSize})
 
-        <!-- Start Filter Bar a-->
         <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting mr-auto">
-                <select name="pageSize" onchange="submitForm(1)" id="pageSizeSelect" @* onchange="window.location.href=this.value" *@>
+                <select name="pageSize" onchange="submitForm(1)" id="pageSizeSelect">
                     <option selected="@(Convert.ToInt32(ViewBag.PageSize)==12?"selected":null)" value="12"><a> 12 Ürün</a></option>
                     <option selected="@(Convert.ToInt32(ViewBag.PageSize)==24?"selected":null)" value="24"><a>24 Ürün</a></option>
                 </select>
@@ -42,7 +48,6 @@
             <product-list-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage"></product-list-pager>
             <input hidden id="selectedPage" name='page' />
         </div>
-        <!-- End Filter Bar -->
     </div>
 
     </div>
@@ -52,9 +57,52 @@
 
 @section submitForm{
     <script>
-        function submitForm(page) {
-            document.getElementById("selectedPage").value = page;
+        function submitForm(value) {
+            if (typeof value === "number") {
+                document.getElementById("selectedPage").value = value;
+            } else if (typeof value === "string") {
+                document.getElementById("selectedCategory").value = value;
+            }
             document.getElementById("mainForm").submit();
         }
     </script>
+
 }
+@section styleSection{
+    <style>
+        .main-nav-list a {
+            font-size: 14px;
+            display: block;
+            line-height: 50px;
+            padding-left: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .main-nav-list a:hover {
+                color: $primary-color; /* Hover durumunda renk değişikliği */
+            }
+
+            .main-nav-list a.active {
+                background: -webkit-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+                background: -moz-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+                background: -o-linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+                background: linear-gradient(90deg, #ffba00 0%, #ff6c00 100%);
+                color: white; /* Aktif durumda metin rengi */
+            }
+
+            .main-nav-list a .number {
+                color: #cccccc;
+                margin-left: 10px;
+            }
+
+            .main-nav-list a .lnr {
+                margin-right: 10px;
+                display: none;
+            }
+
+        .main-nav-list.child a {
+            padding-left: 32px;
+        }
+    </style>
+
+            }

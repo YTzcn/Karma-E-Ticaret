@@ -16,7 +16,6 @@ namespace Karma.MvcUI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddControllers()
@@ -69,6 +68,10 @@ namespace Karma.MvcUI
                  name: "categoryRoute",
             pattern: "Kategori/{categoryName?}/",
             defaults: new { controller = "Kategori", action = "Index" });
+            app.MapControllerRoute(
+                name: "searchRoute",
+           pattern: "Ara/{key?}/",
+           defaults: new { controller = "Ara", action = "Index" });
 
             app.Run();
         }

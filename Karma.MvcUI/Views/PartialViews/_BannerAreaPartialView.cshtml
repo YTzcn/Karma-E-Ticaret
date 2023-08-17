@@ -1,12 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    var controller = ViewContext.RouteData.Values["controller"];
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
     var Action = ViewContext.RouteData.Values["action"] == "Index" ? ViewContext.RouteData.Values["categoryName"] : ViewContext.RouteData.Values["action"];
-
 }
-<!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
     <div class="container">
         <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
@@ -14,10 +9,18 @@
                 <h1>Ürünleri Listele</h1>
                 <nav class="d-flex align-items-center">
                     <a href="~/@controller">@controller<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="~/@controller/@Action">@Action</a>
+                    @if (controller != "Ara")
+                    {
+                        <a href="~/@controller/@Action">@Action</a>
+                    }
+                    else
+                    {
+                        <a href="~/Ara?key=@ViewBag.Key">Ürünlerde '@ViewBag.Key' Arandı</a>
+
+                    }
+
                 </nav>
             </div>
         </div>
     </div>
 </section>
-<!-- End Banner Area -->

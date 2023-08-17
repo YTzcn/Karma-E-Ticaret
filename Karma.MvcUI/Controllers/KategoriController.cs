@@ -23,59 +23,59 @@ namespace Karma.MvcUI.Controllers
         public IActionResult Index(string? categoryName, int page = 1, int pageSize = 12, string[] brands = null, string[] color = null, string upperValue = null, string lowerValue = null, string shorting = null)
         {
             ViewBag.Brands = brands;
-            ViewBag.Shorting = shorting == null ? null : shorting;
+            ViewBag.Shorting = shorting;
             ViewBag.PageSize = pageSize;
             ViewBag.Color = color;
-            ViewBag.lowerValue = lowerValue;
-            ViewBag.upperValue = upperValue;
+            ViewBag.LowerValue = lowerValue;
+            ViewBag.UpperValue = upperValue;
+
+            ProductListViewModel model;
 
             if (String.IsNullOrEmpty(categoryName))
             {
-                ProductListViewModel model = new ProductListViewModel
+                model = new ProductListViewModel
                 {
                     Categories = _categoryService.GetAllActive()
                 };
                 return View(model);
             }
             else
-            {//aferin aferin çalış tüm kodları bi anda silsem nabarsın 
-                var CurrentCategoryId = _categoryService.Get(x => x.CategoryName.Trim().ToLower() == categoryName.ToLower()).CategoryId;
-                var brandId = _brandService.GetAllId(x => brands.Contains(x.BrandName));
-                var products = new List<Product>();
-                if (!(brands.Length == 0) || !(color.Length == 0) || upperValue != null || lowerValue != null)
+            {
+                var currentCategory = _categoryService.Get(x => x.CategoryName.ToLower() == categoryName.ToLower()).CategoryId;
+                var brandIds = _brandService.GetAllId(x => brands != null && brands.Contains(x.BrandName));
+                var products = _productService.GetByCategoryId(currentCategory);
+
+                if (brandIds.Length > 0 || color?.Length > 0 || upperValue != null || lowerValue != null)
                 {
-                    products = _productService.GetByFilter(CurrentCategoryId, brandId, color, lowerValue, upperValue).Distinct().ToList();
+                    products = _productService.GetByFilter(currentCategory, brandIds, color, lowerValue, upperValue, null);
                 }
-                else
+
+                if (!string.IsNullOrEmpty(shorting))
                 {
-                    products = _productService.GetByCategoryId(CurrentCategoryId).Distinct().ToList();
+                    products = shorting switch
+                    {
+                        "Fiyat" => products.OrderBy(x => x.Price).ToList(),
+                        "A-Z" => products.OrderBy(y => y.ProductName).ToList(),
+                        _ => products
+                    };
                 }
-                switch (shorting)
+
+                var totalCount = products.Count;
+                var pagedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+                model = new ProductListViewModel
                 {
-                    case "Fiyat":
-                        products = products.OrderBy(x => x.Price).Distinct().ToList();
-                        break;
-                    case "A-Z":
-                        products = products.OrderBy(y => y.ProductName).Distinct().ToList();
-                        break;
-                    default:
-                        products = products;
-                        break;
-                }
-                ProductListViewModel model = new ProductListViewModel
-                {
-                    CurrentCategory = CurrentCategoryId,
                     Categories = _categoryService.GetAllActive(),
-                    Products = products.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
-                    PageCount = (int)Math.Ceiling(products.Count / (double)pageSize),
+                    CurrentCategory = currentCategory,
+                    Products = pagedProducts,
+                    PageCount = (int)Math.Ceiling(totalCount / (double)pageSize),
                     PageSize = pageSize,
                     CurrentPage = page,
-                    ProductsCount = products.Count
-
+                    ProductsCount = totalCount
                 };
-                return View("ÜrünleriListele", model);
             }
 
+            return View("ÜrünleriListele", model);
         }
 
 

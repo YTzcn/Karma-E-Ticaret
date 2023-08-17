@@ -14,9 +14,20 @@ namespace Karma.MvcUI.ViewComponents
                 Products = productListViewModel.Products,
                 PageCount = productListViewModel.PageCount,
                 PageSize = productListViewModel.PageSize,
-                CurrentPage = productListViewModel.CurrentPage
+                CurrentPage = productListViewModel.CurrentPage,
+                ProductsCount = productListViewModel.ProductsCount,
             };
+
+            if (productListViewModel.ProductsCount == 0)
+            {
+                model.Products = null;
+                model.PageCount = 0;
+                model.CurrentPage = 1;
+                model.ProductsCount = 0;
+            }
+
             return View(model);
         }
+
     }
 }

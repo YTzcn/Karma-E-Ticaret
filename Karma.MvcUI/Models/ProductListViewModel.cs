@@ -12,5 +12,8 @@ namespace Karma.MvcUI.Models
         public int CurrentPage { get; set; } = 1;
         public int CurrentCategory { get; set; }
         public int ProductsCount { get; set; }
+        public List<int> ExistCategoriesId { get; set; }
+        public List<string> ExistColors { get; set; }
+        public List<int> ExistBrandsId { get; set; }
     }
 }

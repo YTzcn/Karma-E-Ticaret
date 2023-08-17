@@ -6,7 +6,7 @@
 <html>
 @await Html.PartialAsync("/Views/PartialViews/_HeaderPartialView.cshtml")
 <body>
-    @await Html.PartialAsync("/Views/PartialViews/_NavbarPartialView.cshtml")
+    @await Component.InvokeAsync("Navbar")
     @await Html.PartialAsync("/Views/PartialViews/_BannerAreaPartialView.cshtml")
     <br>
     @RenderBody()
@@ -15,5 +15,6 @@
     @await Html.PartialAsync("/Views/PartialViews/_FooterPartialView.cshtml")
     @await Html.PartialAsync("/Views/PartialViews/_ScriptsPartialView.cshtml")
     @RenderSection("submitForm",false)
+    @RenderSection("styleSection",false)
 </body>
 </html>

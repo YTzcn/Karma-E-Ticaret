@@ -8,7 +8,7 @@
             @foreach (var item in Model.Categories)
             {
                 <div class="col-lg-4 col-md-6">
-                    <a href="~/Kategori/@item.CategoryId">
+                    <a href="~/Kategori/@item.CategoryName">
                         <div class="single-deal" href="##">
                             <div class="overlay"></div>
                             <img class="img-fluid w-100" src="@item.ImagePath" alt="">
@@ -22,5 +22,7 @@
         </div>
     </div>
 </section>
+<br />
+<br />
 
 

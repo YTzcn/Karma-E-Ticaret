@@ -1,13 +1,11 @@
-﻿@model ProductListViewModel
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 @await Html.PartialAsync("/Views/PartialViews/_HeaderPartialView.cshtml")
 <body>
-    @await Html.PartialAsync("/Views/PartialViews/_NavbarPartialView.cshtml", Model)
+    @await Component.InvokeAsync("Navbar")
     @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_BannerPartialView.cshtml")
     @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_FeaturesPartialView.cshtml")
     @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_CategoryAreaPartialView.cshtml")

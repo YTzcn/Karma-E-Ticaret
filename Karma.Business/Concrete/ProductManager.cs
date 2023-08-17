@@ -49,9 +49,13 @@ namespace Karma.Business.Concrete
             _productDal.Update(product);
         }
 
-        public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue)
+        public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
             var products = _productDal.GetAllProd();
+            if (!String.IsNullOrEmpty(key))
+            {
+                products = products.Where(x => x.ProductName.ToLower().Contains(key.ToLower())).ToList();
+            }
             if (brandId.Length != 0)
             {
                 products = products.Where(x => brandId.Contains(x.BrandId)).ToList();
@@ -72,9 +76,10 @@ namespace Karma.Business.Concrete
             {
                 products = products.Where(x => Convert.ToDecimal(lowerValue) < x.Price && x.Price < Convert.ToDecimal(upperValue)).ToList();
             }
-            if (categoryId != null || categoryId != 0)
+            if (categoryId != null)
             {
-                products = products.Where(x => x.CategoryId == categoryId).ToList();
+                if (categoryId != 0)
+                    products = products.Where(x => x.CategoryId == categoryId).ToList();
             }
 
             return products;

@@ -22,33 +22,39 @@ namespace Karma.MvcUI.ViewComponents
         {
             List<Category> categoryList = new List<Category>();
             List<Brand> brandList = new List<Brand>();
+            var colorList = new List<string>();
+            var brands = new List<int>();
             if (Controller == "Ara")
             {
-                var categories = productListViewModel.Products.Select(x => x.CategoryId).Distinct();
-                foreach (var category in categories)
-                {
-                    categoryList.Add(_categoryService.Get(x => x.CategoryId == category));
-                }
+                var categories = productListViewModel.ExistCategoriesId;
+                categoryList.AddRange(categories.Select(category => _categoryService.Get(x => x.CategoryId == category)));
+                colorList = productListViewModel.ExistColors;
+                brands = productListViewModel.ExistBrandsId;
+                brandList.AddRange(brands.Select(brand => _brandService.Get(x => x.BrandId == brand)));
             }
             else
             {
-                categoryList.AddRange(_categoryService.GetAll());
-            }
-            var colorList = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory).Select(x => x.Color).Distinct().ToList();
-            var brands = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory).Select(x => x.BrandId).Distinct().ToList();
-            foreach (var brand in brands)
-            {
-                brandList.Add(_brandService.Get(x => x.BrandId == brand));
+                categoryList.AddRange(_categoryService.GetAllActive());
+
+                colorList = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory)
+                                             .Select(x => x.Color)
+                                             .Distinct()
+                                             .ToList();
+                brands = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory)
+                                            .Select(x => x.BrandId)
+                                            .Distinct()
+                                            .ToList();
+                brandList.AddRange(brands.Select(brand => _brandService.Get(x => x.BrandId == brand)));
             }
             LeftNavbarViewModel model = new LeftNavbarViewModel
             {
                 Categories = categoryList,
                 Brands = brandList,
                 Colors = colorList,
-
             };
             return View(model);
         }
 
     }
+
 }
