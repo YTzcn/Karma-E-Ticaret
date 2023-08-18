@@ -18,41 +18,80 @@ namespace Karma.MvcUI.ViewComponents
             _brandService = brandService;
             _productService = productService;
         }
-        public ViewViewComponentResult Invoke(ProductListViewModel productListViewModel, string Controller, string queryString)
+        public ViewViewComponentResult Invoke(ProductListViewModel productListViewModel, string controller, string queryString)
         {
-            List<Category> categoryList = new List<Category>();
-            List<Brand> brandList = new List<Brand>();
-            var colorList = new List<string>();
-            var brands = new List<int>();
-            if (Controller == "Ara")
+            var model = CreateLeftNavbarViewModel(productListViewModel, controller);
+            return View(model);
+        }
+
+        private LeftNavbarViewModel CreateLeftNavbarViewModel(ProductListViewModel productListViewModel, string controller)
+        {
+            var model = new LeftNavbarViewModel
+            {
+                Categories = GetCategories(productListViewModel, controller),
+                Brands = GetBrands(productListViewModel, controller),
+                Colors = GetColors(productListViewModel, controller),
+            };
+            return model;
+        }
+
+        private List<Category> GetCategories(ProductListViewModel productListViewModel, string controller)
+        {
+            if (controller == "Ara")
             {
                 var categories = productListViewModel.ExistCategoriesId;
-                categoryList.AddRange(categories.Select(category => _categoryService.Get(x => x.CategoryId == category)));
-                colorList = productListViewModel.ExistColors;
-                brands = productListViewModel.ExistBrandsId;
-                brandList.AddRange(brands.Select(brand => _brandService.Get(x => x.BrandId == brand)));
+                return categories.Select(category => _categoryService.Get(x => x.CategoryId == category)).ToList();
             }
-            else
+            else if (controller == "Kategori")
             {
-                categoryList.AddRange(_categoryService.GetAllActive());
+                return _categoryService.GetAllActive().ToList();
+            }
+            else if (controller == "Ürün")
+            {
+                return _categoryService.GetAllActive().ToList();
+            }
+            return new List<Category>();
+        }
 
-                colorList = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory)
-                                             .Select(x => x.Color)
-                                             .Distinct()
-                                             .ToList();
-                brands = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory)
-                                            .Select(x => x.BrandId)
-                                            .Distinct()
-                                            .ToList();
-                brandList.AddRange(brands.Select(brand => _brandService.Get(x => x.BrandId == brand)));
-            }
-            LeftNavbarViewModel model = new LeftNavbarViewModel
+        private List<Brand> GetBrands(ProductListViewModel productListViewModel, string controller)
+        {
+            var brands = new List<Brand>();
+            if (controller == "Ara")
             {
-                Categories = categoryList,
-                Brands = brandList,
-                Colors = colorList,
-            };
-            return View(model);
+                var brandIds = productListViewModel.ExistBrandsId;
+                brands.AddRange(brandIds.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+            }
+            else if (controller == "Kategori")
+            {
+                var productsInCategory = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory);
+                var brandIds = productsInCategory.Select(x => x.BrandId).Distinct();
+                brands.AddRange(brandIds.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+            }
+            else if (controller == "Ürün")
+            {
+                var productBrands = _productService.GetAll().Select(x => x.BrandId).Distinct();
+                brands.AddRange(productBrands.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+            }
+            return brands;
+        }
+
+        private List<string> GetColors(ProductListViewModel productListViewModel, string controller)
+        {
+            var colors = new List<string>();
+            if (controller == "Ara")
+            {
+                colors.AddRange(productListViewModel.ExistColors);
+            }
+            else if (controller == "Kategori")
+            {
+                var productsInCategory = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory);
+                colors.AddRange(productsInCategory.Select(x => x.Color).Distinct());
+            }
+            else if (controller == "Ürün")
+            {
+                colors.AddRange(_productService.GetAll().Select(x => x.Color).Distinct());
+            }
+            return colors;
         }
 
     }

@@ -22,12 +22,15 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Index(string? categoryName, int page = 1, int pageSize = 12, string[] brands = null, string[] color = null, string upperValue = null, string lowerValue = null, string shorting = null)
         {
+            ViewBag.BannerTitle = "Liste Görünümü";
             ViewBag.Brands = brands;
             ViewBag.Shorting = shorting;
             ViewBag.PageSize = pageSize;
             ViewBag.Color = color;
             ViewBag.LowerValue = lowerValue;
             ViewBag.UpperValue = upperValue;
+            ViewBag.BannerArea1 = "Kategori";
+            ViewBag.BannerArea2 = categoryName;
 
             ProductListViewModel model;
 

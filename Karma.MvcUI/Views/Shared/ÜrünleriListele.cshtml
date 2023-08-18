@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/_UILayout.cshtml";
     string actionString;
-   
+
     if (@ViewContext.RouteData.Values["controller"].ToString() == "Ara")
     {
         actionString = "Ara";
@@ -16,7 +16,7 @@
 <div class="container alert alert-secondary" role="alert">
     <b style="color:black;">@Model.ProductsCount</b> Adet Sonuç Bulundu
 </div>
-<form action="/@actionString" id="mainForm" method="get">
+<form action="/@actionString" onsubmit="removeEmptyParams()" id="mainForm" method="get">
     <input hidden name="key" value="@ViewBag.Key" />
     <div class="container">
         <div class="row">
@@ -63,8 +63,19 @@
             } else if (typeof value === "string") {
                 document.getElementById("selectedCategory").value = value;
             }
+            removeEmptyParams();
             document.getElementById("mainForm").submit();
+
         }
+        function removeEmptyParams() {
+            var formElements = document.getElementById('mainForm').elements;
+            for (var i = 0; i < formElements.length; i++) {
+                if ((formElements[i].type === 'text' || formElements[i].type === 'number') && formElements[i].value === '') {
+                    formElements[i].name = ''; // Boş parametrelerin isimlerini sil
+                }
+            }
+        }
+
     </script>
 
 }

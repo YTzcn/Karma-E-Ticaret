@@ -47,6 +47,6 @@ namespace Karma.Business.Concrete
             return _categoryDal.GetList(x => x.Active == true);
         }
 
-
+        
     }
 }

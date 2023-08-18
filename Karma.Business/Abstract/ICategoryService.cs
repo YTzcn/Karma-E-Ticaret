@@ -16,6 +16,5 @@ namespace Karma.Business.Abstract
         void Delete(Category category);
         void Update(Category category);
         List<Category> GetAllActive();
-       
     }
 }
