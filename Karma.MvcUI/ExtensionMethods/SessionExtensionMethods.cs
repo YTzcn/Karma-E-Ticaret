@@ -7,7 +7,11 @@ namespace Karma.MvcUI.ExtensionMethods
     {
         public static void SetObject(this ISession session, string key, object value)
         {
-            string objectString = JsonConvert.SerializeObject(value);
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            string objectString = JsonConvert.SerializeObject(value, settings);
             session.SetString(key, objectString);
         }
 

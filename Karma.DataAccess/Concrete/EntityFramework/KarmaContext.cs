@@ -16,5 +16,6 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Spesification> Spesifications { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
     }
 }

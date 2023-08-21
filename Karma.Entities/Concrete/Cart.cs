@@ -12,10 +12,14 @@ namespace Karma.Entities.Concrete
         {
             CartLines = new List<CartLine>();
         }
+        public decimal? _totalPrice;
         public List<CartLine> CartLines { get; set; }
         public decimal Total
         {
             get { return CartLines.Sum(c => c.Product.Price * c.Quantity); }
+            set { _totalPrice = value; }
         }
+        public string CouponCode { get; set; }
     }
 }
+

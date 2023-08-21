@@ -62,7 +62,7 @@
                         </button>
                     </div>
                     <div class="card_area d-flex align-items-center">
-                        <a class="primary-btn" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@Model.ProductDetail.ProductId">Sepete Ekle</a>
+                        <a class="primary-btn" asp-controller="Sepet" asp-action="AddToCart" asp-route-productId="@Model.ProductDetail.ProductId">Sepete Ekle</a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
@@ -79,10 +79,12 @@
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Açıklama</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                   aria-selected="false">Özellikler</a>
-            </li>
+            @if (Model.ProductDetail.Spesifications != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Özellikler</a>
+                </li>
+            }
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                    aria-selected="false">Yorumlar</a>
@@ -93,78 +95,81 @@
             <!--Description--><div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 @Model.ProductDetail.SubDescription
             </div>
-            <!--Spesification--><div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h5>En</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.Width</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Boy</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.Height</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Derinlik</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.Depth</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Ağırlık</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.Weight</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Kalite Kontrol</h5>
-                                </td>
-                                <td>
-                                    <h5>@(Model.ProductDetail.Spesifications.QualityCheck == true ? "Geçti" : "Kaldı")</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Taze Bekleme Süresi</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.FreshnessDuration</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Paketleme Tipi</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.WhenPacketing</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5>Kutu İçi Adet</h5>
-                                </td>
-                                <td>
-                                    <h5>@Model.ProductDetail.Spesifications.QuantityPerBox</h5>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!--Spesification-->@if (Model.ProductDetail.Spesifications != null)
+            {
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h5>En</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.Width</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Boy</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.Height</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Derinlik</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.Depth</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Ağırlık</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.Weight</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Kalite Kontrol</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@(Model.ProductDetail.Spesifications.QualityCheck == true ? "Geçti" : "Kaldı")</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Taze Bekleme Süresi</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.FreshnessDuration</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Paketleme Tipi</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.WhenPacketing</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Kutu İçi Adet</h5>
+                                    </td>
+                                    <td>
+                                        <h5>@Model.ProductDetail.Spesifications.QuantityPerBox</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
             @await Component.InvokeAsync("Comments" ,new{productId=Model.ProductDetail.ProductId})
         </div>
     </div>

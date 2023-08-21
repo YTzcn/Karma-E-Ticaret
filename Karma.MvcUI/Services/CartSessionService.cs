@@ -14,7 +14,7 @@ namespace Karma.MvcUI.Services
         }
         public Cart GetCart()
         {
-            Cart cartToCheck = _contextAccessor.HttpContext.Session.GetObject<Cart>("Cart");
+            Cart cartToCheck = _contextAccessor.HttpContext.Session.GetObject<Cart>("cart");
             if (cartToCheck == null)
             {
                 _contextAccessor.HttpContext.Session.SetObject("cart", new Cart());
@@ -25,7 +25,7 @@ namespace Karma.MvcUI.Services
 
         public void SetCart(Cart cart)
         {
-            _contextAccessor.HttpContext.Session.SetObject("cart", new Cart());
+            _contextAccessor.HttpContext.Session.SetObject("cart", cart);
         }
     }
 }

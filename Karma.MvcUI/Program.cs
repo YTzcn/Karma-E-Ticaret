@@ -49,6 +49,9 @@ namespace Karma.MvcUI
             builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
             builder.Services.AddSingleton<ICartService, CartService>();
 
+            builder.Services.AddSingleton<ICouponService, CouponManager>();
+            builder.Services.AddSingleton<ICouponDal, EfCouponDal>();
+
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 

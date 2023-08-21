@@ -1,0 +1,215 @@
+﻿@model CartViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<section class="cart_area">
+    @if (Model.Cart.CartLines.Count == 0)
+    {
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="p-5 rounded">
+                        <h2>Sepet Boş</h2>
+                        <p>Sepetinizde henüz ürün bulunmamaktadır.</p>
+                        <a href="/Ürün" class="btn btn-secondary">Alışverişe Devam Et</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fotoğrafı</th>
+                                <th scope="col">Ürün Adı</th>
+                                <th scope="col">Birim Fiyat</th>
+                                <th scope="col">Adet</th>
+                                <th scope="col">Toplam</th>
+                                <th scope="col">Sepetten Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Cart.CartLines)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src='@(item.Product.Images.Count == 0 ? "/KarmaUI/img/resimyok.jpg" : item.Product.Images.FirstOrDefault(x => x.IsMain == true)?.Url)' style="max-height:150px;max-width:150px;" alt="@item.Product.ProductName">
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="media-body">
+                                            <p>@item.Product.ProductName</p>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <h5>@item.Product.Price</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <!-- İlgili ürün için input alanı -->
+                                            <input type="number" name="qty" data-product-id="@item.Product.ProductId" id="sst-@item.Product.ProductId" maxlength="12" onchange="updateQuantity('@item.Product.ProductId', this.value);" value="@item.Quantity" title="Adet:" class="input-text qty">
+
+                                            <!-- Artırma butonu -->
+                                            <button onclick="increaseQuantity('@item.Product.ProductId');" class="increase items-count" type="button">
+                                                <i class="lnr lnr-chevron-up"></i>
+                                            </button>
+
+                                            <!-- Azaltma butonu -->
+                                            <button onclick="reduceQuantity('@item.Product.ProductId');" class="reduced items-count" type="button">
+                                                <i class="lnr lnr-chevron-down"></i>
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                    <td id="price-@item.Product.ProductId"><h5>@item.LineTotal</h5></td>
+                                    <td><a asp-controller="Sepet" asp-action="RemoveFromCart" asp-route-productId="@item.Product.ProductId" class="btn btn-danger">Sepetten Sil</a></td>
+                                </tr>
+                            }
+                            <tr class="bottom_button">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="cupon_text d-flex align-items-center">
+                                        <input type="text" id="couponInput" placeholder="Kupon Kodu">
+                                        <a class="primary-btn" id="couponSubmit">Uygula</a>
+                                        <a class="gray_btn" id="cancelCoupon" >Kuponu İptal Et</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><h5>Uygulanan Kupon:</h5></td>
+                                <td id="couponList">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td><h5>Sepet Toplamı</h5></td>
+                                <td id="total"><h5>@Model.Cart.Total ₺</h5></td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="~/Ürün">Alışverişe Devam Et</a>
+                                        <a class="primary-btn" href="#">Siparişi Onayla</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+@section cartSection{
+    <script>
+        function updateQuantity(productId, newQuantity) {
+            var result = document.getElementById('sst-' + productId);
+            var sst = parseInt(newQuantity);
+            if (!isNaN(sst)) {
+                result.value = sst;
+                updateCart(productId, sst);
+            }
+        }
+        function updateCart(productId, quantity) {
+            $.ajax({
+                type: "POST",
+                url: "/Sepet/UpdateProductInCart",
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    console.log("Ürün güncellendi: " + response.EndPrice);
+                    var endPrice = response.endPrice;
+                    var cartTotal = response.cartTotal;
+                    var h5ElementPrice = document.getElementById('price-' + productId).getElementsByTagName('h5')[0];
+                    if (h5ElementPrice) {
+                        h5ElementPrice.innerHTML = endPrice;
+                    }
+                    var h5ElementTotal = document.getElementById('total').getElementsByTagName('h5')[0];
+                    if (h5ElementTotal) {
+                        h5ElementTotal.innerHTML = cartTotal;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Hata: " + error);
+                }
+            });
+        }
+        function increaseQuantity(productId) {
+            var result = document.getElementById('sst-' + productId);
+            var sst = parseInt(result.value);
+            if (!isNaN(sst)) {
+                var increasedValue = sst + 1;
+                result.value = increasedValue;
+                updateCart(productId, increasedValue);
+            }
+            return false;
+        }
+        function reduceQuantity(productId) {
+            var result = document.getElementById('sst-' + productId);
+            var sst = parseInt(result.value);
+            if (!isNaN(sst) && sst > 0) {
+                result.value = sst - 1;
+                updateCart(productId, sst - 1);
+            }
+            return false;
+        }
+
+        $(document).ready(function () {
+            $('#couponSubmit').click(function () {
+                var couponCode = $('#couponInput').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/sepet/CouponControl',
+                    data: { couponCode: couponCode },
+                    success: function (response) {
+                        var originalTotal = response.originalTotal;
+                        var couponListTd = $('#couponList h5');
+                        if (couponListTd.length === 0) {
+                            $('#couponList').html('<h5>' +'Kupon İndirimi:'+response.discountPrice+' ₺' + '</h5>');
+                        } else {
+                            couponListTd.text('Kupon İndirimi:' + response.discountPrice + ' ₺');
+                        }
+
+                        $('#total h5').text(response.cartTotal+' ₺');
+
+                        $('#cancelCoupon').show();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Hata: ' + error);
+                    }
+                });
+            });
+
+            $('#cancelCoupon').click(function () {
+                $('#couponList h5').text('');
+                $('#total h5').text(originalTotal);
+
+               
+            });
+        });
+    </script>
+}
