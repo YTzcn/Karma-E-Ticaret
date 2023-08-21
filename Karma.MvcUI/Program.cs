@@ -38,6 +38,11 @@ namespace Karma.MvcUI
             builder.Services.AddScoped<IBrandService, BrandManager>();
             builder.Services.AddScoped<IBrandDal, EfBrandDal>();
 
+            builder.Services.AddScoped<ICommentService, CommentManager>();
+            builder.Services.AddScoped<ICommentDal, EfCommentDal>();
+
+
+
             builder.Services.AddControllers().AddJsonOptions(obj =>
             {
                 obj.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;

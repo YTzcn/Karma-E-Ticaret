@@ -1,0 +1,172 @@
+﻿@model ProductDetailViewModel
+@{
+    ViewData["Title"] = "Detay";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<!--================Single Product Area =================-->
+<div class="product_image_area">
+    <div class="container">
+        <div class="row s_product_inner">
+            <div class="col-lg-6">
+                <div class="s_Product_carousel">
+                    @if (Model.ProductDetail.Images.Count != 0)
+                    {
+                        @foreach (var item in Model.ProductDetail.Images)
+                        {
+                            <div class="single-prd-item">
+                                <img class="img-fluid" src="@item.Url" alt="@Model.ProductDetail.ProductName">
+                            </div>
+                            if (Model.ProductDetail.Images.Count == 1)
+                            {
+                                <div class="single-prd-item">
+                                    <img class="img-fluid" src="@item.Url" alt="@Model.ProductDetail.ProductName">
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <div class="single-prd-item">
+                            <img class="img-fluid" src="~/KarmaUI/img/resimyok.jpg" alt="@Model.ProductDetail.ProductName">
+                        </div>
+
+                        <div class="single-prd-item">
+                            <img class="img-fluid" src="~/KarmaUI/img/resimyok.jpg" alt="@Model.ProductDetail.ProductName">
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="s_product_text">
+                    <h3>@Model.ProductDetail.ProductName</h3>
+                    <h2>@Model.ProductDetail.Price</h2>
+                    <ul class="list">
+                        <li><a class="active" href="#"><span>Kategori</span> : @Model.ProductCategory</a></li>
+                        <li><a href="#"><span>Stok Durumu</span> : @(Model.ProductDetail.UnitInStock > 0 ? "Stokta Var" : "Stok Tükendi")</a></li>
+                    </ul>
+                    <p>
+                        @Model.ProductDetail.Description
+                    </p>
+                    <div class="product_count">
+                        <label for="qty">Adet:</label>
+                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                class="increase items-count" type="button">
+                            <i class="lnr lnr-chevron-up"></i>
+                        </button>
+                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                class="reduced items-count" type="button">
+                            <i class="lnr lnr-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="card_area d-flex align-items-center">
+                        <a class="primary-btn" href="#">Sepete Ekle</a>
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--================End Single Product Area =================-->
+<!--================Product Description Area =================-->
+<section class="product_description_area">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Açıklama</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                   aria-selected="false">Özellikler</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                   aria-selected="false">Yorumlar</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!--Description--><div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                @Model.ProductDetail.SubDescription
+            </div>
+            <!--Spesification--><div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h5>En</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.Width</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Boy</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.Height</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Derinlik</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.Depth</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Ağırlık</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.Weight</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Kalite Kontrol</h5>
+                                </td>
+                                <td>
+                                    <h5>@(Model.ProductDetail.Spesifications.QualityCheck == true ? "Geçti" : "Kaldı")</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Taze Bekleme Süresi</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.FreshnessDuration</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Paketleme Tipi</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.WhenPacketing</h5>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Kutu İçi Adet</h5>
+                                </td>
+                                <td>
+                                    <h5>@Model.ProductDetail.Spesifications.QuantityPerBox</h5>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Component.InvokeAsync("Comments" ,new{productId=Model.ProductDetail.ProductId})
+        </div>
+    </div>
+</section>
+<!--================End Product Description Area =================-->

@@ -10,7 +10,7 @@ namespace Karma.Business.Abstract
 {
     public interface IBrandService
     {
-        List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null);
+        List<Brand> GetList(Expression<Func<Brand, bool>> filter = null);
         Brand Get(Expression<Func<Brand, bool>> filter = null);
         void Add(Brand brand);
         void Delete(Brand brand);

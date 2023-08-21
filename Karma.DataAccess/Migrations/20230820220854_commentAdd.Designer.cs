@@ -4,6 +4,7 @@ using Karma.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Karma.DataAccess.Migrations
 {
     [DbContext(typeof(KarmaContext))]
-    partial class KarmaContextModelSnapshot : ModelSnapshot
+    [Migration("20230820220854_commentAdd")]
+    partial class commentAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Brand", b =>
@@ -63,7 +66,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>
@@ -96,7 +99,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Product", b =>
@@ -140,7 +143,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Spesification", b =>
@@ -190,7 +193,7 @@ namespace Karma.DataAccess.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("Spesifications", (string)null);
+                    b.ToTable("Spesifications");
                 });
 
             modelBuilder.Entity("Karma.Entities.Image", b =>
@@ -222,7 +225,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>

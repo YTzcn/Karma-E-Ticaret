@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
@@ -27,14 +28,14 @@ namespace Karma.Business.Concrete
             _imageDal.Delete(image);
         }
 
-        public Image GetImageById(int ImageId)
+        public Image Get(Expression<Func<Image, bool>> filter = null)
         {
-            return _imageDal.Get(x => x.ImageId == ImageId);
+            return _imageDal.Get(filter);
         }
 
-        public List<Image> GetImagesByProductId(int ProductId)
+        public List<Image> GetList(Expression<Func<Image, bool>> filter = null)
         {
-            return _imageDal.GetList(x => x.ProductId == ProductId);
+            return _imageDal.GetList(filter);
         }
 
         public void Update(Image image)

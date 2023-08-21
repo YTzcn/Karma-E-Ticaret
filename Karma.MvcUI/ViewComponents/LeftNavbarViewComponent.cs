@@ -63,13 +63,13 @@ namespace Karma.MvcUI.ViewComponents
             }
             else if (controller == "Kategori")
             {
-                var productsInCategory = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory);
+                var productsInCategory = _productService.GetList(x => x.CategoryId == productListViewModel.CurrentCategory);
                 var brandIds = productsInCategory.Select(x => x.BrandId).Distinct();
                 brands.AddRange(brandIds.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
             }
             else if (controller == "Ürün")
             {
-                var productBrands = _productService.GetAll().Select(x => x.BrandId).Distinct();
+                var productBrands = _productService.GetList().Select(x => x.BrandId).Distinct();
                 brands.AddRange(productBrands.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
             }
             return brands;
@@ -84,12 +84,12 @@ namespace Karma.MvcUI.ViewComponents
             }
             else if (controller == "Kategori")
             {
-                var productsInCategory = _productService.GetAll(x => x.CategoryId == productListViewModel.CurrentCategory);
+                var productsInCategory = _productService.GetList(x => x.CategoryId == productListViewModel.CurrentCategory);
                 colors.AddRange(productsInCategory.Select(x => x.Color).Distinct());
             }
             else if (controller == "Ürün")
             {
-                colors.AddRange(_productService.GetAll().Select(x => x.Color).Distinct());
+                colors.AddRange(_productService.GetList().Select(x => x.Color).Distinct());
             }
             return colors;
         }

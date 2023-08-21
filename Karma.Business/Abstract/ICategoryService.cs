@@ -11,7 +11,7 @@ namespace Karma.Business.Abstract
     public interface ICategoryService
     {
         Category Get(Expression<Func<Category, bool>> filter = null);
-        List<Category> GetAll(Expression<Func<Category, bool>> filter = null);
+        List<Category> GetList(Expression<Func<Category, bool>> filter = null);
         void Add(Category category);
         void Delete(Category category);
         void Update(Category category);

@@ -4,6 +4,7 @@ using Karma.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Karma.DataAccess.Migrations
 {
     [DbContext(typeof(KarmaContext))]
-    partial class KarmaContextModelSnapshot : ModelSnapshot
+    [Migration("20230820213800_spesificationAddContext")]
+    partial class spesificationAddContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Brand", b =>
@@ -63,40 +66,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brands", (string)null);
-                });
-
-            modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CommentContext")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EMail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Product", b =>
@@ -140,7 +110,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Spesification", b =>
@@ -190,7 +160,7 @@ namespace Karma.DataAccess.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("Spesifications", (string)null);
+                    b.ToTable("Spesifications");
                 });
 
             modelBuilder.Entity("Karma.Entities.Image", b =>
@@ -222,18 +192,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images", (string)null);
-                });
-
-            modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>
-                {
-                    b.HasOne("Karma.Entities.Concrete.Product", "Products")
-                        .WithMany("Comments")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Products");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Spesification", b =>
@@ -260,8 +219,6 @@ namespace Karma.DataAccess.Migrations
 
             modelBuilder.Entity("Karma.Entities.Concrete.Product", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Images");
 
                     b.Navigation("Spesifications")

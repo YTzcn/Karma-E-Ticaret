@@ -28,20 +28,14 @@ namespace Karma.Business.Concrete
         {
             _productDal.Delete(product);
         }
-
-        public List<Product> GetByCategoryId(int CategoryId)
+        public Product Get(Expression<Func<Product, bool>> filter = null)
         {
-            return _productDal.GetAllProd(x => x.CategoryId == CategoryId);
+            return _productDal.Get(filter);
         }
 
-        public Product GetById(int ProductId)
+        public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
         {
-            return _productDal.Get(x => x.ProductId == ProductId);
-        }
-
-        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
-        {
-            return _productDal.GetAllProd(filter);
+            return _productDal.GetList(filter);
         }
 
         public void Update(Product product)
@@ -51,7 +45,7 @@ namespace Karma.Business.Concrete
 
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
-            var products = _productDal.GetAllProd();
+            var products = _productDal.GetList();
             if (!String.IsNullOrEmpty(key))
             {
                 products = products.Where(x => x.ProductName.ToLower().Contains(key.ToLower())).ToList();

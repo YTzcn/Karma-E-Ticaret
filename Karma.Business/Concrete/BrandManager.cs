@@ -27,7 +27,7 @@ namespace Karma.Business.Concrete
             _brandDal.Delete(brand);
         }
 
-        public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
+        public List<Brand> GetList(Expression<Func<Brand, bool>> filter = null)
         {
             return _brandDal.GetList(filter);
         }

@@ -21,6 +21,11 @@ namespace Karma.Entities.Concrete
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
 
+
+
+
         public List<Image> Images { get; set; }
+        public Spesification Spesifications { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

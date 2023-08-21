@@ -27,7 +27,7 @@ namespace Karma.Business.Concrete
             _categoryDal.Delete(category);
         }
 
-        public List<Category> GetAll(Expression<Func<Category, bool>> filter = null)
+        public List<Category> GetList(Expression<Func<Category, bool>> filter = null)
         {
             return filter == null ? _categoryDal.GetList() : _categoryDal.GetList(filter);
         }

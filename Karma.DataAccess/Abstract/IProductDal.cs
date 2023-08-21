@@ -7,6 +7,7 @@ namespace Karma.DataAccess
 {
     public interface IProductDal : IEntityRepository<Product>
     {
-        List<Product> GetAllProd(Expression<Func<Product, bool>> filter = null);
+        List<Product> GetList(Expression<Func<Product, bool>> filter = null);
+        Product Get(Expression<Func<Product, bool>> filter = null);
     }
 }

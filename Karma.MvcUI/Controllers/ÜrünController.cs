@@ -73,5 +73,17 @@ namespace Karma.MvcUI.Controllers
 
             return View(model);
         }
+        public IActionResult Detay(string urunAdi)
+        {
+
+            var product = _productService.Get(x => x.ProductName == urunAdi.Replace('-', ' '));
+            var productCategory = _categoryService.Get(x => x.CategoryId == product.CategoryId).CategoryName;
+            ProductDetailViewModel model = new ProductDetailViewModel()
+            {
+                ProductDetail = product,
+                ProductCategory = productCategory
+            };
+            return View(model);
+        }
     }
 }

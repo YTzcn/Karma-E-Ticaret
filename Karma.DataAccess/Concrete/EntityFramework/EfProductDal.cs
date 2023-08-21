@@ -12,12 +12,20 @@ namespace Karma.DataAccess.Concrete.EntityFramework
 {
     public class EfProductDal : EfEntityRepositoryBase<Product, KarmaContext>, IProductDal
     {
-        public List<Product> GetAllProd(Expression<Func<Product, bool>> filter = null)
+        public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
         {
             using (var context = new KarmaContext())
             {
-                var products = filter == null ? context.Products.Include(c => c.Images).ToList() : context.Products.Include(c => c.Images).Where(filter).ToList();
+                var products = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).ToList() : context.Products.Include(c => c.Images).Where(filter).ToList();
                 return products;
+            }
+        }
+        public Product Get(Expression<Func<Product, bool>> filter = null)
+        {
+            using (var context = new KarmaContext())
+            {
+                var product = context.Products.Include(i => i.Images).Include(s => s.Spesifications).FirstOrDefault(filter);
+                return product;
             }
         }
     }
