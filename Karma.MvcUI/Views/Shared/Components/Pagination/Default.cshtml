@@ -15,16 +15,21 @@
             {
                 <div class="col-lg-4 col-md-6">
                     <div class="single-product">
-                        <img class="img-fluid" style="max-height:250px;min-height:250px;" src='@(item.Images.Count == 0 ? "/KarmaUI/img/resimyok.jpg" : item.Images.FirstOrDefault(x => x.IsMain == true)?.Url)' alt="">
+                        <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(' ','-')">
+                            <img class="img-fluid" style="max-height:250px;min-height:250px;" src='@(item.Images.Count == 0 ? "/KarmaUI/img/resimyok.jpg" : item.Images.FirstOrDefault(x => x.IsMain == true)?.Url)' alt="">
+                        </a>
                         <div class="product-details">
                             <h6>
-                                @item.ProductName
+                                <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(' ','-')">
+                                    @item.ProductName
+                                </a>
                             </h6>
+
                             <div class="price">
                                 <h6>@item.Price ₺</h6>
                             </div>
                             <div class="prd-bottom">
-                                <a href="" class="social-info">
+                                <a href="/Cart/AddToCart?productId=@item.ProductId" class="social-info">
                                     <span class="ti-bag"></span>
                                     <p class="hover-text">Sepete Ekle</p>
                                 </a>

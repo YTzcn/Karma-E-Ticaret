@@ -7,6 +7,7 @@ using Karma.Business.Concrete;
 using Karma.DataAccess;
 using Karma.DataAccess.Concrete.EntityFramework;
 using Karma.DataAccess.Abstract;
+using Karma.MvcUI.Services;
 
 namespace Karma.MvcUI
 {
@@ -17,6 +18,10 @@ namespace Karma.MvcUI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSession();
+            builder.Services.AddDistributedMemoryCache();
+
+
 
             builder.Services.AddControllers()
             .AddJsonOptions(options =>
@@ -41,6 +46,10 @@ namespace Karma.MvcUI
             builder.Services.AddScoped<ICommentService, CommentManager>();
             builder.Services.AddScoped<ICommentDal, EfCommentDal>();
 
+            builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
+            builder.Services.AddSingleton<ICartService, CartService>();
+
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
             builder.Services.AddControllers().AddJsonOptions(obj =>
@@ -63,6 +72,7 @@ namespace Karma.MvcUI
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
