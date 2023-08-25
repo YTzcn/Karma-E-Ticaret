@@ -6,13 +6,15 @@
 @await Html.PartialAsync("/Views/PartialViews/_HeaderPartialView.cshtml")
 <body>
     @await Component.InvokeAsync("Navbar")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_BannerPartialView.cshtml")
+    @await Component.InvokeAsync("BannerArea")
+
     @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_FeaturesPartialView.cshtml")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_CategoryAreaPartialView.cshtml")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_ProductAreaPartialView.cshtml")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_ExclusiveDealPartialView.cshtml")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_BrandAreaPartialView.cshtml")
-    @await Html.PartialAsync("/Views/PartialViews/IndexPartials/_RelatedProductsPartialView.cshtml")
+
+    @await Component.InvokeAsync("CategoryArea")
+    @await Component.InvokeAsync("ProductArea")
+    @await Component.InvokeAsync("ExclusiveDeal")
+    @await Component.InvokeAsync("BrandArea")
+    @await Component.InvokeAsync("RelatedProduct")
     @await Html.PartialAsync("/Views/PartialViews/_FooterPartialView.cshtml")
     @await Html.PartialAsync("/Views/PartialViews/_ScriptsPartialView.cshtml")
 </body>

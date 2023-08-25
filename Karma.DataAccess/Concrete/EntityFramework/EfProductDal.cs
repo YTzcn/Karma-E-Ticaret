@@ -24,7 +24,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             using (var context = new KarmaContext())
             {
-                var product = context.Products.Include(i => i.Images).Include(s => s.Spesifications).FirstOrDefault(filter);
+                var product = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).FirstOrDefault() : context.Products.Include(c => c.Images).Where(filter).FirstOrDefault();
                 return product;
             }
         }

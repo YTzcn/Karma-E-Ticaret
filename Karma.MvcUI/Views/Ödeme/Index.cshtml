@@ -1,0 +1,106 @@
+﻿@model PaymentViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<section class="order_details section_gap">
+    <div class="container">
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Cart.CartLines)
+                        {
+                            <tr>
+                                <td>
+                                    <p>@item.Product.ProductName</p>
+                                </td>
+                                <td>
+                                    <h5>x @item.Quantity</h5>
+                                </td>
+                                <td>
+                                    <p>@item.LineTotal ₺</p>
+                                </td>
+                            </tr>
+                        }
+
+
+
+                        <tr>
+                            <td>
+                                <h4>Toplam:</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>@Model.Cart.Total ₺</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h4>Kupon İndirimi:</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>- @Model.DiscountPrice₺</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h4>Toplam</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>@(Model.Cart._totalPrice != null ? Model.Cart._totalPrice : Model.Cart.Total) ₺</p>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Ödeme Bilgileri</h4>
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Kart Numarası</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="**** **** **** ****" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="expiryDate" class="form-label">Son Kullanma Tarihi</label>
+                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                        </div>
+                        <a type="submit" asp-action="Index" asp-controller="Ödeme" asp-route-x="true" class="btn btn-primary">Ödeme Yap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

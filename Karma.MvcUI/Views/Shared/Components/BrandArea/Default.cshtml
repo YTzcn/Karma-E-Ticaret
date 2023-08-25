@@ -1,0 +1,13 @@
+﻿@model BrandAreaViewModel
+<section class="brand-area section_gap">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model.Brands)
+            {
+                <a class="col single-img" href="#">
+                    <img style="max-height:200px;max-width:200px;" class="img-fluid d-block mx-auto" src="@item.BrandLogo" alt="">
+                </a>
+            }
+        </div>
+    </div>
+</section>

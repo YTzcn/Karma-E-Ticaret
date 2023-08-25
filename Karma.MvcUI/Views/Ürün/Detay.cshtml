@@ -51,7 +51,7 @@
                     </p>
                     <div class="product_count">
                         <label for="qty">Adet:</label>
-                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Adet:" class="input-text qty">
                         <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
                                 class="increase items-count" type="button">
                             <i class="lnr lnr-chevron-up"></i>
@@ -62,7 +62,7 @@
                         </button>
                     </div>
                     <div class="card_area d-flex align-items-center">
-                        <a class="primary-btn" asp-controller="Sepet" asp-action="AddToCart" asp-route-productId="@Model.ProductDetail.ProductId">Sepete Ekle</a>
+                        <a class="primary-btn" id="dynamicLink" href="#" onclick="addToCart()">Sepete Ekle</a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
@@ -71,8 +71,7 @@
         </div>
     </div>
 </div>
-<!--================End Single Product Area =================-->
-<!--================Product Description Area =================-->
+
 <section class="product_description_area">
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -92,10 +91,10 @@
 
         </ul>
         <div class="tab-content" id="myTabContent">
-            <!--Description--><div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 @Model.ProductDetail.SubDescription
             </div>
-            <!--Spesification-->@if (Model.ProductDetail.Spesifications != null)
+            @if (Model.ProductDetail.Spesifications != null)
             {
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">
@@ -174,4 +173,33 @@
         </div>
     </div>
 </section>
-<!--================End Product Description Area =================-->
+
+@section quantitySection {
+    <script>
+        
+            function addToCart() {
+                var quantityInput = document.getElementById('sst');
+                var productId = @Model.ProductDetail.ProductId;
+
+                var link = document.getElementById('dynamicLink');
+                var linkUrl = '/Sepet/AddToCart?productId=' + productId + '&quantity=' + quantityInput.value;
+
+                link.href = linkUrl;
+            }
+
+            var quantityInput = document.getElementById('sst');
+            var dynamicLink = document.getElementById('dynamicLink');
+
+            quantityInput.addEventListener('input', function () {
+                var quantity = quantityInput.value;
+                var linkUrl = dynamicLink.getAttribute('href');
+
+                var updatedLinkUrl = linkUrl.split('?')[0] + '?asp-route-quantity=' + quantity;
+                dynamicLink.setAttribute('href', updatedLinkUrl);
+            });
+
+    </script>
+}
+
+
+}
