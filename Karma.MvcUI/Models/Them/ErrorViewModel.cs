@@ -1,4 +1,4 @@
-namespace Karma.MvcUI.Models
+namespace Karma.MvcUI.Models.Them
 {
     public class ErrorViewModel
     {

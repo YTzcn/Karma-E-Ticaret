@@ -1,5 +1,5 @@
 ﻿using Karma.Business.Abstract;
-using Karma.MvcUI.Models;
+using Karma.MvcUI.Models.Them;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 

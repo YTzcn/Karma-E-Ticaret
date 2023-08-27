@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Printing;
 using Karma.Business.Abstract;
 using Karma.Entities.Concrete;
+using Karma.MvcUI.Models.Them;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.CodeAnalysis;

@@ -1,7 +1,7 @@
 ﻿using Karma.Business.Abstract;
 using Karma.DataAccess;
 using Karma.Entities.Concrete;
-using Karma.MvcUI.Models;
+using Karma.MvcUI.Models.Them;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 

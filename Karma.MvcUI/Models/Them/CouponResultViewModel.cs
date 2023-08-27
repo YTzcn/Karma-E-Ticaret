@@ -1,4 +1,4 @@
-﻿namespace Karma.MvcUI
+﻿namespace Karma.MvcUI.Models.Them
 {
     public class CouponResultViewModel
     {

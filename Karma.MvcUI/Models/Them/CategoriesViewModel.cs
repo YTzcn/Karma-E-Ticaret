@@ -1,6 +1,6 @@
 ﻿using Karma.Entities;
 
-namespace Karma.MvcUI
+namespace Karma.MvcUI.Models.Them
 {
     public class CategoriesViewModel
     {

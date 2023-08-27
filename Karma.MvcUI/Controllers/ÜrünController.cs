@@ -3,9 +3,9 @@ using System.Drawing.Printing;
 using System.Drawing;
 using Karma.Business.Abstract;
 using Karma.Entities.Concrete;
-using Karma.MvcUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Karma.MvcUI.Models.Them;
 
 namespace Karma.MvcUI.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using Karma.Entities;
 using Karma.Entities.Concrete;
 
-namespace Karma.MvcUI.Models
+namespace Karma.MvcUI.Models.Them
 {
     public class LeftNavbarViewModel
     {
