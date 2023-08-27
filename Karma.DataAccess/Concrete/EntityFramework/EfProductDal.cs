@@ -12,7 +12,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
 {
     public class EfProductDal : EfEntityRepositoryBase<Product, KarmaContext>, IProductDal
     {
-        public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
+        public List<Product> GetDetailsList(Expression<Func<Product, bool>> filter = null)
         {
             using (var context = new KarmaContext())
             {
@@ -20,7 +20,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
                 return products;
             }
         }
-        public Product Get(Expression<Func<Product, bool>> filter = null)
+        public Product GetDetails(Expression<Func<Product, bool>> filter = null)
         {
             using (var context = new KarmaContext())
             {

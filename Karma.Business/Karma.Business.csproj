@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Karma.Core\Karma.Core.csproj" />
-    <ProjectReference Include="..\Karma.DataAccess\Karma.DataAccess.csproj" />
-    <ProjectReference Include="..\Karma.Entities\Karma.Entities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Karma.Core\Karma.Core.csproj" />
+		<ProjectReference Include="..\Karma.DataAccess\Karma.DataAccess.csproj" />
+		<ProjectReference Include="..\Karma.Entities\Karma.Entities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Ninject" Version="3.3.6" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Ninject" Version="3.3.6" />
+		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+	</ItemGroup>
 
 </Project>

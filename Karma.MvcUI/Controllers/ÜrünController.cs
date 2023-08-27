@@ -59,12 +59,17 @@ namespace Karma.MvcUI.Controllers
             var existBrandsId = products.Select(x => x.BrandId).Distinct().ToList();
             model = new ProductListViewModel
             {
+                Categories = _categoryService.GetAllActive(),
                 CurrentCategory = currentCategory,
                 Products = pagedProducts,
                 PageCount = (int)Math.Ceiling(totalCount / (double)pageSize),
                 PageSize = pageSize,
                 CurrentPage = page,
-                ProductsCount = totalCount
+                ProductsCount = totalCount,
+                ExistBrandsId = existBrandsId,
+                ExistCategoriesId = existCategories,
+                ExistColors = existColors
+
             };
             return View("ÜrünleriListele", model);
         }
@@ -75,16 +80,23 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Detay(string urunAdi)
         {
-
             var product = _productService.Get(x => x.ProductName == urunAdi.Replace('-', ' '));
-            var productCategory = _categoryService.Get(x => x.CategoryId == product.CategoryId).CategoryName;
-            ProductDetailViewModel model = new ProductDetailViewModel()
+            if (product != null)
             {
-                ProductDetail = product,
-                ProductCategory = productCategory
-            };
-            return View(model);
+                var productCategory = _categoryService.Get(x => x.CategoryId == product.CategoryId).CategoryName;
+                ProductDetailViewModel model = new ProductDetailViewModel()
+                {
+                    ProductDetail = product,
+                    ProductCategory = productCategory
+                };
+                return View(model);
+            }
+            else
+            {
+                TempData.Add("alert", "İstenen Ürün Bulunamadı");
+                return RedirectToAction("Index");
+            }
         }
-       
+
     }
 }

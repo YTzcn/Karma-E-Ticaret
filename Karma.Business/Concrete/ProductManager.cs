@@ -30,12 +30,12 @@ namespace Karma.Business.Concrete
         }
         public Product Get(Expression<Func<Product, bool>> filter = null)
         {
-            return _productDal.Get(filter);
+            return _productDal.GetDetails(filter);
         }
 
         public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
         {
-            return _productDal.GetList(filter);
+            return _productDal.GetDetailsList(filter);
         }
 
         public void Update(Product product)
@@ -45,7 +45,7 @@ namespace Karma.Business.Concrete
 
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
-            var products = _productDal.GetList();
+            var products = _productDal.GetDetailsList();
             if (!String.IsNullOrEmpty(key))
             {
                 products = products.Where(x => x.ProductName.ToLower().Contains(key.ToLower())).ToList();

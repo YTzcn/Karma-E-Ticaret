@@ -16,6 +16,11 @@ namespace Karma.MvcUI.Controllers
         {
             _commentService.Add(comment);
             string referans = Request.Headers["Referer"].ToString();
+            if (!TempData.ContainsKey("message"))
+            {
+                TempData.Add("message", "Yorumunuz Başarıyla Eklenmiştir");
+            }
+
             return Redirect(referans);
         }
     }
