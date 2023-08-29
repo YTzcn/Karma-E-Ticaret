@@ -10,13 +10,14 @@ namespace Karma.MvcUI.Controllers
 {
     public class HomeController : Controller
     {
-
-        public HomeController()
+        private readonly IMailService _mailService;
+        public HomeController(IMailService mailService)
         {
-
+            _mailService = mailService;
         }
         public IActionResult Index()
         {
+            _mailService.SendRegisterConfirmMail("yahyatezcan.yahya@gmail.com", "http://bombabomba.com/");
             return View();
         }
     }

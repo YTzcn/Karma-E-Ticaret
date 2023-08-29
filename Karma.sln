@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karma.Entities", "Karma.Entities\Karma.Entities.csproj", "{AFE2F41C-E20F-4EF0-8481-B4DF1B32E3B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karma.Entities", "Karma.Entities\Karma.Entities.csproj", "{AFE2F41C-E20F-4EF0-8481-B4DF1B32E3B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karma.DataAccess", "Karma.DataAccess\Karma.DataAccess.csproj", "{7D22623B-C2D4-42A8-9F52-831AEC42478B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karma.DataAccess", "Karma.DataAccess\Karma.DataAccess.csproj", "{7D22623B-C2D4-42A8-9F52-831AEC42478B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karma.Business", "Karma.Business\Karma.Business.csproj", "{0E1C92A2-4C48-40C9-99E6-5AC6D3DF3BEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karma.Business", "Karma.Business\Karma.Business.csproj", "{0E1C92A2-4C48-40C9-99E6-5AC6D3DF3BEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karma.MvcUI", "Karma.MvcUI\Karma.MvcUI.csproj", "{41FE4B9C-F711-442E-8D05-373C1C77663F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karma.MvcUI", "Karma.MvcUI\Karma.MvcUI.csproj", "{41FE4B9C-F711-442E-8D05-373C1C77663F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karma.Core", "Karma.Core\Karma.Core.csproj", "{D0CB7611-51D6-4FD0-BB4B-0892F54B1FCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Karma.Core", "Karma.Core\Karma.Core.csproj", "{D0CB7611-51D6-4FD0-BB4B-0892F54B1FCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

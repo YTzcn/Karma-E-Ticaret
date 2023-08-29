@@ -1,4 +1,5 @@
-﻿using Karma.MvcUI.Identity;
+﻿using Karma.Business.Abstract;
+using Karma.MvcUI.Identity;
 using Karma.MvcUI.Models.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,13 @@ namespace Karma.MvcUI.Controllers
     {
         private UserManager<AppIdentityUser> _userManager;
         private SignInManager<AppIdentityUser> _signInManager;
-        public SecurityController(UserManager<AppIdentityUser> userManager, SignInManager<AppIdentityUser> signInManager)
+        private readonly IMailService _mailService;
+
+        public SecurityController(UserManager<AppIdentityUser> userManager, SignInManager<AppIdentityUser> signInManager, IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailService = mailService;
         }
         public IActionResult Login()
         {
@@ -134,7 +138,7 @@ namespace Karma.MvcUI.Controllers
             }
             var confirmationCode = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callBackUrl = Url.Action("ResetPassword", "Security", new { userId = user.Id, code = confirmationCode });
-            //mail at callbackurli
+            _mailService.SendForgotPasswordMail(user.Email, callBackUrl);
             if (!TempData.ContainsKey("alert"))
             {
                 TempData.Add("alert", "Şifre Yenileme Maili E Postana Gönderildi");

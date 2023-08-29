@@ -10,9 +10,9 @@ namespace Karma.Business.Abstract
     {
         public bool SendTextMail(string receiverMail, string subject, string body);
         public bool SendWelcomeMail(string UserName);
-        public bool SendRegisterConfirmMail(string url);
-        public bool SendForgotPasswordMail(string url);
-        public bool SendNewstellerMail();
+        public bool SendRegisterConfirmMail(string recieverMail,string url);//
+        public bool SendForgotPasswordMail(string recieverMail, string url);//
+        public bool SendNewstellerMail(string receiverMail, string? imageUrl, string? message);
         public bool SendSummaryMail();
 
     }

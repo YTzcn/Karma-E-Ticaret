@@ -89,6 +89,7 @@ namespace Karma.MvcUI
             builder.Services.AddSingleton<ICouponDal, EfCouponDal>();
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddTransient<IMailService, MailManager>();
 
 
             builder.Services.AddControllers().AddJsonOptions(obj =>
