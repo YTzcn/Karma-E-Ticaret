@@ -35,7 +35,7 @@ namespace Karma.MvcUI
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.AllowedForNewUsers = true;
-
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -._@+/";
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
@@ -81,6 +81,12 @@ namespace Karma.MvcUI
 
             builder.Services.AddScoped<ICommentService, CommentManager>();
             builder.Services.AddScoped<ICommentDal, EfCommentDal>();
+
+            builder.Services.AddScoped<IContactService, ContactMessageManager>();
+            builder.Services.AddScoped<IContactMessageDal, EfContactMessageDal>();
+
+            builder.Services.AddScoped<INewstellerSubService, NewstellerSubManager>();
+            builder.Services.AddScoped<INewstellerSubDal, EfNewstellerSubDal>();
 
             builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
             builder.Services.AddSingleton<ICartService, CartService>();

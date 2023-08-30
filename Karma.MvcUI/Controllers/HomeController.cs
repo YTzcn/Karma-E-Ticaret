@@ -1,24 +1,42 @@
 ﻿using Karma.Business.Abstract;
-using Karma.DataAccess.Migrations;
-using Karma.MvcUI.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Karma.Entities.Concrete;
-using Karma.Core.Tools;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Karma.MvcUI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IMailService _mailService;
-        public HomeController(IMailService mailService)
+        private readonly INewstellerSubService _newstellerSubService;
+        public HomeController(IMailService mailService, INewstellerSubService newstellerSubService)
         {
             _mailService = mailService;
+            _newstellerSubService = newstellerSubService;
+
         }
         public IActionResult Index()
         {
-            _mailService.SendRegisterConfirmMail("yahyatezcan.yahya@gmail.com", "http://bombabomba.com/");
             return View();
+        }
+        [HttpGet]
+        public IActionResult NewstellerSubscribe(string Email)
+        {
+            var result = _newstellerSubService.IsExist(Email);
+            if (!result)
+            {
+                _newstellerSubService.Add(new NewstellerSub { Email = Email, Active = true });
+                if (!TempData.ContainsKey("message"))
+                {
+                    TempData.Add("message", "Haber Bültenimize Eklendiniz");
+                }
+                return RedirectToAction("Index");
+            }
+            if (!TempData.ContainsKey("alert"))
+            {
+                TempData.Add("alert", "Haber Bünteninde Zaten Eklisiniz");
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

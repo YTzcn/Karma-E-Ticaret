@@ -24,9 +24,7 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.BannerTitle = "Sepetim";
-            ViewBag.BannerArea1 = "Sepet";
-            ViewBag.BannerArea2 = "Sepet Detayları";
+            
             var cart = _cartSessionService.GetCart();
             CartViewModel model = new CartViewModel
             {
@@ -40,7 +38,11 @@ namespace Karma.MvcUI.Controllers
             var cart = _cartSessionService.GetCart();
             _cartService.AddCart(cart, productToBeAdded, quantity);
             _cartSessionService.SetCart(cart);
-            TempData.Add("message", string.Format("Ürününüz {0} Sepete Eklendi ", productToBeAdded.ProductName));
+            if (!TempData.ContainsKey("message"))
+            {
+                TempData.Add("message", string.Format("Ürününüz {0} Sepete Eklendi ", productToBeAdded.ProductName));
+
+            }
             return RedirectToAction("Index", "Ürün");
         }
         public IActionResult RemoveFromCart(int productId)

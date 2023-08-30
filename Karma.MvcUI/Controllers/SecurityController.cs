@@ -25,10 +25,7 @@ namespace Karma.MvcUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
@@ -38,7 +35,41 @@ namespace Karma.MvcUI.Controllers
                     return View(model);
                 }
             }
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);//1 false olan kısım beni hatırla 2. kısım hatalı şifre girişinde giriş engelleme  
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);//1 false olan kısım beni hatırla 2. kısım hatalı şifre girişinde giriş engelleme  
+            if (result.IsNotAllowed)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    // Email isn't confirmed.
+                }
+
+                if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
+                {
+                    // Phone Number isn't confirmed.
+                }
+            }
+            else if (result.IsLockedOut)
+            {
+                // Account is locked out.
+            }
+            else if (result.RequiresTwoFactor)
+            {
+                // 2FA required.
+            }
+            else
+            {
+                // Username or password is incorrect.
+                if (user == null)
+                {
+                    // Username is incorrect.
+                }
+                else
+                {
+                    // Password is incorrect.
+                }
+            }
+
+
             if (result.Succeeded)
             {
                 if (!TempData.ContainsKey("message"))
@@ -46,6 +77,10 @@ namespace Karma.MvcUI.Controllers
                     TempData.Add("message", "Giriş Başarılı Reisim");
                 }
                 return RedirectToAction("Index", "Ürün");
+            }
+            if (!TempData.ContainsKey("alert"))
+            {
+                TempData.Add("alert", "Giriş Hatalı");
             }
             return View(model);
         }
@@ -65,10 +100,7 @@ namespace Karma.MvcUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+
             var user = new AppIdentityUser
             {
                 Email = model.Email,
@@ -78,8 +110,8 @@ namespace Karma.MvcUI.Controllers
             if (result.Succeeded)
             {
                 var confirmationCode = _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callBackUrl = Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = confirmationCode });
-                //mail gönderme işlemi yapılacak link üstte 
+                var callBackUrl = Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = confirmationCode.Result });
+                _mailService.SendRegisterConfirmMail(model.Email, callBackUrl);
                 return RedirectToAction("Login");
             }
             return View(model);
@@ -121,6 +153,7 @@ namespace Karma.MvcUI.Controllers
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> ForgotPassword(string Email)
         {
             if (string.IsNullOrEmpty(Email))
@@ -143,8 +176,9 @@ namespace Karma.MvcUI.Controllers
             {
                 TempData.Add("alert", "Şifre Yenileme Maili E Postana Gönderildi");
             }
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login");
         }
+        [HttpGet]
         public IActionResult ResetPassword(string userId, string code)
         {
             if (userId == null || code == null)
@@ -161,10 +195,7 @@ namespace Karma.MvcUI.Controllers
         }
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {

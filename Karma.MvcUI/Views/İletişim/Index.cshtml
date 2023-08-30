@@ -1,0 +1,58 @@
+﻿@model ContactFormViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<section class="contact_area section_gap_bottom">
+    <div class="container">
+        <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d5158.719195271571!2d37.02233461640672!3d39.753288662138225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1str!2str!4v1693429215532!5m2!1str!2str" width="1080" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="contact_info">
+                    <div class="info_item">
+                        <i class="lnr lnr-home"></i>
+                        <h6>Sivas, Türkiye</h6>
+                        <p>İstasyon Caddesi</p>
+                    </div>
+                    <div class="info_item">
+                        <i class="lnr lnr-phone-handset"></i>
+                        <h6><a href="#">0(552) 986 55 62</a></h6>
+                        <p>Hafta İçi 09:00 - 17:00</p>
+                    </div>
+                    <div class="info_item">
+                        <i class="lnr lnr-envelope"></i>
+                        <h6><a href="#">yahya.tezcan@hotmail.com</a></h6>
+                        <p>İletişim İçin Mail Atınız</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <form class="row contact_form" method="post" id="contactForm" asp-action="AddContactMessage" asp-controller="İletişim">
+                    <div class="col-md-6">
+                        <input hidden name="ContactMessage.IpAddress" value="@(Context.Connection.RemoteIpAddress)" />
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" asp-for="ContactMessage.Name" placeholder="Adınız" required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adınız'">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" asp-for="ContactMessage.EMail" placeholder="E Posta Adresiniz" required onfocus="this.placeholder = ''" onblur="this.placeholder = 'E Posta Adresiniz'">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" asp-for="ContactMessage.Subject" placeholder="Başlık" required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Başlık'">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <textarea class="form-control" asp-for="ContactMessage.Message" id="message" rows="1" placeholder="Mesajınız" required onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mesajınız'"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <button type="submit" value="submit" class="primary-btn">Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

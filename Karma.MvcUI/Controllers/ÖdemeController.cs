@@ -9,12 +9,13 @@ namespace Karma.MvcUI.Controllers
     {
         private readonly ICartService _cartService;
         private readonly ICartSessionService _cartSessionService;
-        private readonly IProductService _productService;
+        private readonly IMailService _mailService;
         private readonly ICouponService _couponService;
-        public ÖdemeController(IProductService productService, ICartService cartService, ICartSessionService cartSessionService, ICouponService couponService)
+
+        public ÖdemeController(IProductService productService, ICartService cartService, ICartSessionService cartSessionService, ICouponService couponService, IMailService mailService)
         {
             _cartService = cartService;
-            _productService = productService;
+            _mailService = mailService;
             _cartSessionService = cartSessionService;
             _couponService = couponService;
         }
@@ -31,9 +32,10 @@ namespace Karma.MvcUI.Controllers
             ; if (x == "true")
             {
                 TempData.Add("message", "Ödemeniz başarıyla gerçekleşti.");
+                _mailService.SendSummaryMail("yahyatezcan.yahya@gmail.com",cart, couponPrice);
                 _cartService.RemoveCart(cart);
                 _cartSessionService.SetCart(cart);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
