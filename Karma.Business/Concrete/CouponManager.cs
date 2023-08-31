@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
 
@@ -21,12 +23,12 @@ namespace Karma.Business.Concrete
         }
         public void Add(Coupon coupon)
         {
-            string code = GenerateCouponCode(6);
-            if (_couponDal.Get(x => x.CouponCode == code) != null)
+            if (_couponDal.Get(x => x.CouponCode == coupon.CouponCode) != null)
             {
-                code = GenerateCouponCode(6);
+                coupon.CouponCode = GenerateCouponCode(6);
             }
-            coupon.CouponCode = code;
+            ValidatorTool.FluentValidate(new CouponValidator(), coupon);
+
             _couponDal.Add(coupon);
         }
 

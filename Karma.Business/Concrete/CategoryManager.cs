@@ -5,8 +5,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Karma.Business.Concrete
 {
@@ -19,6 +22,7 @@ namespace Karma.Business.Concrete
         }
         public void Add(Category category)
         {
+            ValidatorTool.FluentValidate(new CategoryValidator(), category);
             _categoryDal.Add(category);
         }
 
@@ -47,6 +51,6 @@ namespace Karma.Business.Concrete
             return _categoryDal.GetList(x => x.Active == true);
         }
 
-        
+
     }
 }

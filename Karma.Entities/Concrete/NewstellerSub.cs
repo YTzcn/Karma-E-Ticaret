@@ -11,6 +11,6 @@ namespace Karma.Entities.Concrete
     {
         public int Id { get; set; }
         public string Email { get; set; }
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
     }
 }

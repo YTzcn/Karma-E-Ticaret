@@ -88,11 +88,11 @@ namespace Karma.MvcUI
             builder.Services.AddScoped<INewstellerSubService, NewstellerSubManager>();
             builder.Services.AddScoped<INewstellerSubDal, EfNewstellerSubDal>();
 
-            builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
-            builder.Services.AddSingleton<ICartService, CartService>();
-
             builder.Services.AddSingleton<ICouponService, CouponManager>();
             builder.Services.AddSingleton<ICouponDal, EfCouponDal>();
+
+            builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
+            builder.Services.AddSingleton<ICartService, CartService>();
 
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddTransient<IMailService, MailManager>();

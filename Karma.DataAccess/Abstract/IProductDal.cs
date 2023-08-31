@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Net.Http.Headers;
 using Karma.Core.DataAccess;
+using Karma.DataAccess.Concrete.EntityFramework;
 using Karma.Entities.Concrete;
 
 namespace Karma.DataAccess
@@ -9,5 +10,6 @@ namespace Karma.DataAccess
     {
         List<Product> GetDetailsList(Expression<Func<Product, bool>> filter = null);
         Product GetDetails(Expression<Func<Product, bool>> filter = null);
+        public bool IsExsit(Product product);
     }
 }

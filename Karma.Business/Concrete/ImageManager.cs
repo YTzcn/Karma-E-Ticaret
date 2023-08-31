@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities;
 
@@ -20,6 +22,11 @@ namespace Karma.Business.Concrete
 
         public void Add(Image image)
         {
+            if (_imageDal.GetList(x => x.Products.ProductId == image.ProductId && x.IsMain == true).Count == 0)
+            {
+                image.IsMain = true;
+            }
+            ValidatorTool.FluentValidate(new ImageValidator(), image);
             _imageDal.Add(image);
         }
 

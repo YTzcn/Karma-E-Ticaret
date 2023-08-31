@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
 
@@ -19,6 +21,7 @@ namespace Karma.Business.Concrete
         }
         public void Add(Brand brand)
         {
+            ValidatorTool.FluentValidate(new BrandValidator(_brandDal), brand);
             _brandDal.Add(brand);
         }
 
@@ -46,6 +49,12 @@ namespace Karma.Business.Concrete
         {
             var Ids = _brandDal.GetList(filter).Select(x => x.BrandId).ToArray();
             return Ids;
+        }
+
+        bool IBrandService.IsExist(Brand brandName)
+        {
+            bool exist = _brandDal.Get(x => x.BrandName == brandName.BrandName) != null ? true : false;
+            return exist;
         }
     }
 }

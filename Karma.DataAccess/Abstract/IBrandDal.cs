@@ -11,5 +11,6 @@ namespace Karma.DataAccess.Abstract
 {
     public interface IBrandDal : IEntityRepository<Brand>
     {
+        bool IsExsit(Brand brand);
     }
 }

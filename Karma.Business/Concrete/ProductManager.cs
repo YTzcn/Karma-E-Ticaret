@@ -6,9 +6,10 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.Aspects.Postsharp;
 using Karma.DataAccess;
 using Karma.Entities.Concrete;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 
 namespace Karma.Business.Concrete
 {
@@ -19,7 +20,8 @@ namespace Karma.Business.Concrete
         {
             _productDal = productDal;
         }
-        public void Add(Product product)
+        [FluentValidationAspect(typeof(ProductValidator))]
+        public virtual void Add(Product product)
         {
             _productDal.Add(product);
         }
@@ -78,5 +80,7 @@ namespace Karma.Business.Concrete
 
             return products;
         }
+
+
     }
 }

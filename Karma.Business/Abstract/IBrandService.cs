@@ -15,6 +15,7 @@ namespace Karma.Business.Abstract
         void Add(Brand brand);
         void Delete(Brand brand);
         void Update(Brand brand);
+        bool IsExist(Brand brand);
         int[]? GetAllId(Expression<Func<Brand, bool>> filter = null);
     }
 }

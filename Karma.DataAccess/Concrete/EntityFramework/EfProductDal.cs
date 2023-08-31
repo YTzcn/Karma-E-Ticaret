@@ -28,5 +28,16 @@ namespace Karma.DataAccess.Concrete.EntityFramework
                 return product;
             }
         }
+
+        bool IProductDal.IsExsit(Product product)
+        {
+            using (var context = new KarmaContext())
+            {
+                bool exist = context.Products.Where(x => x.ProductName == product.ProductName) != null ? true : false;
+                return exist;
+            }
+
+
+        }
     }
 }
