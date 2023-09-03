@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities;
@@ -20,6 +22,7 @@ namespace Karma.Business.Concrete
         {
             _categoryDal = categoryDal;
         }
+        [FluentValidationAspect(typeof(CategoryValidator))]
         public void Add(Category category)
         {
             ValidatorTool.FluentValidate(new CategoryValidator(), category);
@@ -40,7 +43,7 @@ namespace Karma.Business.Concrete
         {
             return _categoryDal.Get(filter);
         }
-
+        [FluentValidationAspect(typeof(CategoryValidator))]
         public void Update(Category category)
         {
             _categoryDal.Update(category);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Karma.Core.CrossCuttingConcerns.Validation.FluentValidation
 {
@@ -12,7 +7,7 @@ namespace Karma.Core.CrossCuttingConcerns.Validation.FluentValidation
         public static void FluentValidate(IValidator validator, object entity)
         {
             var context = new ValidationContext<object>(entity);
-            var result = validator.Validate(context);
+            var result = validator.Validate(context);//Hata Var Kral Bak Buna
             if (!result.IsValid)
             {
                 throw new ValidationException(result.Errors);

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
@@ -19,9 +21,9 @@ namespace Karma.Business.Concrete
         {
             _brandDal = brandDal;
         }
+        [FluentValidationAspect(typeof(BrandValidator))]
         public void Add(Brand brand)
         {
-            ValidatorTool.FluentValidate(new BrandValidator(_brandDal), brand);
             _brandDal.Add(brand);
         }
 
@@ -39,7 +41,7 @@ namespace Karma.Business.Concrete
         {
             return _brandDal.Get(filter);
         }
-
+        [FluentValidationAspect(typeof(BrandValidator))]
         public void Update(Brand brand)
         {
             _brandDal.Update(brand);

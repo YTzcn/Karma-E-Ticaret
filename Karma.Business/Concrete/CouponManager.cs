@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
@@ -21,6 +23,7 @@ namespace Karma.Business.Concrete
         {
             _couponDal = couponDal;
         }
+        [FluentValidationAspect(typeof(CouponValidator))]
         public void Add(Coupon coupon)
         {
             if (_couponDal.Get(x => x.CouponCode == coupon.CouponCode) != null)
@@ -46,7 +49,7 @@ namespace Karma.Business.Concrete
         {
             return _couponDal.GetList(filter);
         }
-
+        [FluentValidationAspect(typeof(CouponValidator))]
         public void Update(Coupon coupon)
         {
             _couponDal.Update(coupon);

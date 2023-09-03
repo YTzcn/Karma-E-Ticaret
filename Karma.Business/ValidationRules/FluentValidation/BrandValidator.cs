@@ -12,17 +12,12 @@ namespace Karma.Business.ValidationRules.FluentValidation
 {
     public class BrandValidator : AbstractValidator<Brand>
     {
-        private readonly IBrandDal _brandDal;
-        public BrandValidator(IBrandDal brandDal)
+       
+        public BrandValidator()
         {
-            _brandDal = brandDal;
             RuleFor(x => x.BrandName).NotEmpty().WithMessage("Marka Adı Boş Geçilemez");
             RuleFor(x => x.Active).NotEmpty().WithMessage("Aktiflik Durumu Boş Geçilemez");
-            RuleFor(x => x.BrandName).MustAsync(async (name, cancellation) =>
-            {
-                bool exists = _brandDal.IsExsit(new Brand { BrandName = name });
-                return exists;
-            }).WithMessage("Marka Daha Önce Kayıt Edilmiş Lütfen Farklı Bir Marka Adı Giriniz");
+           
         }
     }
 }

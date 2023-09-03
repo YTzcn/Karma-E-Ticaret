@@ -11,13 +11,13 @@ namespace Karma.Business.Test
 {
     public class ProductManagerTest
     {
-        //[ExpectedException(typeof(ValidationException))]
         [Test]
         public void Product_Validation_Check()
         {
             Mock<IProductDal> mock = new Mock<IProductDal>();
             ProductManager productManager = new ProductManager(mock.Object);
-            productManager.Add(new Product {ProductName="Sanane LA" });
+
+            Assert.Throws<ValidationException>(() => productManager.Update(new Product { ProductId = 12, ProductName = "Çatal", Price = 20, Description = "asd", SubDescription = "ds", Active = true, BrandId = 3, CategoryId = 1, Color = "Sarý", UnitInStock = 30, Spesifications = new Spesification() })); ;
         }
     }
 }

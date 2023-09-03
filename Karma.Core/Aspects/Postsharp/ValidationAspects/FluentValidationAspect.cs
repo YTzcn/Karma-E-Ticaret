@@ -7,7 +7,7 @@ using FluentValidation;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using PostSharp.Aspects;
 
-namespace Karma.Core.Aspects.Postsharp
+namespace Karma.Core.Aspects.Postsharp.ValidationAspects
 {
     [Serializable]
     public class FluentValidationAspect : OnMethodBoundaryAspect

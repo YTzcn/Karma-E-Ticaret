@@ -13,10 +13,8 @@ namespace Karma.Business.ValidationRules.FluentValidation
 {
     public class ProductValidator : AbstractValidator<Product>
     {
-        //private readonly IProductDal _productDal;
-        public ProductValidator(/*IProductDal productDal*/)
+        public ProductValidator()
         {
-            //_productDal = productDal;
             RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Kategori Boş Geçilemez");
             RuleFor(x => x.ProductName).NotEmpty().WithMessage("Ürün Adı Boş Geçilemez");
             RuleFor(x => x.BrandId).NotEmpty().WithMessage("Marka Boş Olamaz");
@@ -25,6 +23,7 @@ namespace Karma.Business.ValidationRules.FluentValidation
             RuleFor(x => x.Color).NotEmpty().WithMessage("Renk Boş Geçilmez");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Açıklama Alanı Boş Geçilmez");
             RuleFor(x => x.SubDescription).NotEmpty().WithMessage("Alt Açıklama Alanı Boş Geçilmez");
+            RuleFor(x => x.ProductId).NotEmpty().WithMessage("Ürün Id Boş Olamaz");
 
             RuleFor(x => x.Spesifications.Width).NotEmpty().WithMessage("Ürün Genişliği Boş Geçilmez");
             RuleFor(x => x.Spesifications.Weight).NotEmpty().WithMessage("Ürün Ağırlığı Boş Geçilmez");
@@ -36,11 +35,6 @@ namespace Karma.Business.ValidationRules.FluentValidation
             RuleFor(x => x.Spesifications.WhenPacketing).NotEmpty().WithMessage("Paketleme Türü (Makine/El) Boş Geçilmez");
 
             RuleFor(x => x.ProductName).Length(2, 50).WithMessage("Ürün Adı Minimum 2 Maksimum 50 Karakter Olmalıdır");
-            //RuleFor(x => x.ProductName).MustAsync(async (name, cancellation) =>
-            //{
-            //    bool exists = _productDal.IsExsit(new Product { ProductName = name });
-            //    return exists;
-            //}).WithMessage("Aynı Ürün Adına Sahip Ürün Var Lütfen Farklı Bir Ürün Adı Girin");
 
         }
     }

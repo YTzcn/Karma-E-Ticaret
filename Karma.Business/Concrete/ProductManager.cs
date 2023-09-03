@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.DataAccess;
 using Karma.Entities.Concrete;
 
@@ -21,7 +22,7 @@ namespace Karma.Business.Concrete
             _productDal = productDal;
         }
         [FluentValidationAspect(typeof(ProductValidator))]
-        public virtual void Add(Product product)
+        public void Add(Product product)
         {
             _productDal.Add(product);
         }
@@ -39,7 +40,7 @@ namespace Karma.Business.Concrete
         {
             return _productDal.GetDetailsList(filter);
         }
-
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void Update(Product product)
         {
             _productDal.Update(product);
