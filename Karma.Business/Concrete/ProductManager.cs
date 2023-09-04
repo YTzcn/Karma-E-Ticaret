@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.CacheAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
+using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
 using Karma.DataAccess;
 using Karma.Entities.Concrete;
 
@@ -22,6 +24,7 @@ namespace Karma.Business.Concrete
             _productDal = productDal;
         }
         [FluentValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Add(Product product)
         {
             _productDal.Add(product);
@@ -35,7 +38,7 @@ namespace Karma.Business.Concrete
         {
             return _productDal.GetDetails(filter);
         }
-
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
         {
             return _productDal.GetDetailsList(filter);
@@ -45,7 +48,7 @@ namespace Karma.Business.Concrete
         {
             _productDal.Update(product);
         }
-
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
             var products = _productDal.GetDetailsList();

@@ -16,7 +16,6 @@
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="11.7.1" />
 		<PackageReference Include="Ninject" Version="3.3.6" />
-		<PackageReference Include="PostSharp" Version="6.10.18" />
 		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
 	</ItemGroup>
 
