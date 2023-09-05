@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using PostSharp.Aspects;
+using PostSharp.Serialization;
 
 namespace Karma.Core.Aspects.Postsharp.TransactionAspects
 {
-    [Serializable]
+    [PSerializable]
     public class TransactionScopeAspect : OnMethodBoundaryAspect
     {
         TransactionScopeOption _option;

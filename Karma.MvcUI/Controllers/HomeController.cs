@@ -6,11 +6,9 @@ namespace Karma.MvcUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IMailService _mailService;
         private readonly INewstellerSubService _newstellerSubService;
         public HomeController(IMailService mailService, INewstellerSubService newstellerSubService)
         {
-            _mailService = mailService;
             _newstellerSubService = newstellerSubService;
 
         }

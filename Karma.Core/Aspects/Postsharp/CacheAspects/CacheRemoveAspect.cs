@@ -8,10 +8,11 @@ using Karma.Core.CrossCuttingConcerns.Caching;
 using Microsoft.Extensions.Caching.Memory;
 using PostSharp.Aspects;
 using PostSharp.Aspects.Advices;
+using PostSharp.Serialization;
 
 namespace Karma.Core.Aspects.Postsharp.CacheAspects
 {
-    [Serializable]
+    [PSerializable]
     public class CacheRemoveAspect : OnMethodBoundaryAspect
     {
         private string _pattern;

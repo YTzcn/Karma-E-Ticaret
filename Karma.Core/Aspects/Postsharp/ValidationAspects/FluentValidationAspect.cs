@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using PostSharp.Aspects;
+using PostSharp.Serialization;
 
 namespace Karma.Core.Aspects.Postsharp.ValidationAspects
 {
-    [Serializable]
+    [PSerializable]
     public class FluentValidationAspect : OnMethodBoundaryAspect
     {
         Type _validatorType;
