@@ -12,6 +12,8 @@ using Karma.MvcUI.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace Karma.MvcUI
 {
     public class Program

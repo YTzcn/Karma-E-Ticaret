@@ -80,7 +80,7 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Detay(string urunAdi)
         {
-            var product = _productService.Get(x => x.ProductName == urunAdi.Replace('-', ' '));
+            var product = _productService.GetByProductName(urunAdi.Replace('-', ' '));
             if (product != null)
             {
                 var productCategory = _categoryService.Get(x => x.CategoryId == product.CategoryId).CategoryName;

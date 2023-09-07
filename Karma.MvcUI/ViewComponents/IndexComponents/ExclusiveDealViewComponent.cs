@@ -15,7 +15,7 @@ namespace Karma.MvcUI.ViewComponents.IndexComponents
         public ViewViewComponentResult Invoke()
         {
             Random random = new Random();
-            var Products = _productService.GetList().OrderBy(x => random.Next()).Take(3).ToList();
+            var Products = _productService.GetAll().OrderBy(x => random.Next()).Take(3).ToList();
             ExclusiveDealViewModel model = new ExclusiveDealViewModel
             {
                 Products = Products

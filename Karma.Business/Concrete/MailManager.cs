@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using Karma.Business.Abstract;
+using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Entities.Concrete;
 
 namespace Karma.Business.Concrete
@@ -40,7 +42,6 @@ namespace Karma.Business.Concrete
                 return false;
             }
         }
-
         public bool SendNewstellerMail(string receiverMail, string? imageUrl, string? message, string routeLink)
         {
             string smtpServer = "smtp.gmail.com";

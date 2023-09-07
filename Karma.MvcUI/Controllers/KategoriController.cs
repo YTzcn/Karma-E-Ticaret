@@ -46,7 +46,7 @@ namespace Karma.MvcUI.Controllers
             {
                 var currentCategory = _categoryService.Get(x => x.CategoryName.ToLower() == categoryName.ToLower()).CategoryId;
                 var brandIds = _brandService.GetAllId(x => brands != null && brands.Contains(x.BrandName));
-                var products = _productService.GetList(x => x.CategoryId == currentCategory);
+                var products = _productService.GetListByCategory(currentCategory);
 
                 if (brandIds.Length > 0 || color?.Length > 0 || upperValue != null || lowerValue != null)
                 {

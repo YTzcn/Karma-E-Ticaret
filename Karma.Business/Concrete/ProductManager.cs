@@ -9,8 +9,10 @@ using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
 using Karma.Core.Aspects.Postsharp.CacheAspects;
+using Karma.Core.Aspects.Postsharp.LogAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.DataAccess;
 using Karma.Entities.Concrete;
 
@@ -23,8 +25,7 @@ namespace Karma.Business.Concrete
         {
             _productDal = productDal;
         }
-        [FluentValidationAspect(typeof(ProductValidator))]
-        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+
         public void Add(Product product)
         {
             _productDal.Add(product);
@@ -34,21 +35,10 @@ namespace Karma.Business.Concrete
         {
             _productDal.Delete(product);
         }
-        public Product Get(Expression<Func<Product, bool>> filter = null)
-        {
-            return _productDal.GetDetails(filter);
-        }
-        [CacheAspect(typeof(MemoryCacheManager), 60)]
-        public List<Product> GetList(Expression<Func<Product, bool>> filter = null)
-        {
-            return _productDal.GetDetailsList(filter);
-        }
-        [FluentValidationAspect(typeof(ProductValidator))]
         public void Update(Product product)
         {
             _productDal.Update(product);
         }
-        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
             var products = _productDal.GetDetailsList();
@@ -84,7 +74,31 @@ namespace Karma.Business.Concrete
 
             return products;
         }
+        [LogAspect(typeof(FileLogger))]
+        [FluentValidationAspect(typeof(ProductValidator))]
+        public Product GetById(int Id)
+        {
+            return _productDal.GetDetails(x => x.ProductId == Id);
+        }
+        [LogAspect(typeof(FileLogger))]
+        public Product GetByProductName(string ProductName)
+        {
+            return _productDal.GetDetails(x => x.ProductName == ProductName);
+        }
 
+        public List<Product> GetListByCategory(int categoryId)
+        {
+            return _productDal.GetDetailsList(x => x.CategoryId == categoryId);
+        }
 
+        public List<Product> GetAll()
+        {
+            return _productDal.GetDetailsList();
+        }
+
+        public List<Product> GetListByBrandId(int brandId)
+        {
+            return _productDal.GetDetailsList(x => x.BrandId == brandId);
+        }
     }
 }

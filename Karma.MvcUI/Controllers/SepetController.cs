@@ -24,7 +24,7 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Index()
         {
-            
+
             var cart = _cartSessionService.GetCart();
             CartViewModel model = new CartViewModel
             {
@@ -34,7 +34,7 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult AddToCart(int productId, int? quantity = 1)
         {
-            var productToBeAdded = _productService.Get(x => x.ProductId == productId);
+            var productToBeAdded = _productService.GetById(productId);
             var cart = _cartSessionService.GetCart();
             _cartService.AddCart(cart, productToBeAdded, quantity);
             _cartSessionService.SetCart(cart);
@@ -50,7 +50,7 @@ namespace Karma.MvcUI.Controllers
             ViewBag.BannerTitle = "Sepetim";
             ViewBag.BannerArea1 = "Sepet";
             ViewBag.BannerArea2 = "Sepet Detayları";
-            var productToBeRemoved = _productService.Get(y => y.ProductId == productId);
+            var productToBeRemoved = _productService.GetById(productId);
             var cart = _cartSessionService.GetCart();
             _cartService.RemoveFromCart(cart, productId);
             if (!String.IsNullOrEmpty(cart.CouponCode))

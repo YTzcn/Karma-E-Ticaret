@@ -10,8 +10,11 @@ namespace Karma.Business.Abstract
 {
     public interface IProductService
     {
-        Product Get(Expression<Func<Product, bool>> filter = null);
-        List<Product> GetList(Expression<Func<Product, bool>> filter = null);
+        Product GetById(int Id);
+        Product GetByProductName(string ProductName);
+        List<Product> GetListByCategory(int categoryId);
+        List<Product> GetAll();
+        List<Product> GetListByBrandId(int brandId);
         void Add(Product product);
         void Delete(Product product);
         void Update(Product product);

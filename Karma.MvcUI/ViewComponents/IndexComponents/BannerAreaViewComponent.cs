@@ -18,7 +18,7 @@ namespace Karma.MvcUI.ViewComponents.IndexComponents
         public ViewViewComponentResult Invoke()
         {
             Random random = new Random();
-            var Product = _productService.GetList(x => x.Images.Count != 0).OrderBy(x => random.Next()).Take(5).ToList();
+            var Product = _productService.GetAll().Where(x => x.Images.Count != 0).OrderBy(x => random.Next()).Take(5).ToList();
             foreach (var item in Product)
             {
                 if (item.ProductName.Length > 20)

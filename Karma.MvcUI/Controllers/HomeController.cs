@@ -6,14 +6,16 @@ namespace Karma.MvcUI.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMailService _mailService;
         private readonly INewstellerSubService _newstellerSubService;
         public HomeController(IMailService mailService, INewstellerSubService newstellerSubService)
         {
             _newstellerSubService = newstellerSubService;
-
+            _mailService = mailService;
         }
         public IActionResult Index()
         {
+            //_mailService.SendNewstellerMail("yahyatezcan.yahya@gmail.com", "Deneme", "Deneme", "Deneme");
             return View();
         }
         [HttpGet]
