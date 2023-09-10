@@ -17,7 +17,11 @@ namespace Karma.Core.CrossCuttingConcerns.Logging.Log4Net
             _loggingEvent = loggingEvent;
         }
 
-        public object Message => _loggingEvent.MessageObject;
-        public string UserNamae => _loggingEvent.UserName;
+        //public object Message => _loggingEvent.MessageObject;
+        //public string UserNamae => _loggingEvent.UserName;
+        public object logDetail => _loggingEvent.MessageObject;
+        public DateTime log_date => DateTime.Now;
+        public object audit => _loggingEvent.Level;
+
     }
 }

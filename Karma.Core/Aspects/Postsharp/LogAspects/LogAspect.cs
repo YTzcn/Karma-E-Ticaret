@@ -44,7 +44,7 @@ namespace Karma.Core.Aspects.Postsharp.LogAspects
 
             try
             {
-                
+
 
                 var logParameters = args.Method.GetParameters().Select((t, i) => new LogParameter
                 {
@@ -60,7 +60,7 @@ namespace Karma.Core.Aspects.Postsharp.LogAspects
                     LogParameters = logParameters
                 };
 
-                _loggerService.Warn(logDetail);
+                _loggerService.Info(logDetail);
             }
             catch (Exception)
             {

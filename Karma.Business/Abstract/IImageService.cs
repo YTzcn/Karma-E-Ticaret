@@ -11,8 +11,8 @@ namespace Karma.Business.Abstract
 {
     public interface IImageService
     {
-        List<Image> GetList(Expression<Func<Image, bool>> filter = null);
-        Image Get(Expression<Func<Image, bool>> filter = null);
+        List<Image> GetAll();
+        Image GetById(int Id);
         void Add(Image image);
         void Delete(Image image);
         void Update(Image image);

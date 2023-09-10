@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Caching;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.CacheAspects;
+using Karma.Core.Aspects.Postsharp.LogAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
+using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
 
 namespace Karma.Business.Concrete
 {
+    [LogAspect(typeof(FileLogger))]
     public class CouponManager : ICouponService
     {
         private readonly ICouponDal _couponDal;
@@ -24,6 +30,7 @@ namespace Karma.Business.Concrete
             _couponDal = couponDal;
         }
         [FluentValidationAspect(typeof(CouponValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Add(Coupon coupon)
         {
             if (_couponDal.Get(x => x.CouponCode == coupon.CouponCode) != null)
@@ -34,22 +41,25 @@ namespace Karma.Business.Concrete
 
             _couponDal.Add(coupon);
         }
-
+        [FluentValidationAspect(typeof(CouponValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(Coupon coupon)
         {
             _couponDal.Delete(coupon);
         }
-
-        public Coupon Get(Expression<Func<Coupon, bool>> filter = null)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public Coupon GetById(int Id)
         {
-            return _couponDal.Get(filter);
+            return _couponDal.Get(x => x.Id == Id);
         }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
 
-        public List<Coupon> GetList(Expression<Func<Coupon, bool>> filter = null)
+        public List<Coupon> GetAll()
         {
-            return _couponDal.GetList(filter);
+            return _couponDal.GetList();
         }
         [FluentValidationAspect(typeof(CouponValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(Coupon coupon)
         {
             _couponDal.Update(coupon);
@@ -67,6 +77,11 @@ namespace Karma.Business.Concrete
             }
 
             return couponCode.ToString();
+        }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public Coupon GetByCouponCode(string Code)
+        {
+            return _couponDal.Get(c => c.CouponCode == Code && c.IsActive == true && c.ExpirationDate >= DateTime.Now);
         }
     }
 }

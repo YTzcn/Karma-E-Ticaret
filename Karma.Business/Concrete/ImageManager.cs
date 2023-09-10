@@ -6,12 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Core.Aspects.Postsharp.CacheAspects;
+using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.Aspects.Postsharp.ValidationAspects;
+using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities;
 
 namespace Karma.Business.Concrete
 {
+    [LogAspect(typeof(FileLogger))]
     public class ImageManager : IImageService
     {
         private readonly IImageDal _imageDal;
@@ -19,7 +25,8 @@ namespace Karma.Business.Concrete
         {
             _imageDal = imageDal;
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ImageValidator))]
         public void Add(Image image)
         {
             if (_imageDal.GetList(x => x.Products.ProductId == image.ProductId && x.IsMain == true).Count == 0)
@@ -29,22 +36,24 @@ namespace Karma.Business.Concrete
             ValidatorTool.FluentValidate(new ImageValidator(), image);
             _imageDal.Add(image);
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ImageValidator))]
         public void Delete(Image image)
         {
             _imageDal.Delete(image);
         }
-
-        public Image Get(Expression<Func<Image, bool>> filter = null)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public Image GetById(int Id)
         {
-            return _imageDal.Get(filter);
+            return _imageDal.Get(x => x.ImageId == Id);
         }
-
-        public List<Image> GetList(Expression<Func<Image, bool>> filter = null)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public List<Image> GetAll()
         {
-            return _imageDal.GetList(filter);
+            return _imageDal.GetList();
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ImageValidator))]
         public void Update(Image image)
         {
             _imageDal.Update(image);

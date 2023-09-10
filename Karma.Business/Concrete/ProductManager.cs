@@ -18,6 +18,7 @@ using Karma.Entities.Concrete;
 
 namespace Karma.Business.Concrete
 {
+    [LogAspect(typeof(DatabaseLogger))]
     public class ProductManager : IProductService
     {
         private readonly IProductDal _productDal;
@@ -25,21 +26,24 @@ namespace Karma.Business.Concrete
         {
             _productDal = productDal;
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void Add(Product product)
         {
             _productDal.Add(product);
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void Delete(Product product)
         {
             _productDal.Delete(product);
         }
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public void Update(Product product)
         {
             _productDal.Update(product);
         }
-        [LogAspect(typeof(DatabaseLogger))]
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
             var products = _productDal.GetDetailsList();
@@ -75,26 +79,27 @@ namespace Karma.Business.Concrete
 
             return products;
         }
-        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public Product GetById(int Id)
         {
             return _productDal.GetDetails(x => x.ProductId == Id);
         }
-        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public Product GetByProductName(string ProductName)
         {
             return _productDal.GetDetails(x => x.ProductName == ProductName);
         }
-        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetListByCategory(int categoryId)
         {
             return _productDal.GetDetailsList(x => x.CategoryId == categoryId);
         }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetAll()
         {
             return _productDal.GetDetailsList();
         }
-        [LogAspect(typeof(DatabaseLogger))]
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetListByBrandId(int brandId)
         {
             return _productDal.GetDetailsList(x => x.BrandId == brandId);

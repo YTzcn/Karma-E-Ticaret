@@ -17,7 +17,7 @@ namespace Karma.MvcUI.ViewComponents.IndexComponents
         public ViewViewComponentResult Invoke()
         {
 
-            var Brands = _brandService.GetList();
+            var Brands = _brandService.GetAll();
             BrandAreaViewModel model = new BrandAreaViewModel
             {
                 Brands = Brands

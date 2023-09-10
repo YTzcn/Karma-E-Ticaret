@@ -10,8 +10,9 @@ namespace Karma.Business.Abstract
 {
     public interface ICategoryService
     {
-        Category Get(Expression<Func<Category, bool>> filter = null);
-        List<Category> GetList(Expression<Func<Category, bool>> filter = null);
+        Category GetByCategoryName(string CategoryName);
+        Category GetById(int Id);
+        List<Category> GetAll();
         void Add(Category category);
         void Delete(Category category);
         void Update(Category category);

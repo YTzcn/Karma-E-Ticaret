@@ -21,7 +21,7 @@ namespace Karma.MvcUI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             builder.Services.AddControllersWithViews();
             builder.Services.AddSession();
             builder.Services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer("server=(localdb)\\MSSQLLocalDB;database=KarmaDb;Integrated Security=true;TrustServerCertificate=True;"));

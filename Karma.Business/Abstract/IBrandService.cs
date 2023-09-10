@@ -10,12 +10,12 @@ namespace Karma.Business.Abstract
 {
     public interface IBrandService
     {
-        List<Brand> GetList(Expression<Func<Brand, bool>> filter = null);
-        Brand Get(Expression<Func<Brand, bool>> filter = null);
+        List<Brand> GetAll();
+        Brand GetById(int Id);
         void Add(Brand brand);
         void Delete(Brand brand);
         void Update(Brand brand);
         bool IsExist(Brand brand);
-        int[]? GetAllId(Expression<Func<Brand, bool>> filter = null);
+        int[]? GetAllId(string[] brands);
     }
 }

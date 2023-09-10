@@ -18,7 +18,7 @@ namespace Karma.MvcUI.ViewComponents
         [HttpGet]
         public ViewViewComponentResult Invoke(int productId)
         {
-            var comments = _commentService.GetList(x => x.ProductId == productId);
+            var comments = _commentService.GetListByProductId(productId);
             CommentListViewModel model = new CommentListViewModel
             {
                 Comments = comments,

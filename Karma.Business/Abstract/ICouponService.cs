@@ -13,7 +13,8 @@ namespace Karma.Business.Abstract
         public void Add(Coupon coupon);
         public void Update(Coupon coupon);
         public void Delete(Coupon coupon);
-        public List<Coupon> GetList(Expression<Func<Coupon, bool>> filter = null);
-        public Coupon Get(Expression<Func<Coupon, bool>> filter = null);
+        public List<Coupon> GetAll();
+        public Coupon GetById(int Id);
+        public Coupon GetByCouponCode(string Code);
     }
 }

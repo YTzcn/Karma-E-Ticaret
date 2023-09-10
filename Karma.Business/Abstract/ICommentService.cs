@@ -10,8 +10,9 @@ namespace Karma.Business.Abstract
 {
     public interface ICommentService
     {
-        List<Comment> GetList(Expression<Func<Comment, bool>> filter = null);
-        Comment Get(Expression<Func<Comment, bool>> filter = null);
+        List<Comment> GetAll();
+        List<Comment> GetListByProductId(int ProductId);
+        Comment GetById(int Id);
         void Add(Comment comment);
         void Delete(Comment comment);
         void Update(Comment comment);

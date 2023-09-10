@@ -37,10 +37,10 @@ namespace Karma.MvcUI.Controllers
             var currentCategory = 0;
             if (!String.IsNullOrEmpty(categoryName))
             {
-                currentCategory = categoryName != null ? _categoryService.Get(x => x.CategoryName.ToLower() == categoryName.ToLower()).CategoryId : 0;
+                currentCategory = categoryName != null ? _categoryService.GetByCategoryName(categoryName).CategoryId : 0;
 
             }
-            var brandIds = _brandService.GetAllId(x => brands != null && brands.Contains(x.BrandName));
+            var brandIds = brands != null ? _brandService.GetAllId(brands) : _brandService.GetAll().Select(x => x.BrandId).ToArray();
             products = _productService.GetByFilter(currentCategory, brandIds, color, lowerValue, upperValue, key);
             if (!string.IsNullOrEmpty(shorting))
             {

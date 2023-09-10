@@ -10,8 +10,8 @@ namespace Karma.Business.Abstract
 {
     public interface IContactService
     {
-        public List<ContactMessage> GetList(Expression<Func<ContactMessage, bool>> filter = null);
-        public ContactMessage Get(Expression<Func<ContactMessage, bool>> filter = null);
+        public List<ContactMessage> GetAll();
+        public ContactMessage GetById(int Id);
         public void Add(ContactMessage entity);
         public void Update(ContactMessage entity);
         public void Delete(ContactMessage entity);

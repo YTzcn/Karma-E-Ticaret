@@ -40,7 +40,7 @@ namespace Karma.MvcUI.ViewComponents
             if (controller == "Ara")
             {
                 var categories = productListViewModel.ExistCategoriesId;
-                return categories.Select(category => _categoryService.Get(x => x.CategoryId == category)).ToList();
+                return categories.Select(category => _categoryService.GetById(category)).ToList();
             }
             else if (controller == "Kategori")
             {
@@ -59,18 +59,18 @@ namespace Karma.MvcUI.ViewComponents
             if (controller == "Ara")
             {
                 var brandIds = productListViewModel.ExistBrandsId;
-                brands.AddRange(brandIds.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+                brands.AddRange(brandIds.Select(brandId => _brandService.GetById(brandId)));
             }
             else if (controller == "Kategori")
             {
                 var productsInCategory = _productService.GetListByCategory(productListViewModel.CurrentCategory);
                 var brandIds = productsInCategory.Select(x => x.BrandId).Distinct();
-                brands.AddRange(brandIds.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+                brands.AddRange(brandIds.Select(brandId => _brandService.GetById(brandId)));
             }
             else if (controller == "Ürün")
             {
                 var productBrands = _productService.GetAll().Select(x => x.BrandId).Distinct();
-                brands.AddRange(productBrands.Select(brandId => _brandService.Get(x => x.BrandId == brandId)));
+                brands.AddRange(productBrands.Select(brandId => _brandService.GetById(brandId)));
             }
             return brands;
         }

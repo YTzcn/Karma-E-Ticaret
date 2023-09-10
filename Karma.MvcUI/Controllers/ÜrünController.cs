@@ -38,10 +38,10 @@ namespace Karma.MvcUI.Controllers
             var currentCategory = 0;
             if (!String.IsNullOrEmpty(categoryName))
             {
-                currentCategory = categoryName != null ? _categoryService.Get(x => x.CategoryName.ToLower() == categoryName.ToLower()).CategoryId : 0;
+                currentCategory = categoryName != null ? _categoryService.GetByCategoryName(categoryName).CategoryId : 0;
 
             }
-            var brandIds = _brandService.GetAllId(x => brands != null && brands.Contains(x.BrandName));
+            var brandIds = _brandService.GetAllId(brands);
             products = _productService.GetByFilter(currentCategory, brandIds, color, lowerValue, upperValue, null);
             if (!string.IsNullOrEmpty(shorting))
             {
@@ -83,7 +83,7 @@ namespace Karma.MvcUI.Controllers
             var product = _productService.GetByProductName(urunAdi.Replace('-', ' '));
             if (product != null)
             {
-                var productCategory = _categoryService.Get(x => x.CategoryId == product.CategoryId).CategoryName;
+                var productCategory = _categoryService.GetById(product.CategoryId).CategoryName;
                 ProductDetailViewModel model = new ProductDetailViewModel()
                 {
                     ProductDetail = product,

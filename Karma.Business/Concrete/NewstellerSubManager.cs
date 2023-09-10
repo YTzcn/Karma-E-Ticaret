@@ -5,11 +5,17 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
+using Karma.Core.Aspects.Postsharp.CacheAspects;
+using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Karma.Business.Concrete
 {
+    [LogAspect(typeof(FileLogger))]
     public class NewstellerSubManager : INewstellerSubService
     {
         private readonly INewstellerSubDal _newstellerSubDal;
@@ -17,22 +23,22 @@ namespace Karma.Business.Concrete
         {
             _newstellerSubDal = newstellerSubDal;
         }
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Add(NewstellerSub entity)
         {
             _newstellerSubDal.Add(entity);
         }
-
-        public NewstellerSub Get(Expression<Func<NewstellerSub, bool>> filter = null)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public NewstellerSub GetById(int Id)
         {
-            return _newstellerSubDal.Get(filter);
+            return _newstellerSubDal.Get(x => x.Id == Id);
         }
-
-        public List<NewstellerSub> GetList(Expression<Func<NewstellerSub, bool>> filter = null)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public List<NewstellerSub> GetAll()
         {
-            return _newstellerSubDal.GetList(filter);
+            return _newstellerSubDal.GetList();
         }
-
-        bool INewstellerSubService.IsExist(string email)
+        public bool IsExist(string email)
         {
             return _newstellerSubDal.Get(x => x.Email == email) != null ? true : false;
         }

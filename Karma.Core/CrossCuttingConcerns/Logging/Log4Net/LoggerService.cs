@@ -25,7 +25,6 @@ namespace Karma.Core.CrossCuttingConcerns.Logging.Log4Net
             log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo("log4net.config"));
             log4net.Util.LogLog.InternalDebugging = true;
             _log = LogManager.GetLogger(loggerRepository.Name, name);
-            _log.Info("dddddddddddd");
 
 
         }
@@ -40,6 +39,14 @@ namespace Karma.Core.CrossCuttingConcerns.Logging.Log4Net
         {
             if (IsInfoEnabled)
                 _log.Info(logMessage);
+            if (_log.Logger.Name == "DatabaseLogger")
+            {
+                _log.Info(logMessage);
+            }
+            if (_log.Logger.Name == "JsonFileLogger")
+            {
+                _log.Info(logMessage);
+            }
         }
 
         public void Debug(object logMessage)

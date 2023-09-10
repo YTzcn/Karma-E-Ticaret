@@ -23,7 +23,7 @@ namespace Karma.MvcUI.Controllers
         {
             bool first = true;
             var cart = _cartSessionService.GetCart();
-            decimal? couponPrice = _couponService.Get(x => x.CouponCode == cart.CouponCode)?.Price;
+            decimal? couponPrice = _couponService.GetByCouponCode(cart.CouponCode)?.Price;
             PaymentViewModel model = new PaymentViewModel()
             {
                 Cart = cart,
@@ -32,7 +32,7 @@ namespace Karma.MvcUI.Controllers
             ; if (x == "true")
             {
                 TempData.Add("message", "Ödemeniz başarıyla gerçekleşti.");
-                _mailService.SendSummaryMail("yahyatezcan.yahya@gmail.com",cart, couponPrice);
+                _mailService.SendSummaryMail("yahyatezcan.yahya@gmail.com", cart, couponPrice);
                 _cartService.RemoveCart(cart);
                 _cartSessionService.SetCart(cart);
                 return RedirectToAction("Index", "Home");

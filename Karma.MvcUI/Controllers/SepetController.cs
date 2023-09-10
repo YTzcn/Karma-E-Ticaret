@@ -55,7 +55,7 @@ namespace Karma.MvcUI.Controllers
             _cartService.RemoveFromCart(cart, productId);
             if (!String.IsNullOrEmpty(cart.CouponCode))
             {
-                var couponCode = _couponService.Get(x => x.CouponCode == cart.CouponCode).Price;
+                var couponCode = _couponService.GetByCouponCode(cart.CouponCode).Price;
                 if (cart.Total < couponCode)
                 {
                     _cartSessionService.SetCart(cart);
@@ -96,7 +96,7 @@ namespace Karma.MvcUI.Controllers
             }
             if (!String.IsNullOrEmpty(cart.CouponCode))
             {
-                var couponCode = _couponService.Get(x => x.CouponCode == cart.CouponCode).Price;
+                var couponCode = _couponService.GetByCouponCode(cart.CouponCode).Price;
                 if (cart.Total < couponCode)
                 {
                     _cartSessionService.SetCart(cart);
@@ -135,7 +135,8 @@ namespace Karma.MvcUI.Controllers
         {
             var cart = _cartSessionService.GetCart();
             CouponResultViewModel model;
-            decimal? price = _couponService.Get(c => c.CouponCode == couponCode && c.IsActive == true && c.ExpirationDate >= DateTime.Now)?.Price;
+            // decimal? price = _couponService.Get(c => c.CouponCode == couponCode && c.IsActive == true && c.ExpirationDate >= DateTime.Now)?.Price;
+            decimal? price = _couponService.GetByCouponCode(couponCode)?.Price;
             if (price > cart.Total)
             {
                 model = new CouponResultViewModel()

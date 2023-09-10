@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
+using Karma.Core.Aspects.Postsharp.CacheAspects;
+using Karma.Core.Aspects.Postsharp.LogAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
+using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
 
 namespace Karma.Business.Concrete
 {
+    [LogAspect(typeof(FileLogger))]
     public class BrandManager : IBrandService
     {
         private readonly IBrandDal _brandDal;
@@ -22,38 +27,45 @@ namespace Karma.Business.Concrete
             _brandDal = brandDal;
         }
         [FluentValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+
         public void Add(Brand brand)
         {
             _brandDal.Add(brand);
         }
 
+        [FluentValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(Brand brand)
         {
             _brandDal.Delete(brand);
         }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
 
-        public List<Brand> GetList(Expression<Func<Brand, bool>> filter = null)
+        public List<Brand> GetAll()
         {
-            return _brandDal.GetList(filter);
+            return _brandDal.GetList();
         }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
 
-        public Brand Get(Expression<Func<Brand, bool>> filter = null)
+        public Brand GetById(int Id)
         {
-            return _brandDal.Get(filter);
+            return _brandDal.Get(x => x.BrandId == Id);
         }
         [FluentValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(Brand brand)
         {
             _brandDal.Update(brand);
         }
-
-        int[]? IBrandService.GetAllId(Expression<Func<Brand, bool>> filter)
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public int[]? GetAllId(string[] brands)
         {
-            var Ids = _brandDal.GetList(filter).Select(x => x.BrandId).ToArray();
+            var Ids = _brandDal.GetList(x => x.Active == true && brands.Contains(x.BrandName)).Select(x => x.BrandId).ToArray();
             return Ids;
         }
-
-        bool IBrandService.IsExist(Brand brandName)
+        [FluentValidationAspect(typeof(BrandValidator))]
+        public bool IsExist(Brand brandName)
         {
             bool exist = _brandDal.Get(x => x.BrandName == brandName.BrandName) != null ? true : false;
             return exist;
