@@ -39,6 +39,7 @@ namespace Karma.Business.Concrete
         {
             _productDal.Update(product);
         }
+        [LogAspect(typeof(DatabaseLogger))]
         public List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key)
         {
             var products = _productDal.GetDetailsList();
@@ -74,28 +75,26 @@ namespace Karma.Business.Concrete
 
             return products;
         }
-        [LogAspect(typeof(FileLogger))]
-        [FluentValidationAspect(typeof(ProductValidator))]
+        [LogAspect(typeof(DatabaseLogger))]
         public Product GetById(int Id)
         {
             return _productDal.GetDetails(x => x.ProductId == Id);
         }
-        [LogAspect(typeof(FileLogger))]
+        [LogAspect(typeof(DatabaseLogger))]
         public Product GetByProductName(string ProductName)
         {
             return _productDal.GetDetails(x => x.ProductName == ProductName);
         }
-
+        [LogAspect(typeof(DatabaseLogger))]
         public List<Product> GetListByCategory(int categoryId)
         {
             return _productDal.GetDetailsList(x => x.CategoryId == categoryId);
         }
-
         public List<Product> GetAll()
         {
             return _productDal.GetDetailsList();
         }
-
+        [LogAspect(typeof(DatabaseLogger))]
         public List<Product> GetListByBrandId(int brandId)
         {
             return _productDal.GetDetailsList(x => x.BrandId == brandId);
