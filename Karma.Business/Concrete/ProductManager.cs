@@ -9,7 +9,7 @@ using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
 using Karma.Core.Aspects.Postsharp.CacheAspects;
-using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.Aspects.Postsharp.ExceptionsLogAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
 using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
@@ -18,7 +18,6 @@ using Karma.Entities.Concrete;
 
 namespace Karma.Business.Concrete
 {
-    [LogAspect(typeof(DatabaseLogger))]
     public class ProductManager : IProductService
     {
         private readonly IProductDal _productDal;

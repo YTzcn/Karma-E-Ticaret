@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Karma.Business.Abstract;
 using Karma.Core.Aspects.Postsharp.CacheAspects;
-using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.Aspects.Postsharp.ExceptionsLogAspects;
 using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
 using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.DataAccess.Abstract;
@@ -15,7 +15,6 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Karma.Business.Concrete
 {
-    [LogAspect(typeof(FileLogger))]
     public class NewstellerSubManager : INewstellerSubService
     {
         private readonly INewstellerSubDal _newstellerSubDal;

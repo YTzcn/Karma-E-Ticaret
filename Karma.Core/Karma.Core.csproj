@@ -18,5 +18,5 @@
     <PackageReference Include="PostSharp" Version="2023.0.7" />
     <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
   </ItemGroup>
-
+	
 </Project>

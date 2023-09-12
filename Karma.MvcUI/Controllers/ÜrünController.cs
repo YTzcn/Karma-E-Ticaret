@@ -83,11 +83,11 @@ namespace Karma.MvcUI.Controllers
             var product = _productService.GetByProductName(urunAdi.Replace('-', ' '));
             if (product != null)
             {
-                var productCategory = _categoryService.GetById(product.CategoryId).CategoryName;
+                var productCategory = _categoryService.GetById(product.CategoryId)/*.CategoryName*/;
                 ProductDetailViewModel model = new ProductDetailViewModel()
                 {
                     ProductDetail = product,
-                    ProductCategory = productCategory
+                    ProductCategory = productCategory.CategoryName
                 };
                 return View(model);
             }

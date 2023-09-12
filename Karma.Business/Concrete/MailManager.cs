@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using Karma.Business.Abstract;
-using Karma.Core.Aspects.Postsharp.LogAspects;
+using Karma.Core.Aspects.Postsharp.ExceptionsLogAspects;
 using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Entities.Concrete;
 

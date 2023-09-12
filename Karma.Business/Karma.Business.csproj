@@ -1,12 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DebugType>embedded</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DebugType>embedded</DebugType>
+	</PropertyGroup>
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Karma.Core\Karma.Core.csproj" />
 		<ProjectReference Include="..\Karma.DataAccess\Karma.DataAccess.csproj" />
@@ -19,9 +29,25 @@
 		<PackageReference Include="PostSharp" Version="2023.0.7" />
 		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
 	</ItemGroup>
+	<!-- Karma.Core.Aspects.Postsharp.ExceptionsAspects.ExceptionsLogAspect için AssemblyAttribute. -->
+	<ItemGroup>
+		<AssemblyAttribute Include="Karma.Core.Aspects.Postsharp.ExceptionsAspects.ExceptionsLogAspectAttribute">
+			<_Parameter1>System.Type, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Karma.Business.Concrete.FileLogger</_Parameter1>
+			<_Parameter2>AttributeTargetTypes = &quot;Karma.Business.Concrete.*&quot;</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<!-- Karma.Core.Aspects.Postsharp.LogAspects.LogAspect için AssemblyAttribute. -->
+	<ItemGroup>
+		<AssemblyAttribute Include="Karma.Core.Aspects.Postsharp.LogAspects.LogAspectAttribute">
+			<_Parameter1>System.Type, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Karma.Business.Concrete.FileLogger</_Parameter1>
+			<_Parameter2>AttributeTargetTypes = &quot;Karma.Business.Concrete.*&quot;</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Properties\" />
 	</ItemGroup>
+	
 
 </Project>
