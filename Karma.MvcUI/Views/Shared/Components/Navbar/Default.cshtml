@@ -52,7 +52,7 @@
     </div>
     <div class="search_input" id="search_input_box">
         <div class="container">
-            <form asp-controller="Ara" asp-action="Index" class="d-flex justify-content-between">
+            <form asp-controller="Ara" method="get" asp-action="Index" class="d-flex justify-content-between">
                 <input type="text" name="key" value="@(ViewBag.Key != null ? ViewBag.Key:null)" class="form-control" id="search_input" placeholder="Ürünlerde Ara">
                 <button type="submit" style="padding:1%;background:transparent;color:white;" class="btn">Ara</button>
             </form>

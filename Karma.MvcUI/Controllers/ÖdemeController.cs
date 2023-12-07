@@ -1,37 +1,69 @@
-﻿using Karma.Business.Abstract;
+﻿using System.Collections.Generic;
+using Karma.Business.Abstract;
+using Karma.Entities.Concrete;
 using Karma.MvcUI.Models.Them;
 using Karma.MvcUI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
+using Karma.MvcUI.Identity;
 
 namespace Karma.MvcUI.Controllers
 {
+    [Authorize]
     public class ÖdemeController : Controller
     {
         private readonly ICartService _cartService;
         private readonly ICartSessionService _cartSessionService;
         private readonly IMailService _mailService;
         private readonly ICouponService _couponService;
+        private readonly IOrderService _orderService;
+        private readonly UserManager<AppIdentityUser> _userManager;
 
-        public ÖdemeController(IProductService productService, ICartService cartService, ICartSessionService cartSessionService, ICouponService couponService, IMailService mailService)
+        public ÖdemeController(UserManager<AppIdentityUser> userManager, IProductService productService, ICartService cartService, ICartSessionService cartSessionService, ICouponService couponService, IMailService mailService, IOrderService orderService)
         {
             _cartService = cartService;
             _mailService = mailService;
             _cartSessionService = cartSessionService;
             _couponService = couponService;
+            _orderService = orderService;
+            _userManager = userManager;
         }
-        public IActionResult Index(string? x)
+        [HttpGet]
+        public IActionResult Index()
         {
-            bool first = true;
+
             var cart = _cartSessionService.GetCart();
             decimal? couponPrice = _couponService.GetByCouponCode(cart.CouponCode)?.Price;
             PaymentViewModel model = new PaymentViewModel()
             {
                 Cart = cart,
                 DiscountPrice = couponPrice,
-            }
-            ; if (x == "true")
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(string? x)
+        {
+            var id = _userManager.GetUserId(HttpContext.User);
+            var cart = _cartSessionService.GetCart();
+            decimal? couponPrice = _couponService.GetByCouponCode(cart.CouponCode)?.Price;
+            PaymentViewModel model = new PaymentViewModel()
+            {
+                Cart = cart,
+                DiscountPrice = couponPrice,
+            };
+            if (x == "true")
             {
                 TempData.Add("message", "Ödemeniz başarıyla gerçekleşti.");
+                Order order = new Order()
+                {
+                    UserId = id,
+                    Detail = JsonConvert.SerializeObject(cart),
+                    Total = cart.Total,
+                };
+                _orderService.Add(order);
                 _mailService.SendSummaryMail("yahyatezcan.yahya@gmail.com", cart, couponPrice);
                 _cartService.RemoveCart(cart);
                 _cartSessionService.SetCart(cart);
@@ -39,17 +71,8 @@ namespace Karma.MvcUI.Controllers
             }
             else
             {
-                if (first == true)
-                {
-                    first = false;
-                    return View(model);
-                }
-                else
-                {
-                    TempData.Add("alert", "Ödemede Hata Meydana Geldi Lütfen Tekrar Deneyin");
-                    return View(model);
-                }
-
+                TempData.Add("alert", "Ödemede Hata Meydana Geldi Lütfen Tekrar Deneyin");
+                return View(model);
             }
         }
     }

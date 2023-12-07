@@ -80,22 +80,24 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Ödeme Bilgileri</h4>
-                        <div class="mb-3">
-                            <label for="cardNumber" class="form-label">Kart Numarası</label>
-                            <input type="text" class="form-control" id="cardNumber" placeholder="**** **** **** ****" required>
+                    <form method="post">
+                        <div class="card-body">
+                            <h4 class="card-title">Ödeme Bilgileri</h4>
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Kart Numarası</label>
+                                <input type="text" class="form-control" id="cardNumber" placeholder="**** **** **** ****" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="expiryDate" class="form-label">Son Kullanma Tarihi</label>
+                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                            </div>
+                            <button formmethod="post" type="submit" asp-action="Index" asp-controller="Ödeme" asp-route-x="true" class="btn btn-primary">Ödeme Yap</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="expiryDate" class="form-label">Son Kullanma Tarihi</label>
-                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="cvv" class="form-label">CVV</label>
-                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
-                        </div>
-                        <a type="submit" asp-action="Index" asp-controller="Ödeme" asp-route-x="true" class="btn btn-primary">Ödeme Yap</a>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

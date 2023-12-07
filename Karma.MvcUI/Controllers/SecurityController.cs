@@ -25,7 +25,6 @@ namespace Karma.MvcUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
@@ -40,32 +39,32 @@ namespace Karma.MvcUI.Controllers
             {
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
-                    // Email isn't confirmed.
+                    // mail doğrulanmamış
                 }
 
                 if (!await _userManager.IsPhoneNumberConfirmedAsync(user))
                 {
-                    // Phone Number isn't confirmed.
+                    // telefon doğrulanmamış
                 }
             }
             else if (result.IsLockedOut)
             {
-                // Account is locked out.
+                // hesap kitlenmiş
             }
             else if (result.RequiresTwoFactor)
             {
-                // 2FA required.
+                // 2 faktör doğrulama lazım
             }
             else
             {
-                // Username or password is incorrect.
+                // kullanıcı adı ya da şifre yanlış 
                 if (user == null)
                 {
-                    // Username is incorrect.
+                    // kullanıcı adı yanlış
                 }
                 else
                 {
-                    // Password is incorrect.
+                    // şifre yanlış
                 }
             }
 
@@ -100,7 +99,7 @@ namespace Karma.MvcUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-
+            
             var user = new AppIdentityUser
             {
                 Email = model.Email,
