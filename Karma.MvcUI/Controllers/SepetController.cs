@@ -69,7 +69,7 @@ namespace Karma.MvcUI.Controllers
                 }
             }
             _cartSessionService.SetCart(cart);
-            if (!TempData.ContainsKey("alert"))
+            if (!TempData.ContainsKey("message"))
             {
                 TempData.Add("message", string.Format("Ürün {0} Başarıyla Sepetten Silindi", productToBeRemoved.ProductName));
             }
@@ -80,20 +80,23 @@ namespace Karma.MvcUI.Controllers
         [HttpPost]
         public JsonResult UpdateProductInCart(int productId, int quantity)
         {
-
+            decimal endPrice=0;
+            if (quantity == 0)
+            {
+                RemoveFromCart(productId);
+            }
             var cart = _cartSessionService.GetCart();
             var cartProduct = cart.CartLines.FirstOrDefault(x => x.Product.ProductId == productId);
-            cartProduct.Quantity = quantity;
-            decimal endPrice = cartProduct.Product.Price * quantity;
+            if (cartProduct != null)
+            {
+                cartProduct.Quantity = quantity;
+                endPrice = cartProduct.Product.Price * quantity;
+            }
             CartJsonViewModel model = new CartJsonViewModel
             {
                 EndPrice = endPrice,
                 CartTotal = cart.Total
             };
-            if (quantity == 0)
-            {
-                RemoveFromCart(productId);
-            }
             if (!String.IsNullOrEmpty(cart.CouponCode))
             {
                 var couponCode = _couponService.GetByCouponCode(cart.CouponCode).Price;

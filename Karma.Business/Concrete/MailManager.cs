@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using Karma.Business.Abstract;
-using Karma.Core.Aspects.Postsharp.ExceptionsLogAspects;
+using Karma.Core.Aspects.Postsharp.ExceptionsAspects;
 using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Karma.Entities.Concrete;
 
@@ -16,7 +16,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))
@@ -47,7 +47,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))
@@ -77,7 +77,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))
@@ -144,7 +144,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))
@@ -172,7 +172,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))
@@ -202,7 +202,7 @@ namespace Karma.Business.Concrete
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;
             string senderEmail = "uygulamachatapp@gmail.com";
-            string senderPassword = "xxeucbmgichvdnxa";
+            string senderPassword = "hvksvdyfxxvobsuo";
             try
             {
                 using (SmtpClient smtpClient = new SmtpClient(smtpServer))

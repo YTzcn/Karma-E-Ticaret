@@ -15,7 +15,6 @@ namespace Karma.MvcUI.Controllers
         }
         public IActionResult Index()
         {
-            //_mailService.SendNewstellerMail("yahyatezcan.yahya@gmail.com", "Deneme", "Deneme", "Deneme");
             return View();
         }
         [HttpGet]

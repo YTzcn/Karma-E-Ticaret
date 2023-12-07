@@ -8,7 +8,7 @@ using Karma.Business.Abstract;
 using Karma.Business.ValidationRules.FluentValidation;
 using Karma.Core.Aspects.Postsharp;
 using Karma.Core.Aspects.Postsharp.CacheAspects;
-using Karma.Core.Aspects.Postsharp.ExceptionsLogAspects;
+using Karma.Core.Aspects.Postsharp.ExceptionsAspects;
 using Karma.Core.Aspects.Postsharp.ValidationAspects;
 using Karma.Core.CrossCuttingConcerns.Caching.Microsoft;
 using Karma.Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
