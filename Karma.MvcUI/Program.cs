@@ -126,16 +126,13 @@ namespace Karma.MvcUI
             app.UseSession();
 
             app.UseAuthorization();
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //      name: "areas",
-            //      pattern: "{area:Admin}/{controller=Admin}/{action=Index}/{id?}"
-            //    );
-            //});
+           
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllerRoute(
+                name: "admin",
+                pattern: "{controller=Admin}/{action=Index}/{id?}");
             app.MapControllerRoute(
                  name: "categoryRoute",
             pattern: "Kategori/{categoryName?}/",
@@ -144,10 +141,7 @@ namespace Karma.MvcUI
                 name: "searchRoute",
            pattern: "Ara/{key?}/",
            defaults: new { controller = "Ara", action = "Index" });
-            app.MapControllerRoute(
-                name: "Admin",
-           pattern: "Admin",
-           defaults: new { area = "Admin", controller = "Admin", action = "Index" });
+           
 
             app.Run();
         }

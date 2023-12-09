@@ -1,0 +1,80 @@
+﻿@model AdminProductsViewModel
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">
+            <span class="text-muted fw-light">Account Settings /</span> Notifications
+        </h4>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active"><i class="bx bx-user me-1"></i> Tüm Ürünler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);"><i class="bx bx-bell me-1"></i> Azalan Ürünler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages-account-settings-connections.html"><i class="bx bx-link-alt me-1"></i> Stokta Olmayanlar</a>
+                    </li>
+                </ul>
+                <!--İÇERİK-->
+                <div class="table-responsive text-nowrap">
+                    <table id="table" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>KucukResim</th>
+                                <th>Urun Adi</th>
+                                <th>Kategori</th>
+                                <th>Fiyat</th>
+                                <th>Açıklama</th>
+                                <th>Aktiflik</th>
+                                <th>Düzenle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var x in Model.Products)
+                            {
+                                <tr>
+                                    <td>@x.ProductId</td>
+                                    <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url==null?"/KarmaUI/img/resimyok.jpg":(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url))" alt="@x.ProductName" style="max-height:100px;max-width:100px;" /></td>
+                                    <td>@x.ProductName</td>
+                                    <td>@x.CategoryId</td>
+                                    <td>@x.Price</td>
+                                    <td>@x.Description</td>
+                                    <td>
+                                        @if (x.Active == true)
+                                        {
+                                            <span class="badge bg-success">Aktif</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Pasif</span>
+                                        }
+                                    </td>
+                                    <td><a class="btn btn-outline-warning">Düzenle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script1 {
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+}
