@@ -103,5 +103,15 @@ namespace Karma.Business.Concrete
         {
             return _productDal.GetDetailsList(x => x.BrandId == brandId);
         }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public List<Product> GetProductLessThan5Quantity()
+        {
+            return _productDal.GetDetailsList(x => x.UnitInStock <= 5);
+        }
+        [CacheAspect(typeof(MemoryCacheManager), 60)]
+        public List<Product> OutOfStock()
+        {
+            return _productDal.GetDetailsList(x => x.UnitInStock <= 0);
+        }
     }
 }

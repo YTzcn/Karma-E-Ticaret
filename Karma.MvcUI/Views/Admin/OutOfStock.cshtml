@@ -1,6 +1,6 @@
 ﻿@model AdminProductsViewModel
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "DecreasingProducts";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="content-wrapper">
@@ -8,20 +8,20 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light">Ürünler/</span> Tüm Ürünler
+            <span class="text-muted fw-light">Ürünler/</span> Stokta Olmayanlar
         </h4>
 
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="bx bx-user me-1"></i> Tüm Ürünler</a>
+                        <a class="nav-link" href="/Admin/Products"><i class="bx bx-user me-1"></i> Tüm Ürünler</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Admin/DecreasingProducts"><i class="bx bx-bell me-1"></i> Azalan Ürünler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/OutOfStock"><i class="bx bx-link-alt me-1"></i> Stokta Olmayanlar</a>
+                        <a class="nav-link active" href="#"><i class="bx bx-link-alt me-1"></i> Stokta Olmayanlar</a>
                     </li>
                 </ul>
                 <!--İÇERİK-->
