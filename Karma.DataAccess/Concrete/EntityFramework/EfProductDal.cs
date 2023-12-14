@@ -16,7 +16,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             using (var context = new KarmaContext())
             {
-                var products = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).ToList() : context.Products.Include(c => c.Images).Where(filter).ToList();
+                var products = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).ToList() : context.Products.Include(c => c.Images).Include(x => x.Brand).Include(x => x.Category).Where(filter).ToList();
                 return products;
             }
         }
@@ -24,12 +24,12 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             using (var context = new KarmaContext())
             {
-                var product = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).FirstOrDefault() : context.Products.Include(c => c.Images).Where(filter).FirstOrDefault();
+                var product = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).FirstOrDefault() : context.Products.Include(c => c.Images).Include(x => x.Brand).Include(x => x.Category).Where(filter).FirstOrDefault();
                 return product;
             }
         }
 
-        bool IProductDal.IsExsit(Product product)
+        public bool IsExsit(Product product)
         {
             using (var context = new KarmaContext())
             {

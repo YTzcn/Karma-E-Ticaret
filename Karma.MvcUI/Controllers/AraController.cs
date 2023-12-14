@@ -53,9 +53,9 @@ namespace Karma.MvcUI.Controllers
             }
             var totalCount = products.Count;
             var pagedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            var existCategories = products.Select(x => x.CategoryId).Distinct().ToList();
+            var existCategories = products.Select(x => x.Category.CategoryId).Distinct().ToList();
             var existColors = products.Select(x => x.Color).Distinct().ToList();
-            var existBrandsId = products.Select(x => x.BrandId).Distinct().ToList();
+            var existBrandsId = products.Select(x => x.Brand.BrandId).Distinct().ToList();
             model = new ProductListViewModel
             {
                 ExistCategoriesId = existCategories,

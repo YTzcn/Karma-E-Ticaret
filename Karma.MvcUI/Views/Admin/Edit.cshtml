@@ -7,68 +7,112 @@
 <div class="card mb-4">
     <h5 class="card-header">Düzenle - @Model.Product.ProductName</h5>
     <div class="card-body">
-        <form asp-action="Edit" asp-controller="Admin" method="post">
-            @Html.HiddenFor(x => x.Product.ProductId)
-            <div class="mb-3 row">
-                <label for="html5-text-input" class="col-md-2 col-form-label">Ürün Adı</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.ProductName" type="text" value="@Model.Product.ProductName" />
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">Ürün & Stok Bilgilari</button>
+                </h2>
+                <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <form asp-action="Edit" asp-controller="Admin" method="post">
+                            @Html.HiddenFor(x => x.Product.ProductId)
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label">Ürün Adı</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.ProductName" type="text" value="@Model.Product.ProductName" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlSelect1" class="form-label">Marka</label>
+                                @Html.DropDownListFor(x => x.Product.Brand.BrandId, (List<SelectListItem>)Model.BrandListItem, new { @class = "form-select" })
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlSelect1" class="form-label">Kategori</label>
+                                @Html.DropDownListFor(x => x.Product.Category.CategoryId, (List<SelectListItem>)Model.CategoryListItem, new { @class = "form-select" })
+
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="html5-search-input" class="col-md-2 col-form-label">Fiyat</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.Price" type="text" value="@Model.Product.Price" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="html5-email-input" class="col-md-2 col-form-label">Açıklama</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.Description" type="text" value="@Model.Product.Description" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="html5-url-input" class="col-md-2 col-form-label">Alt Açıklama</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.SubDescription" type="text" value="@Model.Product.SubDescription" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="html5-url-input" class="col-md-2 col-form-label">Stok Adedi</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.UnitInStock" type="text" value="@Model.Product.UnitInStock" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="html5-url-input" class="col-md-2 col-form-label">Renk</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Product.Color" type="text" value="@Model.Product.Color" />
+                                </div>
+                            </div>
+
+                            <div class="form-check form-switch mb-2">
+                                @Html.CheckBoxFor(x => x.Product.Active, new { @class = "form-check-input" })
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Aktif</label>
+                            </div>
+
+                            <br />
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlSelect1" class="form-label">Marka</label>
-                @Html.DropDownListFor(x => x.Product.BrandId, (List<SelectListItem>)Model.BrandListItem, new { @class = "form-select" })
-            </div>
 
-            <div class="mb-3">
-                <label for="exampleFormControlSelect1" class="form-label">Kategori</label>
-                @Html.DropDownListFor(x => x.Product.CategoryId, (List<SelectListItem>)Model.CategoryListItem, new { @class = "form-select" })
+        </div>
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
+                        Resimler
+                    </button>
+                </h2>
 
-            </div>
-
-            <div class="mb-3 row">
-                <label for="html5-search-input" class="col-md-2 col-form-label">Fiyat</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.Price" type="text" value="@Model.Product.Price" />
+                <div id="accordionTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ResimÖnizleme</th>
+                                        <th>Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @foreach (var item in Model.Product.Images)
+                                    {
+                                        <tr>
+                                            @item.
+                                            <td><img src="@(item.Url==null?"/KarmaUI/img/resimyok.jpg":(item.Url))" alt="@item.Products.ProductName" style="max-height:100px;max-width:100px;" /></td>
+                                            <td><a class="btn btn-outline-danger" href="~/Admin/DeleteImage/@item.Products.Images.">Sil</a></td>
+                                        </tr>
+                                    }
+                                    <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="mb-3 row">
-                <label for="html5-email-input" class="col-md-2 col-form-label">Açıklama</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.Description" type="text" value="@Model.Product.Description" />
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label for="html5-url-input" class="col-md-2 col-form-label">Alt Açıklama</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.SubDescription" type="text" value="@Model.Product.SubDescription" />
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label for="html5-url-input" class="col-md-2 col-form-label">Stok Adedi</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.UnitInStock" type="text" value="@Model.Product.UnitInStock" />
-                </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label for="html5-url-input" class="col-md-2 col-form-label">Renk</label>
-                <div class="col-md-10">
-                    <input class="form-control" asp-for="Product.Color" type="text" value="@Model.Product.Color" />
-                </div>
-            </div>
-
-            <div class="form-check form-switch mb-2">
-                @Html.CheckBoxFor(x=>x.Product.Active,new {@class="form-check-input"})
-                <label class="form-check-label" for="flexSwitchCheckDefault">Aktif</label>
-            </div>
-
-            <br />
-            <button type="submit" class="btn btn-success">Kaydet</button>
-        </form>
-    </div>
-</div>
 

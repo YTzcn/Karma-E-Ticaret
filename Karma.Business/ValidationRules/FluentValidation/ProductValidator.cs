@@ -15,9 +15,9 @@ namespace Karma.Business.ValidationRules.FluentValidation
     {
         public ProductValidator()
         {
-            RuleFor(x => x.CategoryId).NotEmpty().WithMessage("Kategori Boş Geçilemez");
+            RuleFor(x => x.Category.CategoryId).NotEmpty().WithMessage("Kategori Boş Geçilemez");
             RuleFor(x => x.ProductName).NotEmpty().WithMessage("Ürün Adı Boş Geçilemez");
-            RuleFor(x => x.BrandId).NotEmpty().WithMessage("Marka Boş Olamaz");
+            RuleFor(x => x.Brand.BrandId).NotEmpty().WithMessage("Marka Boş Olamaz");
             RuleFor(x => x.Active).NotNull().WithMessage("Aktiflik Durumu Boş Olamaz");
             RuleFor(x => x.UnitInStock).NotNull().WithMessage("Stok Boş Geçilmez");
             RuleFor(x => x.Color).NotEmpty().WithMessage("Renk Boş Geçilmez");

@@ -64,12 +64,12 @@ namespace Karma.MvcUI.ViewComponents
             else if (controller == "Kategori")
             {
                 var productsInCategory = _productService.GetListByCategory(productListViewModel.CurrentCategory);
-                var brandIds = productsInCategory.Select(x => x.BrandId).Distinct();
+                var brandIds = productsInCategory.Select(x => x.Brand.BrandId).Distinct();
                 brands.AddRange(brandIds.Select(brandId => _brandService.GetById(brandId)));
             }
             else if (controller == "Ürün")
             {
-                var productBrands = _productService.GetAll().Select(x => x.BrandId).Distinct();
+                var productBrands = _productService.GetAll().Select(x => x.Brand.BrandId).Distinct();
                 brands.AddRange(productBrands.Select(brandId => _brandService.GetById(brandId)));
             }
             return brands;

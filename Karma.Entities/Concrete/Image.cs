@@ -11,7 +11,7 @@ namespace Karma.Entities
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
-
+        public bool Active { get; set; }
         public Product Products { get; set; }
     }
 }

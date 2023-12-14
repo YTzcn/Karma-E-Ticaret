@@ -52,7 +52,7 @@ namespace Karma.Business.Concrete
             }
             if (brandId.Length != 0)
             {
-                products = products.Where(x => brandId.Contains(x.BrandId)).ToList();
+                products = products.Where(x => brandId.Contains(x.Brand.BrandId)).ToList();
             }
             if (color.Length != 0)
             {
@@ -73,7 +73,7 @@ namespace Karma.Business.Concrete
             if (categoryId != null)
             {
                 if (categoryId != 0)
-                    products = products.Where(x => x.CategoryId == categoryId).ToList();
+                    products = products.Where(x => x.Category.CategoryId == categoryId).ToList();
             }
 
             return products;
@@ -91,7 +91,7 @@ namespace Karma.Business.Concrete
         [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetListByCategory(int categoryId)
         {
-            return _productDal.GetDetailsList(x => x.CategoryId == categoryId);
+            return _productDal.GetDetailsList(x => x.Category.CategoryId == categoryId);
         }
         [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetAll()
@@ -101,7 +101,7 @@ namespace Karma.Business.Concrete
         [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetListByBrandId(int brandId)
         {
-            return _productDal.GetDetailsList(x => x.BrandId == brandId);
+            return _productDal.GetDetailsList(x => x.Brand.BrandId == brandId);
         }
         [CacheAspect(typeof(MemoryCacheManager), 60)]
         public List<Product> GetProductLessThan5Quantity()

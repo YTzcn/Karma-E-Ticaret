@@ -48,8 +48,8 @@
                                     <td>@x.ProductId</td>
                                     <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url==null?"/KarmaUI/img/resimyok.jpg":(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url))" alt="@x.ProductName" style="max-height:100px;max-width:100px;" /></td>
                                     <td>@x.ProductName</td>
-                                    <td>@x.CategoryId</td>
-                                    <td>@x.BrandId</td>
+                                    <td>@x.Category.CategoryName</td>
+                                    <td>@x.Brand.BrandName</td>
                                     <td>@x.UnitInStock</td>
                                     <td>@x.Price</td>
                                     <td>@x.Description</td>

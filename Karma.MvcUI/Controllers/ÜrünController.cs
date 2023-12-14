@@ -54,9 +54,9 @@ namespace Karma.MvcUI.Controllers
             }
             var totalCount = products.Count;
             var pagedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            var existCategories = products.Select(x => x.CategoryId).Distinct().ToList();
+            var existCategories = products.Select(x => x.Category.CategoryId).Distinct().ToList();
             var existColors = products.Select(x => x.Color).Distinct().ToList();
-            var existBrandsId = products.Select(x => x.BrandId).Distinct().ToList();
+            var existBrandsId = products.Select(x => x.Brand.BrandId).Distinct().ToList();
             model = new ProductListViewModel
             {
                 Categories = _categoryService.GetAllActive(),
@@ -83,7 +83,7 @@ namespace Karma.MvcUI.Controllers
             var product = _productService.GetByProductName(urunAdi.Replace('-', ' '));
             if (product != null)
             {
-                var productCategory = _categoryService.GetById(product.CategoryId)/*.CategoryName*/;
+                var productCategory = _categoryService.GetById(product.Category.CategoryId)/*.CategoryName*/;
                 ProductDetailViewModel model = new ProductDetailViewModel()
                 {
                     ProductDetail = product,

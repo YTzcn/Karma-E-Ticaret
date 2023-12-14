@@ -13,11 +13,13 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly IProductService _productService;
         private readonly IBrandService _brandService;
         private readonly ICategoryService _categoryService;
-        public AdminController(IProductService productService, IBrandService brandService, ICategoryService categoryService)
+        private readonly IImageService _imageService;
+        public AdminController(IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService)
         {
             _productService = productService;
             _brandService = brandService;
             _categoryService = categoryService;
+            _imageService = imageService;
         }
         public IActionResult Index()
         {
@@ -80,6 +82,20 @@ namespace Karma.MvcUI.Controllers.Admin
                 Products = products
             };
             return View(model);
+        }
+        public JsonResult DeleteImage(int Id)
+        {
+            try
+            {
+                //_imageService.DeactiveImage(Id);
+                return Json(Ok());
+            }
+            catch (Exception)
+            {
+
+                return Json(BadRequest());
+            }
+
         }
     }
 }
