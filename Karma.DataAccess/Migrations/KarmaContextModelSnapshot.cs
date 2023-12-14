@@ -43,7 +43,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Brand", b =>
@@ -67,7 +67,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("BrandId");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>
@@ -100,7 +100,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.ContactMessage", b =>
@@ -136,7 +136,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactMessages");
+                    b.ToTable("ContactMessages", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Coupon", b =>
@@ -168,7 +168,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.NewstellerSub", b =>
@@ -188,7 +188,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NewstellerSubs");
+                    b.ToTable("NewstellerSubs", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Order", b =>
@@ -212,7 +212,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Product", b =>
@@ -256,11 +256,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("BrandId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Spesification", b =>
@@ -310,7 +306,7 @@ namespace Karma.DataAccess.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("Spesifications");
+                    b.ToTable("Spesifications", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Image", b =>
@@ -320,9 +316,6 @@ namespace Karma.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -345,7 +338,7 @@ namespace Karma.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Comment", b =>
@@ -357,25 +350,6 @@ namespace Karma.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Karma.Entities.Concrete.Product", b =>
-                {
-                    b.HasOne("Karma.Entities.Concrete.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Karma.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Karma.Entities.Concrete.Spesification", b =>
