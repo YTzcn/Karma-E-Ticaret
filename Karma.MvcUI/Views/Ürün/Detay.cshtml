@@ -15,12 +15,12 @@
                         @foreach (var item in Model.ProductDetail.Images)
                         {
                             <div class="single-prd-item">
-                                <img class="img-fluid" src="@item.Url" alt="@Model.ProductDetail.ProductName">
+                                <img class="img-fluid"  src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/@item.PublicId" alt="@Model.ProductDetail.ProductName"/>
                             </div>
                             if (Model.ProductDetail.Images.Count == 1)
                             {
                                 <div class="single-prd-item">
-                                    <img class="img-fluid" src="@item.Url" alt="@Model.ProductDetail.ProductName">
+                                <img class="img-fluid"  src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/ +@item.PublicId" alt="@Model.ProductDetail.ProductName"/>
                                 </div>
                             }
                         }
@@ -28,11 +28,11 @@
                     else
                     {
                         <div class="single-prd-item">
-                            <img class="img-fluid" src="~/KarmaUI/img/resimyok.jpg" alt="@Model.ProductDetail.ProductName">
+                            <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/vqzqxfbthc3ez7i18pim" alt="@Model.ProductDetail.ProductName">
                         </div>
 
                         <div class="single-prd-item">
-                            <img class="img-fluid" src="~/KarmaUI/img/resimyok.jpg" alt="@Model.ProductDetail.ProductName">
+                            <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/vqzqxfbthc3ez7i18pim" alt="@Model.ProductDetail.ProductName">
                         </div>
                     }
 

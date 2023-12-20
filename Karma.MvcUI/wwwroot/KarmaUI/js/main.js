@@ -1,6 +1,4 @@
-function toggleRadio(radio) {
-    radio.checked = !radio.checked;
-}
+
 $(document).ready(function () {
     "use strict";
 
@@ -80,24 +78,33 @@ $(document).ready(function () {
         items: 1,
         autoplay: false,
         autoplayTimeout: 5000,
-        loop: true,
+        loop: false,
         nav: false,
-        dots: true
+        dots: false
     });
 
     /*=================================
     Javascript for exclusive area carousel
     ==================================*/
+    //$(".active-exclusive-product-slider").owlCarousel({
+    //    items:1,
+    //    autoplay:false,
+    //    autoplayTimeout: 5000,
+    //    loop: false,
+    //    nav: false,
+    //    navText: ["<img src='/KarmaUI/img/product/prev.png'>","<img src='/KarmaUI/img/product/next.png'>"],
+    //    dots:false
+    //});
+
     $(".active-exclusive-product-slider").owlCarousel({
         items: 3,
         autoplay: false,
         autoplayTimeout: 5000,
-        loop: true,
+        loop: false,
         nav: false,
         navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
         dots: false
     });
-
     //--------- Accordion Icon Change ---------//
 
     $('.collapse').on('shown.bs.collapse', function () {
