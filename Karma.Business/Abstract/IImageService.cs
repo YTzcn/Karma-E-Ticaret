@@ -16,5 +16,6 @@ namespace Karma.Business.Abstract
         void Add(Image image);
         void Delete(Image image);
         void Update(Image image);
+        void DeactiveImage(int ıd);
     }
 }

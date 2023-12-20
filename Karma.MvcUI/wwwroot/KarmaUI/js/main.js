@@ -89,11 +89,11 @@ $(document).ready(function () {
     Javascript for exclusive area carousel
     ==================================*/
     $(".active-exclusive-product-slider").owlCarousel({
-        items: 1,
+        items: 3,
         autoplay: false,
         autoplayTimeout: 5000,
         loop: true,
-        nav: true,
+        nav: false,
         navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
         dots: false
     });

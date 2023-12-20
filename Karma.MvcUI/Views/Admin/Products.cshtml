@@ -46,7 +46,7 @@
                             {
                                 <tr>
                                     <td>@x.ProductId</td>
-                                    <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url==null?"/KarmaUI/img/resimyok.jpg":(x.Images.FirstOrDefault(x=>x.IsMain==true)?.Url))" alt="@x.ProductName" style="max-height:100px;max-width:100px;" /></td>
+                                    <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/"+(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@x.ProductName" /></td>
                                     <td>@x.ProductName</td>
                                     <td>@x.Category.CategoryName</td>
                                     <td>@x.Brand.BrandName</td>

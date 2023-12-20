@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CloudinaryDotNet" Version="1.24.0" />
 		<PackageReference Include="FluentValidation" Version="11.7.1" />
 		<PackageReference Include="Ninject" Version="3.3.6" />
 		<PackageReference Include="PostSharp" Version="2023.0.7" />
@@ -33,7 +34,7 @@
 	<ItemGroup>
 		<AssemblyAttribute Include="Karma.Core.Aspects.Postsharp.ExceptionsAspects.ExceptionsLogAspectAttribute">
 			<_Parameter1>System.Type, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Karma.Business.Concrete.FileLogger</_Parameter1>
-			<_Parameter2>AttributeTargetTypes = &quot;Karma.Business.Concrete.*&quot;</_Parameter2>
+			<_Parameter2>AttributeTargetTypes = "Karma.Business.Concrete.*"</_Parameter2>
 		</AssemblyAttribute>
 	</ItemGroup>
 
@@ -41,7 +42,7 @@
 	<ItemGroup>
 		<AssemblyAttribute Include="Karma.Core.Aspects.Postsharp.LogAspects.LogAspectAttribute">
 			<_Parameter1>System.Type, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Karma.Business.Concrete.FileLogger</_Parameter1>
-			<_Parameter2>AttributeTargetTypes = &quot;Karma.Business.Concrete.*&quot;</_Parameter2>
+			<_Parameter2>AttributeTargetTypes = "Karma.Business.Concrete.*"</_Parameter2>
 		</AssemblyAttribute>
 	</ItemGroup>
 

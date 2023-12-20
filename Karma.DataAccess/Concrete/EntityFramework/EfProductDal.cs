@@ -16,7 +16,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             using (var context = new KarmaContext())
             {
-                var products = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).ToList() : context.Products.Include(c => c.Images).Include(x => x.Brand).Include(x => x.Category).Where(filter).ToList();
+                var products = filter == null ? context.Products.Include(i => i.Images.Where(X => X.Active == true)).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).ToList() : context.Products.Include(i => i.Images.Where(X => X.Active == true)).Include(x => x.Brand).Include(x => x.Category).Where(filter).ToList();
                 return products;
             }
         }
@@ -24,7 +24,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             using (var context = new KarmaContext())
             {
-                var product = filter == null ? context.Products.Include(i => i.Images).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).FirstOrDefault() : context.Products.Include(c => c.Images).Include(x => x.Brand).Include(x => x.Category).Where(filter).FirstOrDefault();
+                var product = filter == null ? context.Products.Include(i => i.Images.Where(X => X.Active == true)).Include(s => s.Spesifications).Include(x => x.Brand).Include(x => x.Category).FirstOrDefault() : context.Products.Include(i => i.Images.Where(X => X.Active == true)).Include(x => x.Brand).Include(x => x.Category).Where(filter).FirstOrDefault();
                 return product;
             }
         }

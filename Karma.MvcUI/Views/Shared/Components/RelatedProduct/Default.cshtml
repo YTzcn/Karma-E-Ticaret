@@ -24,7 +24,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="single-related-product d-flex">
                                 <a href="#">
-                                    <img style="max-width:50px;max-height:50px;" src="@(product.Images.FirstOrDefault(x=>x.IsMain==true)?.Url==null?"/KarmaUI/img/resimyok.jpg":(product.Images.FirstOrDefault(x=>x.IsMain==true)?.Url))" alt="">
+                                    <img src="@(product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_50,w_50/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_50,w_50/f_auto,q_auto/"+(product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@product.ProductName" />
                                 </a>
                                 <div class="desc">
                                     <a href="~/Ürün/Detay?urunAdi=@product.ProductName.Replace(" ","-")" class="title">@product.ProductName</a>

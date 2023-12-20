@@ -16,8 +16,8 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="single-product">
                         <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(' ','-')">
-                            <img class="img-fluid" style="max-height:250px;min-height:250px;" src='@(item.Images.FirstOrDefault(x=>x.IsMain==true)?.Url==null?"/KarmaUI/img/resimyok.jpg":(item.Images.FirstOrDefault(x=>x.IsMain==true)?.Url))' alt="@item.ProductName">
-                        </a>
+                            <img src="@(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_250,w_250/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_250,w_250/f_auto,q_auto/"+(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@item.ProductName" />
+S                        </a>
                         <div class="product-details">
                             <p>
                                 <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(' ','-')">

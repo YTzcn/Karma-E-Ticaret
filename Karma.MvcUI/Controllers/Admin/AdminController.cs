@@ -1,10 +1,10 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.IO;
 using Karma.Business.Abstract;
+using Karma.Entities;
 using Karma.Entities.Concrete;
 using Karma.MvcUI.Models.Admin;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Karma.MvcUI.Controllers.Admin
 {
@@ -83,12 +83,13 @@ namespace Karma.MvcUI.Controllers.Admin
             };
             return View(model);
         }
-        public JsonResult DeleteImage(int Id)
+        [HttpGet]
+        public IActionResult DeleteImage(int id, int productId)
         {
             try
             {
-                //_imageService.DeactiveImage(Id);
-                return Json(Ok());
+                _imageService.DeactiveImage(id);
+                return Redirect("~/Admin/Edit/" + productId);
             }
             catch (Exception)
             {
@@ -96,6 +97,24 @@ namespace Karma.MvcUI.Controllers.Admin
                 return Json(BadRequest());
             }
 
+        }
+        [HttpPost]
+        public IActionResult UploadImage(int ProductId, string url, IFormFile file)
+        {
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), file.FileName);
+            using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
+            {
+                file.CopyTo(stream);
+            }
+            Image image = new Image()
+            {
+                Url = filePath,
+                ProductId = ProductId
+            };
+            _imageService.Add(image);
+            System.IO.File.Delete(filePath);
+            return Redirect("~/Admin/Edit/" + ProductId);
         }
     }
 }

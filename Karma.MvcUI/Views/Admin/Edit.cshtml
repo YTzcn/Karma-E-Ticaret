@@ -103,16 +103,35 @@
                                     @foreach (var item in Model.Product.Images)
                                     {
                                         <tr>
-                                            @item.
-                                            <td><img src="@(item.Url==null?"/KarmaUI/img/resimyok.jpg":(item.Url))" alt="@item.Products.ProductName" style="max-height:100px;max-width:100px;" /></td>
-                                            <td><a class="btn btn-outline-danger" href="~/Admin/DeleteImage/@item.Products.Images.">Sil</a></td>
+                                            <td><img src="https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/\@(item.PublicId)" style="max-height:100px;max-width:100px;" /></td>
+                                            <td><a class="btn btn-outline-danger" href="~/Admin/DeleteImage?id=@item.ImageId&productId=@Model.Product.ProductId">Sil</a></td>
                                         </tr>
                                     }
                                     <tr></tr>
                                 </tbody>
-                            </table>
+                            </table><br />
                         </div>
+                        <h3><small class="text-muted">Resim Ekle</small></h3>
+                        @* <form asp-action="UploadImage" asp-controller="Admin">
+
+                        <input name="url" class="form-control" id="fileee" type="file" asp-route-ProductId="@Model.Product.ProductId" />
+                        @Html.TextBox("file", "", new { name = "url", type = "file" })
+                        <br />
+                        <h1 id="label">aa</h1>
+                        <button type="submit" class="btn btn-outline-success">Ekle</button>
+                        </form> *@
+                        <form action="/Admin/UploadImage" method="post" enctype="multipart/form-data">
+                            <input name="ProductId" value="@Model.Product.ProductId" type="hidden" />
+                            <label for="file">Resim Seç:</label>
+                            <input type="file" name="file" id="file" />
+                            <input type="submit" value="Yükle" />
+                        </form>
+
                     </div>
+                    @TempData["bilgi"]
                 </div>
             </div>
 
+            @section dosyaAl {
+
+            }

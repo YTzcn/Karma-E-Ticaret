@@ -12,8 +12,8 @@ namespace Karma.Business.ValidationRules.FluentValidation
     {
         public ImageValidator()
         {
-            RuleFor(X => X.PublicId).NotEmpty().WithMessage("Public Id Boş Olamaz");
-            RuleFor(X => X.Url).NotEmpty().WithMessage("Url Boş Olamaz");
+            //RuleFor(X => X.PublicId).NotEmpty().WithMessage("Public Id Boş Olamaz");
+            //RuleFor(X => X.Url).NotEmpty().WithMessage("Url Boş Olamaz");
         }
     }
 }
