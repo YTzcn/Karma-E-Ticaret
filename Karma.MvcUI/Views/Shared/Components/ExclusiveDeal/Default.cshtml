@@ -33,28 +33,58 @@
             </div>
             <div class="col-lg-6 no-padding exclusive-right">
                 <div class="active-exclusive-product-slider">
-                    @foreach (var item in Model.Products)
-                    {
-                        <div class="single-exclusive-slider">
-                            <img class="img-fluid"  src="@(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/"+(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@item.ProductName" />
-                            <div class="product-details">
-                                <div class="price">
-                                    <h6>@item.Price ₺</h6>
-                                  
+                    <swiper-container  navigation="true" loop="true" autoplay-delay="2500" autoplay-disable-on-interaction="true">
+                        @foreach (var item in Model.Products)
+                        {
+                            <swiper-slide>
+                                <div class="single-exclusive-slider">
+                                    <img class="img-fluid" src="@(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/"+(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@item.ProductName" />
+                                    <div class="product-details">
+                                        <div class="price">
+                                            <h6>@item.Price ₺</h6>
+
+                                        </div>
+                                        <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(" ","-")">
+                                            <h4>
+                                                @item.ProductName
+                                            </h4>
+                                        </a>
+                                        <div class="add-bag d-flex align-items-center justify-content-center">
+                                            <a href="~/Sepet/AddToCart?productId=@item.ProductId" class="add-btn" href=""><span class="ti-bag"></span></a>
+                                            <span class="add-text text-uppercase">Sepete Ekle</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(" ","-")">
-                                    <h4>
-                                        @item.ProductName
-                                    </h4>
-                                </a>
-                                <div class="add-bag d-flex align-items-center justify-content-center">
-                                    <a href="~/Sepet/AddToCart?productId=@item.ProductId" class="add-btn" href=""><span class="ti-bag"></span></a>
-                                    <span class="add-text text-uppercase">Sepete Ekle</span>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                            </swiper-slide>
+                        }
+
+
+                    </swiper-container>
                 </div>
+
+                @*  <div class="active-exclusive-product-slider">
+                @foreach (var item in Model.Products)
+                {
+                <div class="single-exclusive-slider">
+                <img class="img-fluid"  src="@(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_300/f_auto,q_auto/"+(item.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@item.ProductName" />
+                <div class="product-details">
+                <div class="price">
+                <h6>@item.Price ₺</h6>
+
+                </div>
+                <a href="~/Ürün/Detay?urunAdi=@item.ProductName.Replace(" ","-")">
+                <h4>
+                @item.ProductName
+                </h4>
+                </a>
+                <div class="add-bag d-flex align-items-center justify-content-center">
+                <a href="~/Sepet/AddToCart?productId=@item.ProductId" class="add-btn" href=""><span class="ti-bag"></span></a>
+                <span class="add-text text-uppercase">Sepete Ekle</span>
+                </div>
+                </div>
+                </div>
+                }
+                </div> *@
             </div>
         </div>
     </div>

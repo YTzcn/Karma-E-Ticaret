@@ -1,0 +1,93 @@
+﻿@model EditProductViewModel
+@{
+    ViewData["Title"] = "AddProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card mb-4">
+    <h5 class="card-header">Ekle</h5>
+    <div class="card-body">
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Resim Önizleme</th>
+                        <th>Sil</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+
+                    @*   <tr>
+                    <td><img src="https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/@(item.PublicId)" style="max-height:100px;max-width:100px;" /></td>
+                    <td><a class="btn btn-outline-danger" href="~/Admin/DeleteImage?id=@item.ImageId&productId=@Model.Product.ProductId">Sil</a></td>
+                    </tr> *@
+
+                </tbody>
+            </table>
+            <br />
+        </div>
+
+
+        <div class="accordion-body">
+            <form id="product" method="post">
+                @Html.HiddenFor(x => x.Product.ProductId)
+                <div class="mb-3 row">
+                    <label for="html5-text-input" class="col-md-2 col-form-label">Ürün Adı</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.ProductName" type="text" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlSelect1" class="form-label">Marka</label>
+                    @Html.DropDownListFor(x => x.Product.Brand.BrandId, (List<SelectListItem>)Model.BrandListItem, new { @class = "form-select" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleFormControlSelect1" class="form-label">Kategori</label>
+                    @Html.DropDownListFor(x => x.Product.Category.CategoryId, (List<SelectListItem>)Model.CategoryListItem, new { @class = "form-select" })
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="html5-search-input" class="col-md-2 col-form-label">Fiyat</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.Price" type="text" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-search-input" class="col-md-2 col-form-label">Stok Adedi</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.UnitInStock" type="number" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-search-input" class="col-md-2 col-form-label">Açıklama</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.Description" type="text" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-search-input" class="col-md-2 col-form-label">Alt Açıklama</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.SubDescription" type="text" />
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="html5-search-input" class="col-md-2 col-form-label">Renk</label>
+                    <div class="col-md-10">
+                        <input class="form-control" required asp-for="Product.Color" type="text" />
+                    </div>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    @Html.CheckBoxFor(x => x.Product.Active, new { @class = "form-check-input" })
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Aktif</label>
+                </div>
+                <button type="submit" id="submitBtn" class="btn btn-success">Kaydet</button>
+            </form>
+            <br />
+         
+
+
+        </div>
+    </div>
+</div>
+@TempData["bilgi"]

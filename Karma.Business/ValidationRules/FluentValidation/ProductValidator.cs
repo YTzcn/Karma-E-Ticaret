@@ -23,7 +23,6 @@ namespace Karma.Business.ValidationRules.FluentValidation
             RuleFor(x => x.Color).NotEmpty().WithMessage("Renk Boş Geçilmez");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Açıklama Alanı Boş Geçilmez");
             RuleFor(x => x.SubDescription).NotEmpty().WithMessage("Alt Açıklama Alanı Boş Geçilmez");
-            RuleFor(x => x.ProductId).NotEmpty().WithMessage("Ürün Id Boş Olamaz");
 
             //RuleFor(x => x.Spesifications.Width).NotEmpty().WithMessage("Ürün Genişliği Boş Geçilmez");
             //RuleFor(x => x.Spesifications.Weight).NotEmpty().WithMessage("Ürün Ağırlığı Boş Geçilmez");

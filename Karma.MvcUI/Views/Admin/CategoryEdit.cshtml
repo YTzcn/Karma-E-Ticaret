@@ -1,0 +1,77 @@
+﻿@model CategoryEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card mb-4">
+    <h5 class="card-header">Düzenle - @Model.Category.CategoryId</h5>
+    <div class="card-body">
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">Ürün & Stok Bilgilari</button>
+                </h2>
+                <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <form asp-action="CategoryEdit" asp-controller="Admin" method="post">
+                            @Html.HiddenFor(x => x.Category.CategoryId)
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label">Ürün Adı</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" asp-for="Category.CategoryName" type="text" value="@Model.Category.CategoryName" />
+                                </div>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                @Html.CheckBoxFor(x => x.Category.Active, new { @class = "form-check-input" })
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Aktif</label>
+                            </div>
+
+                            <br />
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
+                        Resimler
+                    </button>
+                </h2>
+
+                <div id="accordionTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Resim Önizleme</th>
+                                        <th>Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    <tr>
+                                        <td><img src="@(String.IsNullOrEmpty(Model.Category.ImagePath)?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":Model.Category.ImagePath.Substring(7))" style="max-height:100px;max-width:100px;" /></td>
+                                        <td><a class="btn btn-outline-danger" href="~/Admin/DeleteCategoryImage?categoryId=@Model.Category.CategoryId">Sil</a></td>
+                                    </tr>
+                                    <tr></tr>
+                                </tbody>
+                            </table><br />
+                        </div>
+                        <h3><small class="text-muted">Resim Ekle</small></h3>
+                        <form action="/Admin/UploadCategoryImage" method="post" enctype="multipart/form-data">
+                            <input name="categoryId" value="@Model.Category.CategoryId" type="hidden" />
+                            <label for="file">Resim Seç:</label>
+                            <input type="file" name="file" id="file" />
+                            <button class="btn btn-success" type="submit" value="Yükle">Yükle</button>
+                        </form>
+
+                    </div>
+                    @TempData["bilgi"]
+                </div>
+            </div>
+

@@ -1,0 +1,53 @@
+﻿@model AdminCategoriesViewModel
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="table-responsive text-nowrap">
+    <table id="table" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Kategori Adı</th>
+                <th>Aktiflik</th>
+                <th>Resim</th>
+                <th>Düzenle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.AllCategories)
+            {
+                <tr>
+                    <td>@x.CategoryId</td>
+                    <td>@x.CategoryName</td>
+                    <td>
+                        @if (x.Active == true)
+                        {
+                            <span class="badge bg-success">Aktif</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Pasif</span>
+                        }
+                    </td>
+                    <td><img src="@(String.IsNullOrEmpty(x.ImagePath)?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_200,w_200/f_auto,q_auto/vqzqxfbthc3ez7i18pim":x.ImagePath.Substring(7))" style="max-width:200px;max-height:200px;" alt="@x.CategoryName" /></td>
+                    <td><a class="btn btn-outline-warning" href="~/Admin/CategoryEdit?CategoryId=@x.CategoryId">Düzenle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script1 {
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+}

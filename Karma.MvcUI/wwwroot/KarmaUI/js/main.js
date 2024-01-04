@@ -61,27 +61,27 @@ $(document).ready(function () {
     /*=================================
     Javascript for product area carousel
     ==================================*/
-    $(".active-product-area").owlCarousel({
-        items: 1,
-        autoplay: false,
-        autoplayTimeout: 5000,
-        loop: true,
-        nav: true,
-        navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
-        dots: false
-    });
+    //$(".active-product-area").owlCarousel({
+    //    items: 1,
+    //    autoplay: false,
+    //    autoplayTimeout: 5000,
+    //    loop: true,
+    //    nav: true,
+    //    navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
+    //    dots: false
+    //});
 
     /*=================================
     Javascript for single product area carousel
     ==================================*/
-    $(".s_Product_carousel").owlCarousel({
-        items: 1,
-        autoplay: false,
-        autoplayTimeout: 5000,
-        loop: false,
-        nav: false,
-        dots: false
-    });
+    //$(".s_Product_carousel").owlCarousel({
+    //    items: 1,
+    //    autoplay: false,
+    //    autoplayTimeout: 5000,
+    //    loop: false,
+    //    nav: false,
+    //    dots: false
+    //});
 
     /*=================================
     Javascript for exclusive area carousel
@@ -96,15 +96,15 @@ $(document).ready(function () {
     //    dots:false
     //});
 
-    $(".active-exclusive-product-slider").owlCarousel({
-        items: 3,
-        autoplay: false,
-        autoplayTimeout: 5000,
-        loop: false,
-        nav: false,
-        navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
-        dots: false
-    });
+    //$(".active-exclusive-product-slider").owlCarousel({
+    //    items: 3,
+    //    autoplay: false,
+    //    autoplayTimeout: 5000,
+    //    loop: false,
+    //    nav: false,
+    //    navText: ["<img src='/KarmaUI/img/product/prev.png'>", "<img src='/KarmaUI/img/product/next.png'>"],
+    //    dots: false
+    //});
     //--------- Accordion Icon Change ---------//
 
     $('.collapse').on('shown.bs.collapse', function () {

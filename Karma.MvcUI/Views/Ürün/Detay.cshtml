@@ -10,32 +10,26 @@
         <div class="row s_product_inner">
             <div class="col-lg-6">
                 <div class="s_Product_carousel">
-                    @if (Model.ProductDetail.Images.Count != 0)
-                    {
-                        @foreach (var item in Model.ProductDetail.Images)
+                    <swiper-container loop="true"  pagination="true" pagination-clickable="true">
+
+
+
+                        @if (Model.ProductDetail.Images.Count != 0)
                         {
-                            <div class="single-prd-item">
-                                <img class="img-fluid"  src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/@item.PublicId" alt="@Model.ProductDetail.ProductName"/>
-                            </div>
-                            if (Model.ProductDetail.Images.Count == 1)
+                            @foreach (var item in Model.ProductDetail.Images)
                             {
-                                <div class="single-prd-item">
-                                <img class="img-fluid"  src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/ +@item.PublicId" alt="@Model.ProductDetail.ProductName"/>
-                                </div>
+                                <swiper-slide class="single-prd-item">
+                                    <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/@item.PublicId" alt="@Model.ProductDetail.ProductName" />
+                                </swiper-slide>
                             }
                         }
-                    }
-                    else
-                    {
-                        <div class="single-prd-item">
-                            <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/vqzqxfbthc3ez7i18pim" alt="@Model.ProductDetail.ProductName">
-                        </div>
-
-                        <div class="single-prd-item">
-                            <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/vqzqxfbthc3ez7i18pim" alt="@Model.ProductDetail.ProductName">
-                        </div>
-                    }
-
+                        else
+                        {
+                            <swiper-slide class="single-prd-item">
+                                <img class="img-fluid" src="https://res.cloudinary.com/drwyecoiw/image/upload/f_auto,q_auto/vqzqxfbthc3ez7i18pim" alt="@Model.ProductDetail.ProductName">
+                            </swiper-slide>
+                        }
+                    </swiper-container>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
@@ -169,34 +163,34 @@
                     </div>
                 </div>
             }
-            @await Component.InvokeAsync("Comments" ,new{productId=Model.ProductDetail.ProductId})
+            @await Component.InvokeAsync("Comments", new { productId = Model.ProductDetail.ProductId })
         </div>
     </div>
 </section>
 
 @section quantitySection {
     <script>
-        
-            function addToCart() {
-                var quantityInput = document.getElementById('sst');
-                var productId = @Model.ProductDetail.ProductId;
 
-                var link = document.getElementById('dynamicLink');
-                var linkUrl = '/Sepet/AddToCart?productId=' + productId + '&quantity=' + quantityInput.value;
-
-                link.href = linkUrl;
-            }
-
+        function addToCart() {
             var quantityInput = document.getElementById('sst');
-            var dynamicLink = document.getElementById('dynamicLink');
+            var productId = @Model.ProductDetail.ProductId;
 
-            quantityInput.addEventListener('input', function () {
-                var quantity = quantityInput.value;
-                var linkUrl = dynamicLink.getAttribute('href');
+            var link = document.getElementById('dynamicLink');
+            var linkUrl = '/Sepet/AddToCart?productId=' + productId + '&quantity=' + quantityInput.value;
 
-                var updatedLinkUrl = linkUrl.split('?')[0] + '?asp-route-quantity=' + quantity;
-                dynamicLink.setAttribute('href', updatedLinkUrl);
-            });
+            link.href = linkUrl;
+        }
+
+        var quantityInput = document.getElementById('sst');
+        var dynamicLink = document.getElementById('dynamicLink');
+
+        quantityInput.addEventListener('input', function () {
+            var quantity = quantityInput.value;
+            var linkUrl = dynamicLink.getAttribute('href');
+
+            var updatedLinkUrl = linkUrl.split('?')[0] + '?asp-route-quantity=' + quantity;
+            dynamicLink.setAttribute('href', updatedLinkUrl);
+        });
 
     </script>
 }

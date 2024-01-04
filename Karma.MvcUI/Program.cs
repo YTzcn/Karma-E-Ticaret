@@ -11,6 +11,14 @@ using Karma.MvcUI.Services;
 using Karma.MvcUI.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using System;
+using Karma.Entities.Concrete;
+using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Karma.Business.ValidationRules.FluentValidation;
+using Karma.Entities;
+using PostSharp.Extensibility;
 
 
 
@@ -126,7 +134,7 @@ namespace Karma.MvcUI
             app.UseSession();
 
             app.UseAuthorization();
-           
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -141,7 +149,7 @@ namespace Karma.MvcUI
                 name: "searchRoute",
            pattern: "Ara/{key?}/",
            defaults: new { controller = "Ara", action = "Index" });
-           
+
 
             app.Run();
         }
