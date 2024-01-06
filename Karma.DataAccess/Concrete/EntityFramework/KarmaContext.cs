@@ -1,5 +1,6 @@
 ﻿using Karma.Entities;
 using Karma.Entities.Concrete;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Karma.DataAccess.Concrete.EntityFramework
@@ -10,6 +11,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         {
             optionsBuilder.UseSqlServer("server=(localdb)\\MSSQLLocalDB;database=KarmaDb;Integrated Security=true;TrustServerCertificate=True;");
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -20,5 +22,13 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<NewstellerSub> NewstellerSubs { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
+            modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId);
+        }
     }
 }

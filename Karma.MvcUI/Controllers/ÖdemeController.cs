@@ -57,10 +57,10 @@ namespace Karma.MvcUI.Controllers
             if (x == "true")
             {
                 TempData.Add("message", "Ödemeniz başarıyla gerçekleşti.");
-                Order order = new Order()
+                NewOrderModel order = new NewOrderModel()
                 {
                     UserId = id,
-                    Detail = JsonConvert.SerializeObject(cart),
+                    Detail = cart,
                     Total = cart.Total,
                 };
                 _orderService.Add(order);

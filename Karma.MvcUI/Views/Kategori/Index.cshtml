@@ -11,7 +11,7 @@
                     <a href="~/Kategori/@item.CategoryName">
                         <div class="single-deal" href="##">
                             <div class="overlay"></div>
-                            <img class="img-fluid w-100" src="@item.ImagePath" alt="">
+                            <img src="@(String.IsNullOrEmpty(item.ImagePath)?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_200,w_200/f_auto,q_auto/vqzqxfbthc3ez7i18pim":item.ImagePath.Substring(7))" alt="@item.CategoryName" />
                             <div class="deal-details">
                                 <h6 class="deal-title">@item.CategoryName</h6>
                             </div>

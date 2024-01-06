@@ -14,12 +14,14 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly IBrandService _brandService;
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
-        public AdminController(IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService)
+        private readonly IOrderService _orderService;
+        public AdminController(IOrderService orderService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService)
         {
             _productService = productService;
             _brandService = brandService;
             _categoryService = categoryService;
             _imageService = imageService;
+            _orderService = orderService;
         }
         public IActionResult Index()
         {
@@ -186,7 +188,7 @@ namespace Karma.MvcUI.Controllers.Admin
             Category.Active = category.Active;
             Category.CategoryName = category.CategoryName;
             _categoryService.Update(Category);
-            return RedirectToAction("Categoryies");
+            return Redirect("~/Admin/CategoryEdit?categoryId=" + category.CategoryId);
         }
         [HttpGet]
         public IActionResult DeleteCategoryImage(int categoryId)
@@ -220,6 +222,78 @@ namespace Karma.MvcUI.Controllers.Admin
             category.ImagePath = filePath;
             _categoryService.Update(category);
             return Redirect("~/Admin/CategoryEdit?categoryId=" + categoryId);
+        }
+        [HttpGet]
+        public IActionResult Brands()
+        {
+            var brands = _brandService.GetAll();
+            AdminBrandsViewModel model = new AdminBrandsViewModel()
+            {
+                Brands = brands
+            };
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult BrandEdit(int brandId)
+        {
+            var brand = _brandService.GetById(brandId);
+            BrandEditViewModel model = new BrandEditViewModel()
+            {
+                Brand = brand
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult BrandEdit(Brand brand)
+        {
+            var Brandd = _brandService.GetById(brand.BrandId);
+            Brandd.Active = brand.Active;
+            Brandd.BrandName = brand.BrandName;
+            _brandService.Update(Brandd);
+            return Redirect("~/Admin/BrandEdit?brandId=" + brand.BrandId);
+        }
+        [HttpGet]
+        public IActionResult DeleteBrandImage(int brandId)
+        {
+            try
+            {
+
+                var brand = _brandService.GetById(brandId);
+                System.IO.File.Delete(brand.BrandLogo);
+                brand.BrandLogo = "";
+                _brandService.Update(brand);
+                return Redirect("~/Admin/CategoryEdit?brandId=" + brandId);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(BadRequest());
+            }
+
+        }
+        [HttpPost]
+        public IActionResult UploadBrandImage(int brandId, IFormFile file)
+        {
+
+            var filePath = Path.Combine("wwwroot\\KarmaUI\\img\\brand", file.FileName);
+            using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
+            {
+                file.CopyTo(stream);
+            }
+            var brand = _brandService.GetById(brandId);
+            brand.BrandLogo = filePath;
+            _brandService.Update(brand);
+            return Redirect("~/Admin/BrandEdit?brandId=" + brandId);
+        }
+        [HttpGet]
+        public IActionResult Orders()
+        {
+            var orders = _orderService.GetAll().OrderBy(x => x.Active);
+            OrdersViewModel model = new OrdersViewModel()
+            {
+                Orders = orders
+            };
+            return View(model);
         }
     }
 }
