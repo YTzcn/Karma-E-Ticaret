@@ -2,9 +2,14 @@
 using Karma.Entities;
 using Karma.Entities.Concrete;
 using Karma.MvcUI.Models.Admin;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Karma.MvcUI.Identity;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Karma.MvcUI.Controllers.Admin
 {
@@ -15,13 +20,17 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
         private readonly IOrderService _orderService;
-        public AdminController(IOrderService orderService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService)
+        private readonly UserManager<AppIdentityUser> _userManager;
+
+
+        public AdminController(IOrderService orderService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
         {
             _productService = productService;
             _brandService = brandService;
             _categoryService = categoryService;
             _imageService = imageService;
             _orderService = orderService;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -289,9 +298,21 @@ namespace Karma.MvcUI.Controllers.Admin
         public IActionResult Orders()
         {
             var orders = _orderService.GetAll().OrderBy(x => x.Active);
+
             OrdersViewModel model = new OrdersViewModel()
             {
                 Orders = orders
+            };
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult GetOrder(int Id)
+        {
+            var order = _orderService.Get(Id);
+            var orderDetail = JsonConvert.DeserializeObject<Cart>(order.Detail)==null?null: JsonConvert.DeserializeObject<Cart>(order.Detail);
+            OrderModel model = new OrderModel()
+            {
+                Order = orderDetail
             };
             return View(model);
         }

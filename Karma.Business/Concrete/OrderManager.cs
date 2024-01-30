@@ -28,10 +28,7 @@ namespace Karma.Business.Concrete
                 Active = true,
                 Detail = JsonConvert.SerializeObject(order.Detail),
                 Total = order.Total,
-                UserId = order.UserId//new IdentityUser()
-                //{
-                //    Id = order.UserId
-                //}
+                UserId = order.UserId
             };
             _orderDal.Add(order1);
         }

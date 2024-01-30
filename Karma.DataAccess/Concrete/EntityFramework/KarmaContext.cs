@@ -22,13 +22,6 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<NewstellerSub> NewstellerSubs { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
-            modelBuilder.Entity<Order>().HasOne(o => o.User).WithMany().HasForeignKey(o => o.UserId);
-        }
+    
     }
 }

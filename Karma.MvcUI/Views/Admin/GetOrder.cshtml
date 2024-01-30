@@ -1,4 +1,4 @@
-﻿@model OrdersViewModel
+﻿@model OrderModel
 @{
     ViewData["Title"] = "Orders";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -33,17 +33,15 @@
                                 <th>Sipariş Id</th>
                                 <th>Müşteri</th>
                                 <th>Tutar</th>
-                                <th>Siparişi Görüntüle</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var x in Model.Orders)
+                            @foreach (var x in Model.Order.CartLines)
                             {
                                 <tr>
-                                    <td>@x.OrderId</td>
-                                    <td>@x.UserId</td>
-                                    <td>@x.Total</td>
-                                    <td><a class="btn btn-outline-warning" href="~/Admin/GetOrder/@x.OrderId">Siparişi Görüntüle</a></td>
+                                    <td>@x.Product.ProductName</td>
+                                    <td>@x.Quantity</td>
+                                    <td>@x.LineTotal</td>
                                 </tr>
                             }
                         </tbody>
