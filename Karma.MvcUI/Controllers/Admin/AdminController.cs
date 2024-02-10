@@ -295,26 +295,104 @@ namespace Karma.MvcUI.Controllers.Admin
             return Redirect("~/Admin/BrandEdit?brandId=" + brandId);
         }
         [HttpGet]
-        public IActionResult Orders()
+        public IActionResult ActiveOrders()
         {
-            var orders = _orderService.GetAll().OrderBy(x => x.Active);
-
-            OrdersViewModel model = new OrdersViewModel()
+            var orders = _orderService.GetAll(1).OrderBy(x => x.Status);
+            List<OrdersListModel> ordersList = new List<OrdersListModel>();
+            foreach (var order in orders)
             {
-                Orders = orders
+                OrdersListModel orderr = new OrdersListModel();
+                orderr.UserName = _userManager.FindByIdAsync(order.UserId).Result.UserName;
+                orderr.UserId = order.UserId;
+                orderr.OrderId = order.OrderId;
+                orderr.Total = order.Total;
+                orderr.Detail = order.Detail;
+                orderr.Status = order.Status;
+                orderr.Date = order.Date;
+                ordersList.Add(orderr);
+            }
+            OrderViewModel model = new OrderViewModel()
+            {
+                Orders = ordersList
             };
+
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult PostedOrders()
+        {
+            var orders = _orderService.GetAll(2).OrderBy(x => x.Status);
+            List<OrdersListModel> ordersList = new List<OrdersListModel>();
+            foreach (var order in orders)
+            {
+                OrdersListModel orderr = new OrdersListModel();
+                orderr.UserName = _userManager.FindByIdAsync(order.UserId).Result.UserName;
+                orderr.UserId = order.UserId;
+                orderr.OrderId = order.OrderId;
+                orderr.Total = order.Total;
+                orderr.Detail = order.Detail;
+                orderr.Status = order.Status;
+                orderr.Date = order.Date;
+                ordersList.Add(orderr);
+            }
+            OrderViewModel model = new OrderViewModel()
+            {
+                Orders = ordersList
+            };
+
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult CompletedOrders()
+        {
+            var orders = _orderService.GetAll(3).OrderBy(x => x.Status);
+            List<OrdersListModel> ordersList = new List<OrdersListModel>();
+            foreach (var order in orders)
+            {
+                OrdersListModel orderr = new OrdersListModel();
+                orderr.UserName = _userManager.FindByIdAsync(order.UserId).Result.UserName;
+                orderr.UserId = order.UserId;
+                orderr.OrderId = order.OrderId;
+                orderr.Total = order.Total;
+                orderr.Detail = order.Detail;
+                orderr.Status = order.Status;
+                orderr.Date = order.Date;
+                ordersList.Add(orderr);
+            }
+            OrderViewModel model = new OrderViewModel()
+            {
+                Orders = ordersList
+            };
+
             return View(model);
         }
         [HttpGet]
         public IActionResult GetOrder(int Id)
         {
             var order = _orderService.Get(Id);
-            var orderDetail = JsonConvert.DeserializeObject<Cart>(order.Detail)==null?null: JsonConvert.DeserializeObject<Cart>(order.Detail);
+            var orderDetail = JsonConvert.DeserializeObject<Cart>(order.Detail) == null ? null : JsonConvert.DeserializeObject<Cart>(order.Detail);
             OrderModel model = new OrderModel()
             {
-                Order = orderDetail
+                Order = orderDetail,
+                OrderId = Id
             };
             return View(model);
+        }
+        [HttpGet]
+        public IActionResult PostedOrder(int orderId)
+        {
+            var order = _orderService.Get(orderId);
+            order.Status = 2;
+            _orderService.Update(order);
+            return RedirectToAction("ActiveOrders");
+        }
+        [HttpGet]
+        public IActionResult CompletedOrder(int orderId)
+        {
+            var order = _orderService.Get(orderId);
+            order.Status = 3;
+            _orderService.Update(order);
+            return RedirectToAction("PostedOrders");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model OrdersViewModel
+﻿@model OrderViewModel
 @{
     ViewData["Title"] = "Orders";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -14,16 +14,13 @@
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="bx bx-user me-1"></i> Tüm Ürünler</a>
+                        <a class="nav-link" href="/Admin/ActiveOrders"><i class="bx bx-user me-1"></i> Aktif Siparişler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/DecreasingProducts"><i class="bx bx-bell me-1"></i> Azalan Ürünler</a>
+                        <a class="nav-link" href="/Admin/PostedOrders"><i class="bx bx-bell me-1"></i>Kargodaki Siparişler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/OutOfStock"><i class="bx bx-link-alt me-1"></i> Stokta Olmayanlar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Admin/AddProduct"><i class="btn btn-success">Yeni Ürün Ekle</i> </a>
+                        <a class="nav-link active" href="#"><i class="bx bx-link-alt me-1"></i> Teslim Edilmiş Siparişler</a>
                     </li>
                 </ul>
                 <div class="table-responsive text-nowrap">
@@ -41,7 +38,7 @@
                             {
                                 <tr>
                                     <td>@x.OrderId</td>
-                                    <td>@x.UserId</td>
+                                    <td>@x.UserName</td>
                                     <td>@x.Total</td>
                                     <td><a class="btn btn-outline-warning" href="~/Admin/GetOrder/@x.OrderId">Siparişi Görüntüle</a></td>
                                 </tr>

@@ -12,6 +12,8 @@ namespace Karma.Business.Abstract
     {
         void Add(NewOrderModel order);
         List<Order> GetAll();
+        List<Order> GetAll(int ordersStatus);
         Order Get(int id);
+        void Update(Order order);
     }
 }

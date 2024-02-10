@@ -20,7 +20,7 @@ namespace Karma.Entities.Concrete
         public decimal Total { get; set; }
         public string UserId { get; set; }
         public DateTime Date => DateTime.Now;
-        public bool Active { get; set; }
+        public byte Status { get; set; }
         public string Detail { get; set; }
 
     }

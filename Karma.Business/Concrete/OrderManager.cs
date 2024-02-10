@@ -25,7 +25,7 @@ namespace Karma.Business.Concrete
         {
             Order order1 = new Order()
             {
-                Active = true,
+                Status = 1,
                 Detail = JsonConvert.SerializeObject(order.Detail),
                 Total = order.Total,
                 UserId = order.UserId
@@ -37,10 +37,19 @@ namespace Karma.Business.Concrete
         {
             return _orderDal.Get(x => x.OrderId == id);
         }
-
+        
         public List<Order> GetAll()
         {
             return _orderDal.GetList();
+        }
+        public List<Order> GetAll(int ordersStatus)
+        {
+            return _orderDal.GetList(x => x.Status == ordersStatus);
+        }
+        
+        public void Update(Order order)
+        {
+            _orderDal.Update(order);
         }
     }
 }

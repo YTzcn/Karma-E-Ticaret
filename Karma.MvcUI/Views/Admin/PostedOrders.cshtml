@@ -1,0 +1,63 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-wrapper">
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">
+            <span class="text-muted fw-light">Ürünler/</span> Tüm Ürünler
+        </h4>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/ActiveOrders"><i class="bx bx-user me-1"></i> Aktif Siparişler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="bx bx-bell me-1"></i>Kargodaki Siparişler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/CompletedOrders"><i class="bx bx-link-alt me-1"></i> Teslim Edilmiş Siparişler</a>
+                    </li>
+                </ul>
+                <div class="table-responsive text-nowrap">
+                    <table id="table" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Sipariş Id</th>
+                                <th>Müşteri</th>
+                                <th>Tutar</th>
+                                <th>Siparişi Görüntüle</th>
+                                <th>Teslim Edildi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var x in Model.Orders)
+                            {
+                                <tr>
+                                    <td>@x.OrderId</td>
+                                    <td>@x.UserName</td>
+                                    <td>@x.Total</td>
+                                    <td><a class="btn btn-outline-warning" href="~/Admin/GetOrder/@x.OrderId">Siparişi Görüntüle</a></td>
+                                    <td><a class="btn btn-outline-success" href="~/Admin/CompletedOrder/@x.OrderId">Teslim Edildi Olarak İşaretle</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script1 {
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+}
