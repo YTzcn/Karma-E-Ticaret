@@ -1,0 +1,121 @@
+﻿@model CampaignProductsPageViewModel
+@{
+    ViewData["Title"] = "Campaign Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">Aktif Kampanyalı Ürünler</button>
+                </h2>
+                <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <div id="accordionIcon-1" class="accordion-collapse collapse show" data-bs-parent="#accordionIcon" style="">
+                            <div class="accordion-body">
+                                <div class="table-responsive text-nowrap">
+                                    <table id="table0" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <th>Kampanya Id</th>
+                                        <th>Ürün Id</th>
+                                        <th>Ürün Resmi</th>
+                                        <th>Ürün Adı</th>
+                                        <th>Normal Fiyat</th>
+                                        <th>Kampanya Fiyatı</th>
+                                        <th>Kampanyadan Çıkar</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var x in Model.CampaignedProducts)
+                                            {
+                                                <tr>
+                                                    <td>@x.Id</td>
+                                                    <td>@x.Product.ProductId</td>
+                                                    <td><img src="@(x.Product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/"+(x.Product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" /></td>
+                                                    <td>@x.Product.ProductName</td>
+                                                    <td>@x.Product.Price</td>
+                                                    <td>@x.NewPrice</td>
+                                                    <td><a href="/Admin/RemoveCampaignProduct?campaignId=@x.Id" class="btn btn-danger">Kampanyadan Çıkar</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
+                        Tüm Ürünlerin Listesi
+                    </button>
+                </h2>
+
+                <div id="accordionTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="table-responsive text-nowrap">
+                            <table id="table1" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>KucukResim</th>
+                                        <th>Urun Adi</th>
+                                        <th>Kategori</th>
+                                        <th>Marka</th>
+                                        <th>Fiyat</th>
+                                        <th>Kampanyalı Fiyat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var x in Model.Products)
+                                    {
+                                        <tr>
+                                            <td>@x.ProductId</td>
+                                            <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/"+(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@x.ProductName" /></td>
+                                            <td>@x.ProductName</td>
+                                            <td>@x.Category.CategoryName</td>
+                                            <td>@x.Brand.BrandName</td>
+                                            <td>@x.Price</td>
+                                            <td>
+                                                <form asp-action="AddCampaignProduct" asp-controller="Admin" method="post">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">₺</div>
+                                                        </div>
+                                                        <input type="hidden" name="productId" value="@x.ProductId" />
+                                                        <input class="form-control" type='number' step='0.01' value='0.00' name="campaignPrice" placeholder="Kampanya Fiyatı(0.00)">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-success" type="submit">Kampanya Listesine Ekle</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @section script1 {
+                <script>
+                    $(document).ready(function () {
+                        $('#table0').DataTable();
+                    });
+                    $(document).ready(function () {
+                        $('#table1').DataTable();
+                    });
+                </script>
+            }

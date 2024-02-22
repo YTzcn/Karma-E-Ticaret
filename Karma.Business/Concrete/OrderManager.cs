@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Karma.Business.Abstract;
+﻿using Karma.Business.Abstract;
 using Karma.DataAccess.Abstract;
 using Karma.Entities.Concrete;
 using Karma.MvcUI;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 
 namespace Karma.Business.Concrete
@@ -37,7 +29,7 @@ namespace Karma.Business.Concrete
         {
             return _orderDal.Get(x => x.OrderId == id);
         }
-        
+
         public List<Order> GetAll()
         {
             return _orderDal.GetList();
@@ -46,7 +38,7 @@ namespace Karma.Business.Concrete
         {
             return _orderDal.GetList(x => x.Status == ordersStatus);
         }
-        
+
         public void Update(Order order)
         {
             _orderDal.Update(order);

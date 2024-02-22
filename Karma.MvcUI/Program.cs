@@ -80,6 +80,9 @@ namespace Karma.MvcUI
             builder.Services.AddScoped<IProductService, ProductManager>();
             builder.Services.AddScoped<IProductDal, EfProductDal>();
 
+            builder.Services.AddScoped<ICampaignService, CampaignManager>();
+            builder.Services.AddScoped<ICampaignProductDal, EfCampaignProductDal>();
+
             builder.Services.AddScoped<IOrderService, OrderManager>();
             builder.Services.AddScoped<IOrderDal, EfOrderDal>();
 

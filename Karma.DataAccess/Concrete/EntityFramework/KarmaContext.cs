@@ -1,6 +1,5 @@
 ﻿using Karma.Entities;
 using Karma.Entities.Concrete;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Karma.DataAccess.Concrete.EntityFramework
@@ -22,6 +21,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<NewstellerSub> NewstellerSubs { get; set; }
-    
+        public DbSet<CampaignProduct> CampaginProducts { get; set; }
+
     }
 }

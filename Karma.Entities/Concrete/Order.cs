@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Karma.Core.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Karma.Core.Entities;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.EntityFrameworkCore;
 
 namespace Karma.Entities.Concrete
 {

@@ -1,14 +1,13 @@
 ﻿using Karma.Business.Abstract;
+using Karma.DataAccess.Migrations;
 using Karma.Entities;
 using Karma.Entities.Concrete;
+using Karma.MvcUI.Identity;
 using Karma.MvcUI.Models.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using Karma.MvcUI.Identity;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace Karma.MvcUI.Controllers.Admin
@@ -20,10 +19,11 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly ICategoryService _categoryService;
         private readonly IImageService _imageService;
         private readonly IOrderService _orderService;
+        private readonly ICampaignService _campaignService;
         private readonly UserManager<AppIdentityUser> _userManager;
 
 
-        public AdminController(IOrderService orderService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
+        public AdminController(IOrderService orderService, ICampaignService campaignService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
         {
             _productService = productService;
             _brandService = brandService;
@@ -31,6 +31,7 @@ namespace Karma.MvcUI.Controllers.Admin
             _imageService = imageService;
             _orderService = orderService;
             _userManager = userManager;
+            _campaignService = campaignService;
         }
         public IActionResult Index()
         {
@@ -393,6 +394,36 @@ namespace Karma.MvcUI.Controllers.Admin
             order.Status = 3;
             _orderService.Update(order);
             return RedirectToAction("PostedOrders");
+        }
+        public IActionResult CampaignProducts()
+        {
+            var products = _productService.GetAll();
+            var campaignedProduct = _campaignService.GetAllActive();
+            CampaignProductsPageViewModel model = new CampaignProductsPageViewModel()
+            {
+                Products = products,
+                CampaignedProducts = campaignedProduct
+            };
+            return View(model);
+        }
+        public IActionResult AddCampaignProduct(int productId, string campaignPrice)
+        {
+            var FindProduct = _productService.GetById(productId);
+            campaignPrice = campaignPrice.Replace('.', ',');
+            CampaignProduct product = new CampaignProduct()
+            {
+                Product = FindProduct,
+                Active = true,
+                NewPrice = Convert.ToDouble(campaignPrice)
+            };
+            _campaignService.Add(product);
+            return RedirectToAction("CampaignProducts");
+        }
+        public IActionResult RemoveCampaignProduct(int campaignId)
+        {
+            var product = _campaignService.GetById(campaignId);
+            _campaignService.Delete(product);
+            return RedirectToAction("CampaignProducts");
         }
     }
 }
