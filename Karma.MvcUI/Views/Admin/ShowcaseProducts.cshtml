@@ -1,0 +1,104 @@
+﻿@model ShowcaseProductsViewModel
+@{
+    ViewData["Title"] = "Campaign Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">Vitrindeki Ürünler</button>
+                </h2>
+                <div id="accordionOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <div id="accordionIcon-1" class="accordion-collapse collapse show" data-bs-parent="#accordionIcon" style="">
+                            <div class="accordion-body">
+                                <div class="table-responsive text-nowrap">
+                                    <table id="table0" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <th>Vitrin Id</th>
+                                        <th>Ürün Id</th>
+                                        <th>Ürün Resmi</th>
+                                        <th>Ürün Adı</th>
+                                        <th>Vitrinden Kaldır</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var x in Model.ShowcaseProducts)
+                                            {
+                                                <tr>
+                                                    <td>@x.Id</td>
+                                                    <td>@x.Product.ProductId</td>
+                                                    <td><img src="@(x.Product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/"+(x.Product.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" /></td>
+                                                    <td>@x.Product.ProductName</td>
+                                                    <td><a href="/Admin/DeleteFromShowcase?showcaseId=@x.Id" class="btn btn-danger">Vitrinden Kaldır</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card accordion-item active">
+                <h2 class="accordion-header" id="headingOne">
+                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="true" aria-controls="accordionTwo">
+                        Tüm Ürünlerin Listesi
+                    </button>
+                </h2>
+
+                <div id="accordionTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="table-responsive text-nowrap">
+                            <table id="table1" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Küçük Resim</th>
+                                        <th>Urun Adi</th>
+                                        <th>Kategori</th>
+                                        <th>Marka</th>
+                                        <th>Fiyat</th>
+                                        <th>Vitrine Ekle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var x in Model.Products)
+                                    {
+                                        <tr>
+                                            <td>@x.ProductId</td>
+                                            <td><img src="@(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId==null?"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/vqzqxfbthc3ez7i18pim":"https://res.cloudinary.com/drwyecoiw/image/upload/c_scale,h_100,w_100/f_auto,q_auto/"+(x.Images.FirstOrDefault(x=>x.IsMain==true)?.PublicId))" alt="@x.ProductName" /></td>
+                                            <td>@x.ProductName</td>
+                                            <td>@x.Category.CategoryName</td>
+                                            <td>@x.Brand.BrandName</td>
+                                            <td>@x.Price</td>
+                                            <td><a href="/Admin/AddShowcase?productId=@x.ProductId" class="btn btn-success">Vitrine Ekle</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @section script1 {
+                <script>
+                    $(document).ready(function () {
+                        $('#table0').DataTable();
+                    });
+                    $(document).ready(function () {
+                        $('#table1').DataTable();
+                    });
+                </script>
+            }

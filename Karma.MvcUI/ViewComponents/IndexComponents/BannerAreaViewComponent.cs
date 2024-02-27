@@ -10,15 +10,15 @@ namespace Karma.MvcUI.ViewComponents.IndexComponents
 {
     public class BannerAreaViewComponent : ViewComponent
     {
-        private readonly IProductService _productService;
-        public BannerAreaViewComponent(IProductService productService)
+        private readonly IShowcaseProductsService _showcaseProductsService;
+        public BannerAreaViewComponent(IShowcaseProductsService showcaseProductsService)
         {
-            _productService = productService;
+            _showcaseProductsService = showcaseProductsService;
         }
         public ViewViewComponentResult Invoke()
         {
             Random random = new Random();
-            var Product = _productService.GetAll().Where(x => x.Images.Count != 0).OrderBy(x => random.Next()).Take(5).ToList();
+            var Product = _showcaseProductsService.GetList();
             BannerAreaViewModel model = new BannerAreaViewModel
             {
                 ProductList = Product,

@@ -1,24 +1,12 @@
-using Microsoft.Extensions.Configuration;
-using Ninject.Modules;
-using Ninject;
-using Karma.Business.DependencyResolvers.Ninject;
 using Karma.Business.Abstract;
 using Karma.Business.Concrete;
 using Karma.DataAccess;
-using Karma.DataAccess.Concrete.EntityFramework;
 using Karma.DataAccess.Abstract;
-using Karma.MvcUI.Services;
+using Karma.DataAccess.Concrete.EntityFramework;
 using Karma.MvcUI.Identity;
+using Karma.MvcUI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using System;
-using Karma.Entities.Concrete;
-using Karma.Core.CrossCuttingConcerns.Validation.FluentValidation;
-using Karma.Business.ValidationRules.FluentValidation;
-using Karma.Entities;
-using PostSharp.Extensibility;
 
 
 
@@ -97,6 +85,9 @@ namespace Karma.MvcUI
 
             builder.Services.AddScoped<ICommentService, CommentManager>();
             builder.Services.AddScoped<ICommentDal, EfCommentDal>();
+
+            builder.Services.AddScoped<IShowcaseProductsDal, EfShowcaseProductsDal>();
+            builder.Services.AddScoped<IShowcaseProductsService, ShowcaseProductsManager>();
 
             builder.Services.AddScoped<IContactService, ContactMessageManager>();
             builder.Services.AddScoped<IContactMessageDal, EfContactMessageDal>();

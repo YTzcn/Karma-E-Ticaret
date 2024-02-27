@@ -113,5 +113,10 @@ namespace Karma.Business.Concrete
         {
             return _productDal.GetDetailsList(x => x.UnitInStock <= 0);
         }
+
+        public List<Product> GetUpcomingProducts()
+        {
+            return _productDal.GetDetailsList(x => x.IsUpcomingProduct == true);
+        }
     }
 }

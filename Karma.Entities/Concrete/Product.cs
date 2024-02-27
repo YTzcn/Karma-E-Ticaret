@@ -18,7 +18,9 @@ namespace Karma.Entities.Concrete
         public int UnitInStock { get; set; }
         public string Color { get; set; }
         public bool Active { get; set; }
-        public virtual Category Category{ get; set; }
+        public bool IsUpcomingProduct { get; set; }
+        public DateTime AddedDate { get; set; }
+        public virtual Category Category { get; set; }
         public virtual Brand Brand { get; set; }
 
 

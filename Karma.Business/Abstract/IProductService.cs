@@ -21,5 +21,6 @@ namespace Karma.Business.Abstract
         List<Product> GetByFilter(int? categoryId, int[]? brandId, string[]? color, string? lowerValue, string? upperValue, string? key);
         List<Product> GetProductLessThan5Quantity();
         List<Product> OutOfStock();
+        List<Product> GetUpcomingProducts();
     }
 }

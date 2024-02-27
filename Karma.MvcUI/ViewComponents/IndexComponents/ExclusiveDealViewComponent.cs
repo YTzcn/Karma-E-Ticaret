@@ -7,18 +7,17 @@ namespace Karma.MvcUI.ViewComponents.IndexComponents
 {
     public class ExclusiveDealViewComponent : ViewComponent
     {
-        private readonly IProductService _productService;
-        public ExclusiveDealViewComponent(IProductService productService)
+        private readonly ICampaignService _campaignService;
+        public ExclusiveDealViewComponent(ICampaignService campaignService)
         {
-            _productService = productService;
+            _campaignService = campaignService;
         }
         public ViewViewComponentResult Invoke()
         {
-            Random random = new Random();
-            var Products = _productService.GetAll().OrderBy(x => random.Next()).Take(3).ToList();
+            var products = _campaignService.GetAllActive();
             ExclusiveDealViewModel model = new ExclusiveDealViewModel
             {
-                Products = Products
+                Products = products
             };
             return View(model);
         }

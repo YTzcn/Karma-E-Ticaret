@@ -6,7 +6,6 @@ namespace Karma.Entities.Concrete
 
     public class Order : IEntity
     {
-        [Key]
         public int OrderId { get; set; }
         public decimal Total { get; set; }
         public string UserId { get; set; }

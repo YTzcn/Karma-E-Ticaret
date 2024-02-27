@@ -4,6 +4,6 @@ namespace Karma.MvcUI.Models.Them
 {
     public class ExclusiveDealViewModel
     {
-        public List<Product> Products { get; set; }
+        public List<CampaignProduct> Products { get; set; }
     }
 }

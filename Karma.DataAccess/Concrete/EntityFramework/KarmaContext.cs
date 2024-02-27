@@ -22,6 +22,7 @@ namespace Karma.DataAccess.Concrete.EntityFramework
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<NewstellerSub> NewstellerSubs { get; set; }
         public DbSet<CampaignProduct> CampaginProducts { get; set; }
+        public DbSet<ShowcaseProducts> ShowcaseProducts{ get; set; }
 
     }
 }

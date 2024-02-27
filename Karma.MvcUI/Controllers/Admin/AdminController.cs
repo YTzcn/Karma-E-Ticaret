@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Karma.MvcUI.Controllers.Admin
 {
@@ -20,10 +22,11 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly IImageService _imageService;
         private readonly IOrderService _orderService;
         private readonly ICampaignService _campaignService;
+        private readonly IShowcaseProductsService _showcaseProductsService;
         private readonly UserManager<AppIdentityUser> _userManager;
 
 
-        public AdminController(IOrderService orderService, ICampaignService campaignService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
+        public AdminController(IShowcaseProductsService showcaseProductsService, IOrderService orderService, ICampaignService campaignService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
         {
             _productService = productService;
             _brandService = brandService;
@@ -32,6 +35,7 @@ namespace Karma.MvcUI.Controllers.Admin
             _orderService = orderService;
             _userManager = userManager;
             _campaignService = campaignService;
+            _showcaseProductsService = showcaseProductsService;
         }
         public IActionResult Index()
         {
@@ -424,6 +428,42 @@ namespace Karma.MvcUI.Controllers.Admin
             var product = _campaignService.GetById(campaignId);
             _campaignService.Delete(product);
             return RedirectToAction("CampaignProducts");
+        }
+        public IActionResult UpcomingProducts()
+        {
+            var products = _productService.GetUpcomingProducts();
+            UpcomingViewModel model = new UpcomingViewModel
+            {
+                Products = products
+            };
+            return View();
+        }
+        public IActionResult ShowcaseProducts()
+        {
+            var allProducts = _productService.GetAll();
+            var products = _showcaseProductsService.GetList();
+            ShowcaseProductsViewModel model = new ShowcaseProductsViewModel()
+            {
+                ShowcaseProducts = products,
+                Products = allProducts,
+            };
+            return View(model);
+        }
+        public IActionResult AddShowcase(int productId)
+        {
+            var product = _productService.GetById(productId);
+            ShowcaseProducts showcaseProducts = new ShowcaseProducts()
+            {
+                Product = product
+            };
+            _showcaseProductsService.Add(showcaseProducts);
+            return RedirectToAction("ShowcaseProducts");
+        }
+        public IActionResult DeleteFromShowcase(int showcaseId)
+        {
+            var showcase = _showcaseProductsService.Get(showcaseId);
+            _showcaseProductsService.Delete(showcase);
+            return RedirectToAction("ShowcaseProducts");
         }
     }
 }
