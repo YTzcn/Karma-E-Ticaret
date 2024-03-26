@@ -8,6 +8,6 @@ namespace Karma.MvcUI
         public Product Product { get; set; }
         public List<SelectListItem> BrandListItem { get; set; }
         public List<SelectListItem> CategoryListItem { get; set; }
-
+        public bool IsUpcoming { get; set; }
     }
 }

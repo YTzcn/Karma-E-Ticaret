@@ -1,5 +1,5 @@
 ﻿using Karma.Entities.Concrete;
-using Karma.MvcUI.Identity;
+using Karma.MvcUI.Identity.DAL;
 
 namespace Karma.MvcUI
 {

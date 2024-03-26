@@ -1,5 +1,5 @@
 ﻿using Karma.Business.Abstract;
-using Karma.MvcUI.Identity;
+using Karma.MvcUI.Identity.DAL;
 using Karma.MvcUI.Models.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

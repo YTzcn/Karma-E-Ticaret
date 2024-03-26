@@ -72,6 +72,10 @@
                                 @Html.CheckBoxFor(x => x.Product.Active, new { @class = "form-check-input" })
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Aktif</label>
                             </div>
+                            <div class="form-check form-switch mb-2">
+                                @Html.CheckBoxFor(x => x.Product.IsUpcomingProduct, new { @class = "form-check-input" })
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Gelecek Olaraka İşarele</label>
+                            </div>
 
                             <br />
                             <button type="submit" class="btn btn-success">Kaydet</button>

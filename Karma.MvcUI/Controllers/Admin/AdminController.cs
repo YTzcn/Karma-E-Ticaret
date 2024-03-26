@@ -1,16 +1,15 @@
 ﻿using Karma.Business.Abstract;
-using Karma.DataAccess.Migrations;
 using Karma.Entities;
 using Karma.Entities.Concrete;
-using Karma.MvcUI.Identity;
+using Karma.MvcUI.Identity.Business.Abstract;
+using Karma.MvcUI.Identity.Business.Concrete;
+using Karma.MvcUI.Identity.DAL;
 using Karma.MvcUI.Models.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace Karma.MvcUI.Controllers.Admin
 {
@@ -24,9 +23,10 @@ namespace Karma.MvcUI.Controllers.Admin
         private readonly ICampaignService _campaignService;
         private readonly IShowcaseProductsService _showcaseProductsService;
         private readonly UserManager<AppIdentityUser> _userManager;
+        private readonly IUserService _userManageer;
 
 
-        public AdminController(IShowcaseProductsService showcaseProductsService, IOrderService orderService, ICampaignService campaignService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
+        public AdminController(IUserService userManagerr, IShowcaseProductsService showcaseProductsService, IOrderService orderService, ICampaignService campaignService, IProductService productService, IBrandService brandService, ICategoryService categoryService, IImageService imageService, UserManager<AppIdentityUser> userManager)
         {
             _productService = productService;
             _brandService = brandService;
@@ -36,6 +36,7 @@ namespace Karma.MvcUI.Controllers.Admin
             _userManager = userManager;
             _campaignService = campaignService;
             _showcaseProductsService = showcaseProductsService;
+            _userManageer = userManagerr;
         }
         public IActionResult Index()
         {
@@ -133,7 +134,7 @@ namespace Karma.MvcUI.Controllers.Admin
             return Redirect("~/Admin/Edit/" + ProductId);
         }
         [HttpGet]
-        public IActionResult AddProduct()
+        public IActionResult AddProduct(bool isUpcoming = false)
         {
             var brands = _brandService.GetAll();
             var categories = _categoryService.GetAll();
@@ -150,7 +151,8 @@ namespace Karma.MvcUI.Controllers.Admin
                                     {
                                         Value = x.CategoryId.ToString(),
                                         Text = x.CategoryName
-                                    }).ToList()
+                                    }).ToList(),
+                IsUpcoming = isUpcoming
             };
             return View(model);
         }
@@ -434,9 +436,21 @@ namespace Karma.MvcUI.Controllers.Admin
             var products = _productService.GetUpcomingProducts();
             UpcomingViewModel model = new UpcomingViewModel
             {
-                Products = products
+                Products = products,
             };
-            return View();
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult AddUpcomingProduct()
+        {
+            return Redirect("~/Admin/AddProduct?isUpcoming=true");
+        }
+        public IActionResult DeleteFromUpcoming(int productId)
+        {
+            var product = _productService.GetById(productId);
+            product.IsUpcomingProduct = false;
+            _productService.Update(product);
+            return RedirectToAction("UpcomingProducts");
         }
         public IActionResult ShowcaseProducts()
         {
@@ -464,6 +478,28 @@ namespace Karma.MvcUI.Controllers.Admin
             var showcase = _showcaseProductsService.Get(showcaseId);
             _showcaseProductsService.Delete(showcase);
             return RedirectToAction("ShowcaseProducts");
+        }
+        public async Task<IActionResult> Users()
+        {
+            var AllUsers = _userManager.Users.ToList();
+            _userManageer.SendResetPasswordMail(AllUsers[0].Id);
+            List<UserListView> userList = new List<UserListView>();
+            foreach (var user in AllUsers)
+            {
+                UserListView userr = new UserListView()
+                {
+                    Username = user.UserName,
+                    Active = user.EmailConfirmed,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                };
+                userList.Add(userr);
+            }
+            UsersViewModel model = new UsersViewModel()
+            {
+                Users = userList
+            };
+            return View(model);
         }
     }
 }

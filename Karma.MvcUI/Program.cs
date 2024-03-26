@@ -3,7 +3,9 @@ using Karma.Business.Concrete;
 using Karma.DataAccess;
 using Karma.DataAccess.Abstract;
 using Karma.DataAccess.Concrete.EntityFramework;
-using Karma.MvcUI.Identity;
+using Karma.MvcUI.Identity.Business.Abstract;
+using Karma.MvcUI.Identity.Business.Concrete;
+using Karma.MvcUI.Identity.DAL;
 using Karma.MvcUI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +72,8 @@ namespace Karma.MvcUI
 
             builder.Services.AddScoped<ICampaignService, CampaignManager>();
             builder.Services.AddScoped<ICampaignProductDal, EfCampaignProductDal>();
+
+            builder.Services.AddScoped<IUserService, UserManager>();
 
             builder.Services.AddScoped<IOrderService, OrderManager>();
             builder.Services.AddScoped<IOrderDal, EfOrderDal>();

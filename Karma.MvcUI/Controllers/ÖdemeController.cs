@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Identity;
-using Karma.MvcUI.Identity;
+using Karma.MvcUI.Identity.DAL;
 
 namespace Karma.MvcUI.Controllers
 {

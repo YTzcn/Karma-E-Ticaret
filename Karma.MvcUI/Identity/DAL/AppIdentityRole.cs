@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Karma.MvcUI.Identity
+namespace Karma.MvcUI.Identity.DAL
 {
-    public class AppIdentityUser : IdentityUser
+    public class AppIdentityRole : IdentityRole
     {
         //diğer özellikler buraya
     }
